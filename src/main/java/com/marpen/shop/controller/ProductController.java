@@ -38,6 +38,11 @@ public class ProductController {
         return "catalog";
     }
 
+    @RequestMapping(value="/home", method = {RequestMethod.GET})
+    public String getHome(){
+       return "home";
+    }
+
 //    @RequestMapping(value="/catalog/search", method = {RequestMethod.GET})
 //    public String getSearchList(@RequestParam(value="pageid", required=false,defaultValue = "1") Integer pageid,
 //                                @RequestParam(name="searchString", required=true) String searchName,
