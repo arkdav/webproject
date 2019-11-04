@@ -34,7 +34,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
         <property name="suffix" value=".jsp" />
     </bean>
 
-      <bean id="handlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+<!--      <bean id="handlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />-->
   <!-- DataSource - DatabaseInformation-->
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
