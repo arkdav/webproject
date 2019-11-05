@@ -23,7 +23,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
     <!-- Specifying the Resource location to load JS, CSS, Images etc -->
     <mvc:resources mapping="/images/**" location="/images/" />
     <mvc:default-servlet-handler/>
-
+    <mvc:annotation-driven />
 
     <!-- View Resolver -->
     <!-- Resolves views selected for rendering by @Controllers to .jsp resources
@@ -34,7 +34,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
         <property name="suffix" value=".jsp" />
     </bean>
 
-<!--      <bean id="handlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />-->
+<!--      <bean id="HandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />-->
   <!-- DataSource - DatabaseInformation-->
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">

@@ -42,20 +42,7 @@ public class ProductController {
     public String getHome(){
        return "home";
     }
-
-//    @RequestMapping(value="/catalog/search", method = {RequestMethod.GET})
-//    public String getSearchList(@RequestParam(value="pageid", required=false,defaultValue = "1") Integer pageid,
-//                                @RequestParam(name="searchString", required=true) String searchName,
-//                                Model model) {
-//        int productsPerPage = 6;
-//        if(pageid!=1) {
-//            pageid = (pageid - 1) * productsPerPage + 1;
-//        }
-//        model.addAttribute("productsList", this.productFacadeImpl.getCatalogListSearch(searchName, pageid, productsPerPage));
-//        model.addAttribute("pagesList", this.productFacadeImpl.getIdListSearch(searchName, productsPerPage));
-//        model.addAttribute("search", searchName);
-//        return "catalog";
-//    }
+    
 
     @RequestMapping(value = "/productdata/{product_id}", method = RequestMethod.GET)
     public String productData(@PathVariable("product_id")int product_id, Model model) {
