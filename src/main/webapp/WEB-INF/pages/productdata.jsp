@@ -18,7 +18,21 @@
 <%@include file="header.jsp" %>
 <main>
     <div class="main-block">
-        <p>HOME</p>
+        <h1>Product Details</h1>
+        <br>
+        <p>Name:  ${productinf.name}</p>
+        <p>Type: ${productinf.type}</p>
+        <p>Information: ${productinf.information}</p>
+        <p>Price: ${productinf.price}</p>
+        <br>
+            <c:if test="${!empty images}">
+                <c:forEach items="${images}" var="image" >
+                    <p><img src="../../images/${image.link}"></p>
+                </c:forEach>
+            </c:if>
+        <form class="form-inline my-2 my-lg-0" method="get" action="/basket" >
+            <button type="submit" class="btn btn-outline-success my-2 my-sm-0" >Add to basket</button>
+        </form>
     </div>
 </main>
 <%@include file="footer.jsp" %>

@@ -38,11 +38,11 @@ public class ProductController {
         return "catalog";
     }
 
-    @RequestMapping(value="/home", method = {RequestMethod.GET})
-    public String getHome(){
+    @RequestMapping(value={"/","/home"}, method = {RequestMethod.GET})
+    public String getHome() {
        return "home";
     }
-    
+
 
     @RequestMapping(value = "/productdata/{product_id}", method = RequestMethod.GET)
     public String productData(@PathVariable("product_id")int product_id, Model model) {
@@ -54,11 +54,6 @@ public class ProductController {
     @RequestMapping(value = "/basket", method = RequestMethod.GET)
     public String addToBasket(Model model) {
         return "basket";
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Model model) {
-        return "login";
     }
 
 }
