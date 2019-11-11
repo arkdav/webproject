@@ -1,5 +1,7 @@
 package com.marpen.shop.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,6 +40,7 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     @Column(name = "birthdate")
     private Date birthdate;
 
@@ -47,7 +50,7 @@ public class User {
     public User(){
     }
 
-    public User(int user_id, String username, String password, int role_id, String name, String surname, String email, String phone, Date birthdate, String confirmPassword) {
+    public User(int user_id, String username, String password, int role_id, String name, String surname, String email, String phone, Date birthdate) {
         this.user_id=user_id;
         this.username = username;
         this.password = password;
@@ -57,7 +60,6 @@ public class User {
         this.email = email;
         this.phone = phone;
         this.birthdate = birthdate;
-        this.confirmPassword = confirmPassword;
     }
 
     public int getUser_id() {

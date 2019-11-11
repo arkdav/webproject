@@ -3,7 +3,6 @@
 <%@ taglib prefix="from" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +19,7 @@
 <main>
     <div class="main-block">
         <h1>Basket</h1>
+        <p>${productinf.product_id}</p>
     </div>
 </main>
 <%@include file="footer.jsp" %>

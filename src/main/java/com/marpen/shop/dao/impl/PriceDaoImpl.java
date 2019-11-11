@@ -4,9 +4,7 @@ import com.marpen.shop.dao.PriceDao;
 import com.marpen.shop.model.Price;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 public class PriceDaoImpl implements PriceDao {
 
     private SessionFactory sessionFactory;

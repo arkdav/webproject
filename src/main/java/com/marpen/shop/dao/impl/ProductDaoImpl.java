@@ -4,11 +4,9 @@ import com.marpen.shop.dao.ProductDao;
 import com.marpen.shop.model.Product;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.List;
 
-@Transactional
 public class ProductDaoImpl implements ProductDao {
 
     private SessionFactory sessionFactory;

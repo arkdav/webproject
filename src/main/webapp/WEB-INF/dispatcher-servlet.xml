@@ -7,13 +7,15 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:sec="http://www.springframework.org/schema/security"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-http://www.springframework.org/schema/tx
-http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-http://www.springframework.org/schema/context
-http://www.springframework.org/schema/context/spring-context-3.0.xsd
-http://www.springframework.org/schema/mvc
-http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/mvc
+            http://www.springframework.org/schema/mvc/spring-mvc.xsd
+            http://www.springframework.org/schema/security
+            http://www.springframework.org/schema/security/spring-security.xsd">
 
     <!-- Specifying base package of the components  -->
     <context:component-scan base-package="com.marpen.shop" />
@@ -25,6 +27,31 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
     <mvc:resources mapping="/images/**" location="/images/" />
     <mvc:default-servlet-handler/>
     <mvc:annotation-driven />
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/>
+            <ref bean="localeChangeInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>classpath:messages</value>
+                <value>classpath:validation</value>
+            </list>
+        </property>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+    <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <property name="paramName" value="lang"/>
+    </bean>
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="en"/>
+    </bean>
 
     <!-- View Resolver -->
     <!-- Resolves views selected for rendering by @Controllers to .jsp resources
@@ -57,6 +84,8 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
             <value>com.marpen.shop.model.CatalogVersion</value>
             <value>com.marpen.shop.model.Role</value>
             <value>com.marpen.shop.model.User</value>
+            <value>com.marpen.shop.model.Cart</value>
+            <value>com.marpen.shop.model.CartEntry</value>
         </list>
     </property>
     <property name="hibernateProperties">
@@ -105,6 +134,22 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
         <constructor-arg name="imageDao" ref="imageDao"/>
     </bean>
 
+    <!-- CartDao and CartService beans -->
+    <bean id="cartDao" class="com.marpen.shop.dao.impl.CartDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="cartService" class="com.marpen.shop.service.impl.CartServiceImpl">
+        <constructor-arg name="cartDao" ref="cartDao"/>
+    </bean>
+
+    <!-- CartEntryDao and CartEntryService beans -->
+    <bean id="cartEntryDao" class="com.marpen.shop.dao.impl.CartEntryDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="cartEntryService" class="com.marpen.shop.service.impl.CartEntryServiceImpl">
+        <constructor-arg name="cartEntryDao" ref="cartEntryDao"/>
+    </bean>
+
     <!-- ProductController and ProductFacadeImpl beans -->
     <bean id="productController" class="com.marpen.shop.controller.ProductController">
         <constructor-arg ref="productFacade"/>
@@ -114,63 +159,76 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
         <constructor-arg name="priceService" ref="priceService"/>
         <constructor-arg name="imageService" ref="imageService"/>
     </bean>
+
+
 <!--     UserController bean -->
 
-<!--    <bean id="userController" class="com.marpen.shop.controller.UserController">-->
-<!--        <constructor-arg name="securityService" ref="securityService"/>-->
-<!--        <constructor-arg name="userService" ref="userService"/>-->
-<!--        <constructor-arg name="userValidator" ref="userValidator"/>-->
-<!--    </bean>-->
+    <bean id="userController" class="com.marpen.shop.controller.UserController">
+        <constructor-arg name="userFacade" ref="userFacade"/>
+        <constructor-arg name="registrationValidator" ref="registrationValidator"/>
+        <constructor-arg name="securityFacade" ref="securityFacade"/>
+    </bean>
 
-<!--    <bean id="userDao" class="com.marpen.shop.dao.impl.UserDaoImpl">-->
-<!--        <constructor-arg name="sessionFactory" ref="sessionFactory"/>-->
-<!--    </bean>-->
-<!--    <bean id="roleDao" class="com.marpen.shop.dao.impl.RoleDaoImpl">-->
-<!--        <constructor-arg name="sessionFactory" ref="sessionFactory"/>-->
-<!--    </bean>-->
+    <bean id="securityFacade" class="com.marpen.shop.facade.impl.SecurityFacadeImpl">
+        <constructor-arg name="securityService" ref="securityService"/>
+    </bean>
 
-<!--    <bean id="userService" class="com.marpen.shop.service.impl.UserServiceImpl">-->
-<!--        <constructor-arg name="userDao" ref="userDao"/>-->
-<!--        <constructor-arg name="roleDao" ref="roleDao"/>-->
-<!--        <constructor-arg name="bCryptPasswordEncoder" ref="encoder"/>-->
-<!--    </bean>-->
+    <bean id="userFacade" class="com.marpen.shop.facade.impl.UserFacadeImpl">
+        <constructor-arg name="userService" ref="userService"/>
+        <constructor-arg name="bCryptPasswordEncoder" ref="encoder"/>
+    </bean>
 
-<!--    <bean id="userDetailsService" class="com.marpen.shop.service.impl.UserDetailsServiceImpl">-->
-<!--        <constructor-arg name="userDao" ref="userDao"/>-->
-<!--        <constructor-arg name="roleDao" ref="roleDao"/>-->
-<!--    </bean>-->
+    <bean id="userDao" class="com.marpen.shop.dao.impl.UserDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="roleDao" class="com.marpen.shop.dao.impl.RoleDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 
-<!--    <bean id="securityService" class="com.marpen.shop.service.impl.SecurityServiceImpl">-->
-<!--        <constructor-arg name="authenticationManager" ref="authenticationManager"/>-->
-<!--        <constructor-arg name="userDetailsService" ref="userDetailsService"/>-->
-<!--    </bean>-->
+    <bean id="userService" class="com.marpen.shop.service.impl.UserServiceImpl">
+        <constructor-arg name="userDao" ref="userDao"/>
+        <constructor-arg name="roleDao" ref="roleDao"/>
+    </bean>
 
-<!--    <bean id="userValidator" class="com.marpen.shop.validator.UserValidator">-->
-<!--        <constructor-arg name="userService" ref="userService"/>-->
-<!--    </bean>-->
+    <bean id="userDetailsService" class="com.marpen.shop.service.impl.UserDetailsServiceImpl">
+        <constructor-arg name="userService" ref="userService"/>
+        <constructor-arg name="roleDao" ref="roleDao"/>
+    </bean>
 
-<!--    <sec:http auto-config="true">-->
-<!--        <sec:intercept-url pattern="/" access="permitAll()"/>-->
-<!--        <sec:intercept-url pattern="/home" access="permitAll()"/>-->
-<!--        <sec:intercept-url pattern="/basket" access="hasRole('ROLE_USER')"/>-->
-<!--        <sec:intercept-url pattern="/catalog" access="permitAll()"/>-->
-<!--        <sec:intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>-->
+    <bean id="securityService" class="com.marpen.shop.service.impl.SecurityServiceImpl">
+        <constructor-arg name="authenticationManager" ref="authenticationManager"/>
+        <constructor-arg name="userService" ref="userService"/>
+        <constructor-arg name="userDetailsService" ref="userDetailsService"/>
+    </bean>
 
-<!--        <sec:form-login login-page="/login" default-target-url="/catalog" authentication-failure-url="/login?error"-->
-<!--                        username-parameter="username" password-parameter="password"/>-->
 
-<!--        <sec:logout logout-success-url="/home" invalidate-session="true"/>-->
-<!--    </sec:http>-->
+    <bean id="registrationValidator" class="com.marpen.shop.validator.RegistrationValidator">
+        <constructor-arg name="userService" ref="userService"/>
+    </bean>
 
-<!--    <sec:authentication-manager alias="authenticationManager">-->
-<!--        <sec:authentication-provider user-service-ref="userDetailsService">-->
-<!--            <sec:password-encoder ref="encoder"></sec:password-encoder>-->
-<!--        </sec:authentication-provider>-->
-<!--    </sec:authentication-manager>-->
+    <sec:http auto-config="true">
+        <sec:intercept-url pattern="/" access="permitAll()"/>
+        <sec:intercept-url pattern="/home" access="permitAll()"/>
+        <sec:intercept-url pattern="/basket" access="hasRole('ROLE_USER')"/>
+        <sec:intercept-url pattern="/catalog" access="permitAll()"/>
+        <sec:intercept-url pattern="/userdata" access="hasRole('ROLE_USER')"/>
+        <sec:intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+        <sec:form-login login-page="/login" default-target-url="/userdata"
+                        authentication-failure-url="/login?error"
+                        username-parameter="username" password-parameter="password"/>
+        <sec:logout logout-url="/logout" logout-success-url="/home" invalidate-session="true"/>
+    </sec:http>
 
-<!--    <bean id="encoder"-->
-<!--          class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">-->
-<!--        <constructor-arg name="strength" value="11"/>-->
-<!--    </bean>-->
+    <sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider user-service-ref="userDetailsService">
+            <sec:password-encoder ref="encoder" />
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+<!--    <sec:remember-me />-->
+
+    <bean id="encoder"
+          class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <constructor-arg name="strength" value="11"/>
+    </bean>
 
 </beans>

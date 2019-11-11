@@ -2,6 +2,8 @@
 
 <%@ taglib prefix="from" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="tag" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,9 +32,12 @@
                     <p><img src="../../images/${image.link}"></p>
                 </c:forEach>
             </c:if>
-        <form class="form-inline my-2 my-lg-0" method="get" action="/basket" >
-            <button type="submit" class="btn btn-outline-success my-2 my-sm-0" >Add to basket</button>
-        </form>
+            <sec:authorize access="isAuthenticated()">
+                <form class="form-inline my-2 my-lg-0" method="post" action="/basket?product_id=${productinf.product_id}" >
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <button type="submit" class="btn btn-outline-success my-2 my-sm-0" ><tag:message code="product.addToBasket"/></button>
+                </form>
+            </sec:authorize>
     </div>
 </main>
 <%@include file="footer.jsp" %>

@@ -21,8 +21,8 @@ public class ProductController {
 
     @RequestMapping(value="/catalog", method = {RequestMethod.GET})
     public String getProductsList(@RequestParam(value="pageid", required=false,defaultValue = "1") Integer pageid,
-                                  @RequestParam(name="searchString", required=false) String searchName,
-                                  Model model) {
+            @RequestParam(value="searchString", required=false) String searchName,
+            Model model) {
         int productsPerPage = 6;
         if(pageid!=1) {
             pageid = (pageid - 1) * productsPerPage + 1;
@@ -38,7 +38,7 @@ public class ProductController {
         return "catalog";
     }
 
-    @RequestMapping(value={"/","/home"}, method = {RequestMethod.GET})
+    @RequestMapping(value={"/","/home"}, method = RequestMethod.GET)
     public String getHome() {
        return "home";
     }
@@ -51,9 +51,19 @@ public class ProductController {
         return "productdata";
     }
 
-    @RequestMapping(value = "/basket", method = RequestMethod.GET)
-    public String addToBasket(Model model) {
+    @RequestMapping(value = "/basket", method = RequestMethod.POST)
+    public String addToBasket(@RequestParam(value="product_id", required=true)int product_id, Model model) {
+
+       //добавить товар в корзину
         return "basket";
     }
+
+    @RequestMapping(value = "/basket", method = RequestMethod.GET)
+    public String giveBasket(Model model) {
+       //добавить список товаров корзины
+       //model.addAttribute("basketList", )
+       return "basket";
+    }
+
 
 }

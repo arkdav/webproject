@@ -3,9 +3,11 @@ package com.marpen.shop.service.impl;
 import com.marpen.shop.dao.ImageDao;
 import com.marpen.shop.model.Image;
 import com.marpen.shop.service.ImageService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 public class ImageServiceImpl implements ImageService {
 
     private ImageDao imageDao;

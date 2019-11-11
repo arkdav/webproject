@@ -3,9 +3,11 @@ package com.marpen.shop.service.impl;
 import com.marpen.shop.model.Product;
 import com.marpen.shop.dao.ProductDao;
 import com.marpen.shop.service.ProductService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 public class ProductServiceImpl implements ProductService {
 
     private ProductDao productDao;

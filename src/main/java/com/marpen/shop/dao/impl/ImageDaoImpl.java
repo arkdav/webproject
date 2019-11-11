@@ -4,11 +4,9 @@ import com.marpen.shop.dao.ImageDao;
 import com.marpen.shop.model.Image;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional
 public class ImageDaoImpl implements ImageDao {
 
     private SessionFactory sessionFactory;

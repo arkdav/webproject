@@ -1,9 +1,9 @@
 package com.marpen.shop.controller;
 
-import com.marpen.shop.model.User;
-import com.marpen.shop.service.SecurityService;
-import com.marpen.shop.service.UserService;
-import com.marpen.shop.validator.UserValidator;
+import com.marpen.shop.dto.RegistrationDto;
+import com.marpen.shop.facade.SecurityFacade;
+import com.marpen.shop.facade.UserFacade;
+import com.marpen.shop.validator.RegistrationValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,38 +16,51 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes("currentUser")
 public class UserController {
 
-    UserController(){}
-    private UserValidator userValidator;
-    private SecurityService securityService;
-    private UserService userService;
+    private UserFacade userFacade;
+    private RegistrationValidator registrationValidator;
+    private SecurityFacade securityFacade;
 
-    public UserController(UserValidator userValidator, SecurityService securityService, UserService userService) {
-        this.userValidator = userValidator;
-        this.securityService=securityService;
-        this.userService = userService;
+    public UserController(UserFacade userFacade, RegistrationValidator registrationValidator, SecurityFacade securityFacade){
+
+        this.userFacade=userFacade;
+        this.registrationValidator = registrationValidator;
+        this.securityFacade=securityFacade;
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
-        model.addAttribute("userForm", new User());
+        model.addAttribute("userForm", new RegistrationDto());
         return "registration";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+    public String registration(@ModelAttribute("userForm") RegistrationDto registrationDto, BindingResult bindingResult, Model model) {
 
-        userValidator.validate(userForm, bindingResult);
+        registrationValidator.validate(registrationDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return "registration";
         }
-        userService.save(userForm);
-        securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
+        userFacade.save(registrationDto);
+        securityFacade.autologin(registrationDto.getLogin(), registrationDto.getPassword());
         return "redirect:/catalog";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String toLoginPage(Model model) {
+    public String login(Model model, String error, String logout) {
+        if (error != null) {
+            model.addAttribute("error", "Username or password is incorrect.");
+        }
+        if (logout != null) {
+            model.addAttribute("message", "Logged out successfully.");
+        }
         return "login";
+    }
+
+    @RequestMapping(value = "/userdata", method = RequestMethod.GET)
+    public String getUserPage(Model model) {
+
+        //model.addAttribute("userInf", this.userFacade.getIdList(productsPerPage));
+        return "userdata";
     }
 
 }
