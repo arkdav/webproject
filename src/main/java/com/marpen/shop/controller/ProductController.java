@@ -45,25 +45,11 @@ public class ProductController {
 
 
     @RequestMapping(value = "/productdata/{product_id}", method = RequestMethod.GET)
-    public String productData(@PathVariable("product_id")int product_id, Model model) {
-        model.addAttribute("productinf", this.productFacade.getProductById(product_id));
-        model.addAttribute("images", this.productFacade.getImageListByProductId(product_id));
+    public String productData(@PathVariable("product_id")int productId,
+                              Model model) {
+        model.addAttribute("productinf", this.productFacade.getProductById(productId));
+        model.addAttribute("images", this.productFacade.getImageListByProductId(productId));
         return "productdata";
     }
-
-    @RequestMapping(value = "/basket", method = RequestMethod.POST)
-    public String addToBasket(@RequestParam(value="product_id", required=true)int product_id, Model model) {
-
-       //добавить товар в корзину
-        return "basket";
-    }
-
-    @RequestMapping(value = "/basket", method = RequestMethod.GET)
-    public String giveBasket(Model model) {
-       //добавить список товаров корзины
-       //model.addAttribute("basketList", )
-       return "basket";
-    }
-
 
 }

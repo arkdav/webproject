@@ -2,6 +2,7 @@
 
 <%@ taglib prefix="from" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="tag" uri="http://www.springframework.org/tags"%>
 
 
 <!DOCTYPE html>
@@ -28,12 +29,11 @@
                                 <c:forEach items="${productsList}" var="product" >
                                     <div class="product col-4" >
                                         <div class="product-img">
-                                        <%--    <img src="<c:url value='../../images/${product.link}'/>"/>--%>
-                                            <img src="../../images/${product.link}">
+                                           <img src="../../images/${product.link}">
                                         </div>
                                         <div>
-                                            <h2 class="product-name"><a href="/productdata/${product.product_id}"/>${product.name}</h2>
-                                            <h4 class="product-price">${product.price}</h4>
+                                            <h2 class="product-name"><a href="/productdata/${product.productId}">${product.name}</a></h2>
+                                            <h4 class="product-price">${product.price}$</h4>
                                         </div>
                                     </div>
                                 </c:forEach>
@@ -45,22 +45,24 @@
                             </c:otherwise>
                         </c:choose>
                     </div>
+                    <ul class="pagination">
                     <c:choose>
                         <c:when test="${search!=null}">
                             <c:if test="${!empty productsList}">
                                 <c:forEach items="${pagesList}" var="mpage">
-                                    <a href="/catalog?pageid=${mpage.page_id}&searchString=${search}">${mpage.page_id}</a>
+                                    <li class="page-item"><a class="page-link" href="/catalog?pageid=${mpage.pageId}&searchString=${search}">${mpage.pageId}</a></li>
                                 </c:forEach>
                             </c:if>
                         </c:when>
                         <c:otherwise>
                             <c:if test="${!empty productsList}">
                                 <c:forEach items="${pagesList}" var="mpage">
-                                    <a href="/catalog?pageid=${mpage.page_id}">${mpage.page_id}</a>
+                                    <li class="page-item"><a class="page-link" href="/catalog?pageid=${mpage.pageId}">${mpage.pageId}</a></li>
                                 </c:forEach>
                             </c:if>
                         </c:otherwise>
                     </c:choose>
+                    </ul>
                 </div>
                 <div class="sort col-2">
                    <!--
@@ -77,10 +79,9 @@
                     -->
                     <c:choose>
                         <c:when test="${search==null}">
-                            <form class="form-inline my-2 my-lg-0" method="get" >
-                                  <%--action="/catalog/search">--%>
+                            <form class="form-inline my-2 my-lg-0" method="get">
                                 <input class="form-control mr-sm-2" type="search" name="searchString" aria-label="Search">
-                                <button type="submit" class="btn btn-outline-success my-2 my-sm-0" >Search</button>
+                                <button type="submit" class="btn btn-outline-success my-2 my-sm-0" ><tag:message code="product.search"/></button>
                             </form>
                         </c:when>
                     </c:choose>

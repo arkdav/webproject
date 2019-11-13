@@ -18,17 +18,17 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image getImageById(int image_id) {
-        return this.imageDao.getImageById(image_id);
+    public Image getImageById(int imageId) {
+        return this.imageDao.getImageById(imageId);
     }
 
     @Override
-    public List<Image> getImageListByProductId(int product_id) {
-        return this.imageDao.getImageListByProductId(product_id);
+    public List<Image> getImageListByProductId(int productId) {
+        return this.imageDao.getImageListByProductId(productId);
     }
 
     @Override
-    public Image getImageByProductId(int product_id) {
-        return this.imageDao.getImageByProductId(product_id);
+    public Image getImageByProductId(int productId) {
+        return this.imageDao.getImageByProductId(productId);
     }
 }

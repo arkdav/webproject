@@ -4,6 +4,6 @@ import com.marpen.shop.model.Price;
 
 public interface PriceDao {
 
-    Price getPriceByProductId(int product_id);
+    Price getPriceByProductId(int productId);
 
 }

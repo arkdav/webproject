@@ -26,14 +26,14 @@ public class RoleDaoImpl implements RoleDao {
     public int getRoleIdByRole(String role) {
         String sql="Select * from roles where rolename like :role";
         List <Role> roles=currentSession().createSQLQuery(sql).addEntity(Role.class).setParameter("role", role).list();
-        return  roles.isEmpty()?null:roles.get(0).getRole_id();
+        return  roles.isEmpty()?null:roles.get(0).getRoleId();
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public String getRoleNameById(int role_id){
+    public String getRoleNameById(int roleId){
         String sql="Select * from roles where role_id like :role_id";
-        List <Role> roles=currentSession().createSQLQuery(sql).addEntity(Role.class).setParameter("role_id", role_id).list();
+        List <Role> roles=currentSession().createSQLQuery(sql).addEntity(Role.class).setParameter("role_id", roleId).list();
         return  roles.isEmpty()?null:roles.get(0).getRolename();
     }
 }

@@ -3,7 +3,7 @@ package com.marpen.shop.dto;
 
 public class ProductDto {
 
-    private int product_id;
+    private int productId;
     private String name;
     private String information;
     private String type;
@@ -12,8 +12,8 @@ public class ProductDto {
 
     public ProductDto(){}
 
-    public ProductDto(int product_id, String name, String information, String type, Double price, String link) {
-        this.product_id=product_id;
+    public ProductDto(int productId, String name, String information, String type, Double price, String link) {
+        this.productId = productId;
         this.name=name;
         this.information=information;
         this.type=type;
@@ -21,12 +21,12 @@ public class ProductDto {
         this.link=link;
     }
 
-    public int getProduct_id() {
-        return product_id;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public String getName() {
@@ -68,7 +68,7 @@ public class ProductDto {
     @Override
     public String toString() {
         return "ProductDto{" +
-                "product_id=" + product_id +
+                "productId=" + productId +
                 ", name='" + name + '\'' +
                 ", information='" + information + '\'' +
                 ", type='" + type + '\'' +

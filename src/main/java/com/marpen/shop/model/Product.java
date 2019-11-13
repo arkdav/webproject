@@ -13,7 +13,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "product_id", nullable = false)
-    private int product_id;
+    private int productId;
 
     @Column(name = "name")
     private String name;
@@ -25,28 +25,28 @@ public class Product {
     private String type;
 
     @Column(name = "catver_id")
-    private int catver_id;
+    private int catverId;
 
 
     public Product() {
     }
 
-    public Product(int product_id, String name, String information, String type, int catver_id) {
-        this.product_id = product_id;
+    public Product(int productId, String name, String information, String type, int catverId) {
+        this.productId = productId;
         this.name = name;
         this.information = information;
         this.type = type;
-        this.catver_id = catver_id;
+        this.catverId = catverId;
     }
 
-    public Integer getProduct_id() {
+    public Integer getProductId() {
 
-        return product_id;
+        return productId;
     }
 
-    public void setProduct_id(int product_id) {
+    public void setProductId(int productId) {
 
-        this.product_id = product_id;
+        this.productId = productId;
     }
 
     public String getName() {
@@ -79,23 +79,23 @@ public class Product {
         this.type = type;
     }
 
-    public Integer getCatver_id() {
-        return catver_id;
+    public Integer getCatverId() {
+        return catverId;
     }
 
-    public void setCatver_id(Integer catver_id) {
+    public void setCatverId(Integer catverId) {
 
-        this.catver_id = catver_id;
+        this.catverId = catverId;
     }
 
     @Override
     public String toString() {
         return "Product{" +
-                "product_id=" + product_id +
+                "productId=" + productId +
                 ", name='" + name + '\'' +
                 ", information='" + information + '\'' +
                 ", type='" + type + '\'' +
-                ", catver_id=" + catver_id +
+                ", catverId=" + catverId +
                 '}';
     }
 

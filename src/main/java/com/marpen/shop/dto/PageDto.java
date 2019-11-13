@@ -2,20 +2,20 @@ package com.marpen.shop.dto;
 
 public class PageDto {
 
-    private int page_id;
+    private int pageId;
 
     public PageDto() {
     }
 
-    public PageDto(int page_id) {
-        this.page_id=page_id;
+    public PageDto(int pageId) {
+        this.pageId= pageId;
     }
 
-    public int getPage_id() {
-        return page_id;
+    public int getPageId() {
+        return pageId;
     }
 
-    public void setPage_id(int page_id) {
-        this.page_id = page_id;
+    public void setPageId(int pageId) {
+        this.pageId = pageId;
     }
 }

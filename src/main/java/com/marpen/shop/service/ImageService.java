@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface ImageService {
 
-    Image getImageById(int image_id);
+    Image getImageById(int imageId);
 
-    List<Image> getImageListByProductId(int product_id);
+    List<Image> getImageListByProductId(int productId);
 
-    Image getImageByProductId(int product_id);
+    Image getImageByProductId(int productId);
 }

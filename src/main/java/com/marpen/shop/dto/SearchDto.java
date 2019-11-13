@@ -4,16 +4,16 @@ public class SearchDto {
 
     private String productsPerPage;
 
-    private String pageid;
+    private String pageId;
 
     private String searchName;
 
     public SearchDto() {
     }
 
-    public SearchDto(String productsPerPage, String pageid, String searchName) {
+    public SearchDto(String productsPerPage, String pageId, String searchName) {
         this.productsPerPage = productsPerPage;
-        this.pageid = pageid;
+        this.pageId = pageId;
         this.searchName = searchName;
     }
 
@@ -25,12 +25,12 @@ public class SearchDto {
         this.productsPerPage = productsPerPage;
     }
 
-    public String getPageid() {
-        return pageid;
+    public String getPageId() {
+        return pageId;
     }
 
-    public void setPageid(String pageid) {
-        this.pageid = pageid;
+    public void setPageId(String pageId) {
+        this.pageId = pageId;
     }
 
     public String getSearchName() {

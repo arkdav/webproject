@@ -27,32 +27,32 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteProduct(int product_id) {
-        this.productDao.deleteProduct(product_id);
+    public void deleteProduct(int productId) {
+        this.productDao.deleteProduct(productId);
     }
 
     @Override
-    public Product getProductById(int product_id) {
+    public Product getProductById(int productId) {
 
-        return this.productDao.getProductById(product_id);
+        return this.productDao.getProductById(productId);
     }
 
     @Override
-    public List<Product> getProductsListByPage(int pageid, int productsPerPage) {
+    public List<Product> getProductsListByPage(int pageId, int productsPerPage) {
 
-        return this.productDao.getProductsListByPage(pageid,productsPerPage);
+        return this.productDao.getProductsListByPage(pageId,productsPerPage);
     }
 
     @Override
-    public List<Product> getProductsListByType(String type, int pageid, int productsPerPage){
+    public List<Product> getProductsListByType(String type, int pageId, int productsPerPage){
 
-        return productDao.getProductsListByType(type, pageid, productsPerPage);
+        return productDao.getProductsListByType(type, pageId, productsPerPage);
     }
 
     @Override
-    public List<Product> getProductsListByName(String name, int pageid, int productsPerPage){
+    public List<Product> getProductsListByName(String name, int pageId, int productsPerPage){
 
-        return productDao.getProductsListByName(name, pageid, productsPerPage);
+        return productDao.getProductsListByName(name, pageId, productsPerPage);
     }
 
     @Override

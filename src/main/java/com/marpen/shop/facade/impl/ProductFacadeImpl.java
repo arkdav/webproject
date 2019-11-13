@@ -26,8 +26,8 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
-    public List<ProductDto> getCatalogList(int pageid, int productsPerPage) {
-        List<Product> products = this.productService.getProductsListByPage(pageid, productsPerPage);
+    public List<ProductDto> getCatalogList(int pageId, int productsPerPage) {
+        List<Product> products = this.productService.getProductsListByPage(pageId, productsPerPage);
         List<ProductDto> list = new ArrayList<>(products.size());
         for (Product product :
                 products) {
@@ -38,8 +38,8 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
-    public List<ProductDto> getCatalogListSearch(String searchName, int pageid, int productsPerPage) {
-        List<Product> products = this.productService.getProductsListByName(searchName, pageid, productsPerPage);
+    public List<ProductDto> getCatalogListSearch(String searchName, int pageId, int productsPerPage) {
+        List<Product> products = this.productService.getProductsListByName(searchName, pageId, productsPerPage);
         System.out.println(products);
         List<ProductDto> list = new ArrayList<>(products.size());
         for (Product product :
@@ -51,8 +51,8 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
-    public ProductDto getProductById(int product_id) {
-        Product product = this.productService.getProductById(product_id);
+    public ProductDto getProductById(int productId) {
+        Product product = this.productService.getProductById(productId);
         return getProductDtoFromProduct(product);
     }
 
@@ -69,12 +69,12 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
-    public List<ImageDto> getImageListByProductId(int product_id) {
-        List<Image> images = this.imageService.getImageListByProductId(product_id);
+    public List<ImageDto> getImageListByProductId(int productId) {
+        List<Image> images = this.imageService.getImageListByProductId(productId);
         List<ImageDto> list = new ArrayList<>(images.size());
         for (Image image :
                 images) {
-            ImageDto im = new ImageDto(image.getImage_id(),
+            ImageDto im = new ImageDto(image.getImageId(),
                     image.getLink()
             );
             list.add(im);
@@ -83,12 +83,12 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     private ProductDto getProductDtoFromProduct(Product product) {
-        return new ProductDto(product.getProduct_id(),
+        return new ProductDto(product.getProductId(),
                 product.getName(),
                 product.getInformation(),
                 product.getType(),
-                priceService.getPriceByProductId(product.getProduct_id()).getPrice(),
-                imageService.getImageByProductId(product.getProduct_id()).getLink()
+                priceService.getPriceByProductId(product.getProductId()).getPrice(),
+                imageService.getImageByProductId(product.getProductId()).getLink()
         );
     }
 

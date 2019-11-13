@@ -20,14 +20,13 @@
 <body>
 <div class="container">
     <form method="POST" action="/login" class="form-signin" style="width: 40%">
-        <h2 class="form-heading"><tag:message code="header.login"/></h2>
+        <h2 class="form-heading"></h2>
         <div class="form-group ${error != null ? 'has-error' : ''}">
-            <span>${message}</span>
-            <input type="text" name="username" class="form-control" placeholder="Username"/>
-            <input type="password" name="password" class="form-control" placeholder="Password"/>
+            <input type="text" name="username" class="form-control" placeholder="<tag:message code="login.username"/>"/>
+            <input type="password" name="password" class="form-control" placeholder="<tag:message code="login.password"/>"/>
             <span>${error}</span>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit"><tag:message code="header.login"/></button>
             <h4 class="text-center"><a href="/registration"><tag:message code="registration.create"/></a></h4>
         </div>
     </form>

@@ -22,7 +22,7 @@
     <form:form method="POST" modelAttribute="userForm" class="form-signin" cssStyle="width:40%">
         <h2 class="form-signin-heading"><tag:message code="header.registration"/></h2>
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="login" class="form-control" placeholder="Username" />
+                <form:input type="text" path="login" class="form-control" placeholder="Username"/>
                 <form:errors path="login" />
             </div>
             <div class="form-group" ${status.error ? 'has-error' : ''}>

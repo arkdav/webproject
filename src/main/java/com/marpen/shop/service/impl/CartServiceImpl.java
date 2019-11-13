@@ -18,13 +18,13 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart getCartByUserId(int user_id){
-        return cartDao.getCartByUserId(user_id);
+    public Cart getCartByUserId(int userId){
+        return cartDao.getCartByUserId(userId);
     }
 
     @Override
-    public int getCartIdByUserId(int user_id){
-        return cartDao.getCartByUserId(user_id).getCart_id();
+    public int getCartIdByUserId(int userId){
+        return cartDao.getCartByUserId(userId).getCartId();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class CartServiceImpl implements CartService {
         Date dateNow = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         cart.setDate(dateNow);
-        cart.setUser_id(userId);
+        cart.setUserId(userId);
         cartDao.save(cart);
     }
 }

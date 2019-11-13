@@ -7,4 +7,5 @@ public interface UserFacade {
 
     UserDto save(RegistrationDto registrationDto);
 
+    UserDto getUserInformation(String username);
 }

@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
-        user.setRole_id(roleDao.getRoleIdByRole("ROLE_USER"));
+        user.setRoleId(roleDao.getRoleIdByRole("ROLE_USER"));
         userDao.save(user);
     }
 

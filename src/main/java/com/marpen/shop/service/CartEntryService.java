@@ -6,11 +6,15 @@ import java.util.List;
 
 public interface CartEntryService {
 
-    List<CartEntry> getCartEntriesByCartId(int cart_id);
+    List<CartEntry> getCartEntriesByCartId(int cartId);
+
+    CartEntry getCartEntryByProductId(int cartId, int productId);
 
     void save(CartEntry cartEntry);
 
-    void save(int cart_id, int product_id);
+    void save(int cartId, int productId);
 
-    void save(int cart_id, int product_id, int amount);
+    void save(int cartId, int productId, int amount);
+
+    void updateCartEntry(CartEntry cartEntry);
 }

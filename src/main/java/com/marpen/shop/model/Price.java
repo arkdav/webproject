@@ -11,7 +11,7 @@ public class Price {
 
     @Id
     @Column(name = "product_id")
-    private int product_id;
+    private int productId;
 
     @Column(name = "price")
     private double price;
@@ -19,19 +19,19 @@ public class Price {
     public Price() {
     }
 
-    public Price(int product_id, double price) {
-        this.product_id = product_id;
+    public Price(int productId, double price) {
+        this.productId = productId;
         this.price = price;
     }
 
-    public Integer getProduct_id() {
+    public Integer getProductId() {
 
-        return product_id;
+        return productId;
     }
 
-    public void setProduct_id(int product_id) {
+    public void setProductId(int productId) {
 
-        this.product_id = product_id;
+        this.productId = productId;
     }
 
     public double getPrice() {
@@ -47,7 +47,7 @@ public class Price {
     @Override
     public String toString() {
         return "Price{" +
-                "product_id=" + product_id +
+                "productId=" + productId +
                 ", price=" + price +
                 '}';
     }

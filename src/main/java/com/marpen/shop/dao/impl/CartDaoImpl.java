@@ -2,7 +2,6 @@ package com.marpen.shop.dao.impl;
 
 import com.marpen.shop.dao.CartDao;
 import com.marpen.shop.model.Cart;
-import com.marpen.shop.model.Product;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -13,7 +12,7 @@ public class CartDaoImpl implements CartDao {
     private SessionFactory sessionFactory;
 
     public CartDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory=sessionFactory;
+        this.sessionFactory = sessionFactory;
         sessionFactory.openSession();
     }
 
@@ -22,10 +21,10 @@ public class CartDaoImpl implements CartDao {
     }
 
     @Override
-    public Cart getCartByUserId(int user_id) {
-        String sql="select * from cart where user_id like :user_id";
-        List<Cart> carts=currentSession().createSQLQuery(sql).addEntity(Cart.class).setParameter("user_id", user_id).list();
-        return carts.isEmpty()?null:carts.get(0);
+    public Cart getCartByUserId(int userId) {
+        String sql = "select * from cart where user_id like :user_id";
+        List<Cart> carts = currentSession().createSQLQuery(sql).addEntity(Cart.class).setParameter("user_id", userId).list();
+        return carts.isEmpty() ? null : carts.get(0);
     }
 
     @Override

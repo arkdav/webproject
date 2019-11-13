@@ -21,58 +21,51 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public void addProduct(Product product) {
-
        currentSession().persist(product);
     }
 
     @Override
     public void updateProduct(Product product){
-
         currentSession().update(product);
     }
 
     @Override
-    public void deleteProduct(int product_id){
-
-        Product product=(Product) currentSession().load(Product.class,product_id);
+    public void deleteProduct(int productId){
+        Product product=(Product) currentSession().load(Product.class,productId);
         if(product!=null){
             currentSession().delete(product);
         }
     }
 
     @Override
-    public Product getProductById(int product_id) {
-       Product p= (Product) currentSession().load(Product.class, product_id);
+    public Product getProductById(int productId) {
+       Product p= (Product) currentSession().load(Product.class, productId);
        return p;
-        //(Product)currentSession().createSQLQuery("SELECT * FROM product"+"WHERE product_id=:id");
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Product> getProductsListByPage(int pageid, int productsPerPage){
-        String sql="select * from products where catver_id=1 limit "+(pageid-1)+","+productsPerPage;
+    public List<Product> getProductsListByPage(int pageId, int productsPerPage){
+        String sql="select * from products where catver_id=1 limit "+(pageId-1)+","+productsPerPage;
         List<Product> products=currentSession().createSQLQuery(sql).addEntity(Product.class).list();
-        // List <Product> products=currentSession().createQuery("from Product").list();
        return products;
 
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Product> getProductsListByType(String type, int pageid, int productsPerPage) {
-        String sql="select * from products where type like :type and catver_id=1 limit "+(pageid-1)+","+productsPerPage;
+    public List<Product> getProductsListByType(String type, int pageId, int productsPerPage) {
+        String sql="select * from products where type like :type and catver_id=1 limit "+(pageId-1)+","+productsPerPage;
         List <Product>products=currentSession().createSQLQuery(sql).addEntity(Product.class).setParameter("type", type).list();
         return products;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Product> getProductsListByName(String name, int pageid, int productsPerPage) {
+    public List<Product> getProductsListByName(String name, int pageId, int productsPerPage) {
         String nameForSql="%"+name+"%";
-        System.out.println(nameForSql);
-        String sql="select * from products where name like :name and catver_id=1 limit "+(pageid-1)+","+productsPerPage;
+        String sql="select * from products where name like :name and catver_id=1 limit "+(pageId-1)+","+productsPerPage;
         List <Product>products=currentSession().createSQLQuery(sql).addEntity(Product.class).setParameter("name", nameForSql).list();
-        System.out.println(products.toString());
         return products;
     }
 

@@ -1,7 +1,5 @@
 package com.marpen.shop.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +15,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int user_id;
+    private int userId;
 
     @Column(name = "username")
     private String username;
@@ -26,7 +24,7 @@ public class User {
     private String password;
 
     @Column(name = "role_id")
-    private int role_id;
+    private int roleId;
 
     @Column(name = "name")
     private String name;
@@ -40,9 +38,9 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    //@DateTimeFormat(pattern = "dd.MM.yyyy")
     @Column(name = "birthdate")
-    private Date birthdate;
+    private Date birthDate;
 
     @Transient
     private String confirmPassword;
@@ -50,24 +48,24 @@ public class User {
     public User(){
     }
 
-    public User(int user_id, String username, String password, int role_id, String name, String surname, String email, String phone, Date birthdate) {
-        this.user_id=user_id;
+    public User(int userId, String username, String password, int roleId, String name, String surname, String email, String phone, Date birthDate) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
-        this.role_id = role_id;
+        this.roleId = roleId;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.phone = phone;
-        this.birthdate = birthdate;
+        this.birthDate = birthDate;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -86,12 +84,12 @@ public class User {
         this.password = password;
     }
 
-    public int getRole_id() {
-        return role_id;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setRole_id(int role_id) {
-        this.role_id = role_id;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
     public String getConfirmPassword() {
@@ -101,7 +99,6 @@ public class User {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
-
 
     public String getName() {
         return name;
@@ -135,11 +132,11 @@ public class User {
         this.phone = phone;
     }
 
-    public Date getBirthdate() {
-        return birthdate;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 }

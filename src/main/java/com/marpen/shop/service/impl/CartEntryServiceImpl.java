@@ -15,10 +15,14 @@ public class CartEntryServiceImpl implements CartEntryService {
         this.cartEntryDao=cartEntryDao;
     }
 
+    @Override
+    public List <CartEntry> getCartEntriesByCartId(int cartId) {
+        return cartEntryDao.getCartEntriesByCartId(cartId);
+    }
 
     @Override
-    public List <CartEntry> getCartEntriesByCartId(int cart_id) {
-        return cartEntryDao.getCartEntriesByCartId(cart_id);
+    public CartEntry getCartEntryByProductId(int cartId, int productId){
+        return cartEntryDao.getCartEntryByProductId(cartId, productId);
     }
 
     @Override
@@ -27,20 +31,25 @@ public class CartEntryServiceImpl implements CartEntryService {
     }
 
     @Override
-    public void save(int cart_id, int product_id, int amount) {
+    public void save(int cartId, int productId, int amount) {
         CartEntry cartEntry =new CartEntry();
-        cartEntry.setCart_id(cart_id);
-        cartEntry.setProduct_id(product_id);
+        cartEntry.setCartId(cartId);
+        cartEntry.setProductId(productId);
         cartEntry.setAmount(amount);
         cartEntryDao.save(cartEntry);
     }
 
     @Override
-    public void save(int cart_id, int product_id) {
+    public void save(int cartId, int productId) {
         CartEntry cartEntry =new CartEntry();
-        cartEntry.setCart_id(cart_id);
-        cartEntry.setProduct_id(product_id);
+        cartEntry.setCartId(cartId);
+        cartEntry.setProductId(productId);
         cartEntry.setAmount(1);
         cartEntryDao.save(cartEntry);
+    }
+
+    @Override
+    public void updateCartEntry(CartEntry cartEntry){
+        cartEntryDao.update(cartEntry);
     }
 }

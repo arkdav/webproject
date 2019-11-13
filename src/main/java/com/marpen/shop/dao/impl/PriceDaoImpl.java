@@ -15,13 +15,12 @@ public class PriceDaoImpl implements PriceDao {
     }
 
     private Session currentSession() {
-
         return sessionFactory.getCurrentSession();
     }
 
     @Override
-    public Price getPriceByProductId(int product_id){
-            return  (Price) currentSession().load(Price.class, product_id);
+    public Price getPriceByProductId(int productId){
+        return  (Price) currentSession().load(Price.class, productId);
     }
 
 }

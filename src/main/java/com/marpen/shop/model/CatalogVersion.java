@@ -10,7 +10,7 @@ public class CatalogVersion {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "catver_id")
-    private int catver_id;
+    private int catverId;
 
     @Column(name = "name")
     private String name;
@@ -18,17 +18,17 @@ public class CatalogVersion {
     public CatalogVersion() {
     }
 
-    public CatalogVersion(int catver_id, String name) {
-        this.catver_id=catver_id;
+    public CatalogVersion(int catverId, String name) {
+        this.catverId =catverId;
         this.name = name;
     }
 
-    public Integer getCatver_id() {
-        return catver_id;
+    public Integer getCatverId() {
+        return catverId;
     }
 
-    public void setCatver_id(int catver_id) {
-        this.catver_id = catver_id;
+    public void setCatverId(int catverId) {
+        this.catverId = catverId;
     }
 
     public String getName() {
@@ -42,7 +42,7 @@ public class CatalogVersion {
     @Override
     public String toString() {
         return "CatalogVersion{" +
-                "catver_id=" + catver_id +
+                "catverId=" + catverId +
                 ", name='" + name + '\'' +
                 '}';
     }

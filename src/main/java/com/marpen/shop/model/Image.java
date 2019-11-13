@@ -8,37 +8,37 @@ public class Image {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="image_id")
-    private int image_id;
+    private int imageId;
 
     @Column(name="link")
     private String link;
 
     @Column(name="product_id")
-    private int product_id;
+    private int productId;
 
     public Image() {
     }
 
-    public Image(int image_id, String link, int product_id) {
-        this.image_id = image_id;
+    public Image(int imageId, String link, int productId) {
+        this.imageId = imageId;
         this.link = link;
-        this.product_id = product_id;
+        this.productId = productId;
     }
 
-    public int getImage_id() {
-        return image_id;
+    public int getImageId() {
+        return imageId;
     }
 
-    public void setImage_id(int image_id) {
-        this.image_id = image_id;
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
     }
 
-    public int getProduct_id() {
-        return product_id;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public String getLink() {
@@ -52,9 +52,9 @@ public class Image {
     @Override
     public String toString() {
         return "Image{" +
-                "image_id=" + image_id +
+                "imageId=" + imageId +
                 ", link='" + link + '\'' +
-                ", product_id=" + product_id +
+                ", productId=" + productId +
                 '}';
     }
 }

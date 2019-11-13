@@ -14,13 +14,13 @@ public class CartEntry {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name="entry_id")
-    private int entry_id;
+    private int entryId;
 
     @Column(name="cart_id")
-    private int cart_id;
+    private int cartId;
 
     @Column(name="product_id")
-    private int product_id;
+    private int productId;
 
     @Column(name="amount")
     private int amount;
@@ -28,28 +28,28 @@ public class CartEntry {
     public CartEntry() {
     }
 
-    public int getEntry_id() {
-        return entry_id;
+    public int getEntryId() {
+        return entryId;
     }
 
-    public void setEntry_id(int entry_id) {
-        this.entry_id = entry_id;
+    public void setEntryId(int entryId) {
+        this.entryId = entryId;
     }
 
-    public int getCart_id() {
-        return cart_id;
+    public int getCartId() {
+        return cartId;
     }
 
-    public void setCart_id(int cart_id) {
-        this.cart_id = cart_id;
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
     }
 
-    public int getProduct_id() {
-        return product_id;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public int getAmount() {

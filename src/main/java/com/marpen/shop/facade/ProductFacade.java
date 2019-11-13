@@ -8,15 +8,15 @@ import java.util.List;
 
 public interface ProductFacade {
 
-    List<ProductDto> getCatalogList(int pageid, int productsPerPage);
+    List<ProductDto> getCatalogList(int pageId, int productsPerPage);
 
-    List<ProductDto> getCatalogListSearch(String searchName, int pageid, int productsPerPage);
+    List<ProductDto> getCatalogListSearch(String searchName, int pageId, int productsPerPage);
 
-    ProductDto getProductById(int product_id);
+    ProductDto getProductById(int productId);
 
     List<PageDto> getIdList(int productsPerPage);
 
     List<PageDto> getIdListSearch(final String searchName, int productsPerPage);
 
-    List<ImageDto> getImageListByProductId(int product_id);
+    List<ImageDto> getImageListByProductId(int productId);
 }

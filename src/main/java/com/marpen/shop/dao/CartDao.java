@@ -4,7 +4,7 @@ import com.marpen.shop.model.Cart;
 
 public interface CartDao {
 
-    Cart getCartByUserId(int user_id);
+    Cart getCartByUserId(int userId);
 
     void save(Cart cart);
 }

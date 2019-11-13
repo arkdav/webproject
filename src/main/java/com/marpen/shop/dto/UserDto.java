@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class UserDto {
 
-    private int idUser;
+    private int userId;
     private String login;
     private String password;
     private String name;
@@ -13,8 +13,11 @@ public class UserDto {
     private String phone;
     private Date birthdate;
 
-    public UserDto( int idUser, String login, String password, String name, String surname, String email, String phone, Date birthdate) {
-        this.idUser = idUser;
+    public UserDto(){
+    }
+
+    public UserDto(int userId, String login, String password, String name, String surname, String email, String phone, Date birthdate) {
+        this.userId = userId;
         this.login = login;
         this.password = password;
         this.name = name;
@@ -24,12 +27,12 @@ public class UserDto {
         this.birthdate = birthdate;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getLogin() {

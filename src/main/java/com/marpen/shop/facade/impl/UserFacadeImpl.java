@@ -20,6 +20,7 @@ public class UserFacadeImpl implements UserFacade {
         this.bCryptPasswordEncoder=bCryptPasswordEncoder;
     }
 
+    @Override
     public UserDto save(RegistrationDto userForm){
 
         User user= null;
@@ -32,21 +33,26 @@ public class UserFacadeImpl implements UserFacade {
         return fromUserToUserDto(user);
     }
 
+    @Override
     public UserDto getUserInformation(String username){
         User user=userService.getUserByUsername(username);
-        return fromUserToUserDto(user);
+        UserDto userDto=null;
+        if(user!=null){
+            userDto=fromUserToUserDto(user);
+        }
+        return userDto;
     }
 
     public UserDto fromUserToUserDto(User user){
         UserDto userDto=new UserDto(
-                user.getUser_id(),
+                user.getUserId(),
                 user.getUsername(),
                 user.getPassword(),
                 user.getName(),
                 user.getSurname(),
                 user.getEmail(),
                 user.getPhone(),
-                user.getBirthdate()
+                user.getBirthDate()
         );
         return userDto;
     }
@@ -59,7 +65,7 @@ public class UserFacadeImpl implements UserFacade {
         user.setSurname(registrationDto.getSurname());
         user.setEmail(registrationDto.getEmail());
         user.setPhone(registrationDto.getPhone());
-        user.setBirthdate(new SimpleDateFormat("dd.MM.yyyy").parse(registrationDto.getBirthdate()));
+        user.setBirthDate(new SimpleDateFormat("dd.MM.yyyy").parse(registrationDto.getBirthdate()));
         return user;
     }
 }

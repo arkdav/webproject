@@ -1,7 +1,6 @@
 package com.marpen.shop.service.impl;
 
 import com.marpen.shop.dao.RoleDao;
-import com.marpen.shop.dao.UserDao;
 import com.marpen.shop.model.User;
 import com.marpen.shop.service.UserService;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,10 +27,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         User user = userService.getUserByUsername(username);
         Set<GrantedAuthority> roles= new HashSet<>();
-        roles.add(new SimpleGrantedAuthority(roleDao.getRoleNameById(user.getRole_id())));
+        roles.add(new SimpleGrantedAuthority(roleDao.getRoleNameById(user.getRoleId())));
         UserDetails userDetails=new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), roles);
         return userDetails;
     }

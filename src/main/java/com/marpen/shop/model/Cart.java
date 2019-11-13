@@ -15,10 +15,10 @@ public class Cart {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name="cart_id")
-    private int cart_id;
+    private int cartId;
 
     @Column(name="user_id")
-    private int user_id;
+    private int userId;
 
     @Column(name="date")
     private Date date;
@@ -27,20 +27,20 @@ public class Cart {
     }
 
 
-    public int getCart_id() {
-        return cart_id;
+    public int getCartId() {
+        return cartId;
     }
 
-    public void setCart_id(int cart_id) {
-        this.cart_id = cart_id;
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public Date getDate() {

@@ -11,9 +11,9 @@ public interface ProductService {
 
     void updateProduct(Product product);
 
-    void deleteProduct(int product_id);
+    void deleteProduct(int productId);
 
-    Product getProductById(int product_id);
+    Product getProductById(int productId);
 
     List<Product> getProductsListByPage(int pageid, int productsPerPage);
 
