@@ -1,34 +1,56 @@
 CREATE SCHEMA `webdb` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
+CREATE TABLE `webdb`.`catalogversion` (
+                                          `catver_id` INT NOT NULL,
+                                          `name` VARCHAR(225) NOT NULL,
+                                          PRIMARY KEY (`catver_id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8
+    COLLATE = utf8_unicode_ci;
+
+INSERT INTO `webdb`.`catalogversion` (`catver_id`, `name`) VALUES ('1', 'present');
+INSERT INTO `webdb`.`catalogversion` (`catver_id`, `name`) VALUES ('2', 'future');
+INSERT INTO `webdb`.`catalogversion` (`catver_id`, `name`) VALUES ('3', 'past');
+
 CREATE TABLE `webdb`.`products` (
   `product_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(225) NULL,
   `information` VARCHAR(225) NULL,
   `type` VARCHAR(225) NULL,
   `catver_id` INT NULL,
-  PRIMARY KEY (`product_id`))
+  PRIMARY KEY (`product_id`),
+  FOREIGN KEY (`catver_id`) REFERENCES `webdb`.`catalogversion`(`catver_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
-CREATE TABLE `webdb`.`catalogversion` (
-  `catver_id` INT NOT NULL,
-  `name` VARCHAR(225) NOT NULL,
-  PRIMARY KEY (`catver_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_unicode_ci;
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('1', 'Album #2', 'infaboutalbum2','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('2', 'Pen #30', 'infaboutpen33','pen','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('3', 'Album #66', 'infaboutalbum66','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('4', 'Album #67', 'infaboutalbum67','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('5', 'Album #68', 'infaboutalbum68','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('6', 'Album #32', 'infaboutalbum32','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('7', 'Album #71', 'infaboutalbum71','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('8', 'Album #72', 'infaboutalbum72','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('9', 'Album #73', 'infaboutalbum73','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('10', 'Album #74', 'infaboutalbum74','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('11', 'Album #75', 'infaboutalbum75','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('12', 'Album #76', 'infaboutalbum76','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('13', 'Album #77', 'infaboutalbum77','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('14', 'Album #78', 'infaboutalbum78','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('15', 'Album #79', 'infaboutalbum79','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('16', 'Album #80', 'infaboutalbum80','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('17', 'Album #81', 'infaboutalbum81','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('18', 'Album #82', 'infaboutalbum82','album','1');
 
-INSERT INTO `webdb`.`catalogversion` (`catver_id`, `name`) VALUES ('1', 'present');
-INSERT INTO `webdb`.`catalogversion` (`catver_id`, `name`) VALUES ('2', 'future');
-INSERT INTO `webdb`.`catalogversion` (`catver_id`, `name`) VALUES ('3', 'past');
 
 CREATE TABLE `webdb`.`images` (
   `image_id` INT NOT NULL AUTO_INCREMENT,
   `link` VARCHAR(225) NULL,
   `product_id` INT NULL,
-
-  PRIMARY KEY (`image_id`))
+  PRIMARY KEY (`image_id`),
+  FOREIGN KEY (`product_id`) REFERENCES `webdb`.`products`(`product_id`)
+  )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
@@ -56,7 +78,8 @@ INSERT INTO `webdb`.`images` (`link`, `product_id`) VALUES ('album66.jpg', '18')
 CREATE TABLE `webdb`.`price` (
   `product_id` INT NOT NULL,
   `price` DOUBLE NOT NULL,
-   PRIMARY KEY (`product_id`))
+  PRIMARY KEY (`product_id`),
+  FOREIGN KEY (`product_id`) REFERENCES `webdb`.`products`(`product_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
@@ -78,7 +101,6 @@ INSERT INTO `webdb`.`price` (`product_id`, `price`) VALUES ('15', '33.1');
 INSERT INTO `webdb`.`price` (`product_id`, `price`) VALUES ('16', '33.1');
 INSERT INTO `webdb`.`price` (`product_id`, `price`) VALUES ('17', '33.1');
 INSERT INTO `webdb`.`price` (`product_id`, `price`) VALUES ('18', '33.1');
-INSERT INTO `webdb`.`price` (`product_id`, `price`) VALUES ('19', '33.1');
 
 CREATE TABLE `webdb`.`roles` (
   `role_id` INT NOT NULL,
@@ -100,7 +122,8 @@ CREATE TABLE `webdb`.`users` (
   `email` VARCHAR(225) NULL,
   `phone` VARCHAR(225) NULL,
   `birthdate` DATE NULL,
-  PRIMARY KEY (`user_id`))
+  PRIMARY KEY (`user_id`),
+  FOREIGN KEY (`role_id`) REFERENCES `webdb`.`roles`(`role_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
@@ -111,7 +134,8 @@ CREATE TABLE `webdb`.`cart` (
   `cart_id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `date` DATE NOT NULL,
-  PRIMARY KEY (`cart_id`))
+  PRIMARY KEY (`cart_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `webdb`.`users`(`user_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
@@ -121,7 +145,9 @@ CREATE TABLE `webdb`.`cartentry` (
   `cart_id` INT NOT NULL,
   `product_id` INT NOT NULL,
   `amount` INT NOT NULL,
-  PRIMARY KEY (`entry_id`))
+  PRIMARY KEY (`entry_id`),
+  FOREIGN KEY (`cart_id`) REFERENCES `webdb`.`cart`(`cart_id`),
+  FOREIGN KEY (`product_id`) REFERENCES `webdb`.`products`(`product_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
@@ -132,7 +158,8 @@ CREATE TABLE `webdb`.`orders` (
   `user_id` INT NOT NULL,
   `date` DATE NOT NULL,
   `totalprice` DOUBLE NOT NULL,
-PRIMARY KEY (`order_id`))
+  PRIMARY KEY (`order_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `webdb`.`users`(`user_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
@@ -143,7 +170,9 @@ CREATE TABLE `webdb`.`orderentry` (
   `product_id` INT NOT NULL,
   `amount` INT NOT NULL,
   `price` DOUBLE NOT NULL,
-  PRIMARY KEY (`orderentry_id`))
+  PRIMARY KEY (`orderentry_id`),
+  FOREIGN KEY (`order_id`) REFERENCES `webdb`.`orders`(`order_id`),
+  FOREIGN KEY (`product_id`) REFERENCES `webdb`.`products`(`product_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
