@@ -13,4 +13,7 @@ public interface CartEntryDao {
     void save(CartEntry cartEntry);
 
     void update(CartEntry cartEntry);
+
+    void remove(CartEntry cartEntry);
+
 }

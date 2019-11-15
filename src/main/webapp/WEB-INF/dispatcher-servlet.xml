@@ -86,8 +86,11 @@
             <value>com.marpen.shop.model.User</value>
             <value>com.marpen.shop.model.Cart</value>
             <value>com.marpen.shop.model.CartEntry</value>
+            <value>com.marpen.shop.model.Order</value>
+            <value>com.marpen.shop.model.OrderEntry</value>
         </list>
     </property>
+        <!--        <property name="packagesToScan" value="com.marpen.shop.model" />-->
     <property name="hibernateProperties">
         <props>
             <prop key="hibernate.dialect">${hibernate.dialect}</prop>
@@ -99,7 +102,6 @@
         </props>
     </property>
     </bean>
-    <!--        <property name="packagesToScan" value="com.marpen.shop.model" />-->
 
     <!-- Transaction -->
     <bean id="transactionManager"
@@ -133,7 +135,6 @@
     <bean id="imageService" class="com.marpen.shop.service.impl.ImageServiceImpl">
         <constructor-arg name="imageDao" ref="imageDao"/>
     </bean>
-
     <!-- CartDao and CartService beans -->
     <bean id="cartDao" class="com.marpen.shop.dao.impl.CartDaoImpl">
         <constructor-arg name="sessionFactory" ref="sessionFactory" />
@@ -141,14 +142,26 @@
     <bean id="cartService" class="com.marpen.shop.service.impl.CartServiceImpl">
         <constructor-arg name="cartDao" ref="cartDao"/>
     </bean>
-
-
     <!-- CartEntryDao and CartEntryService beans -->
     <bean id="cartEntryDao" class="com.marpen.shop.dao.impl.CartEntryDaoImpl">
         <constructor-arg name="sessionFactory" ref="sessionFactory" />
     </bean>
     <bean id="cartEntryService" class="com.marpen.shop.service.impl.CartEntryServiceImpl">
         <constructor-arg name="cartEntryDao" ref="cartEntryDao"/>
+    </bean>
+    <!-- OrderDao and OrderService beans -->
+    <bean id="orderDao" class="com.marpen.shop.dao.impl.OrderDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="orderService" class="com.marpen.shop.service.impl.OrderServiceImpl">
+        <constructor-arg name="orderDao" ref="orderDao"/>
+    </bean>
+    <!-- OrderEntryDao and OrderEntryService beans -->
+    <bean id="orderEntryDao" class="com.marpen.shop.dao.impl.OrderEntryDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="orderEntryService" class="com.marpen.shop.service.impl.OrderEntryServiceImpl">
+        <constructor-arg name="orderEntryDao" ref="orderEntryDao"/>
     </bean>
 
     <!-- ProductController and ProductFacadeImpl beans -->
@@ -168,6 +181,13 @@
         <constructor-arg name="productFacade" ref="productFacade"/>
     </bean>
 
+    <!-- OrderFacade bean -->
+    <bean id="orderFacade" class="com.marpen.shop.facade.impl.OrderFacadeImpl">
+        <constructor-arg name="orderService" ref="orderService"/>
+        <constructor-arg name="orderEntryService" ref="orderEntryService"/>
+        <constructor-arg name="basketFacade" ref="basketFacade"/>
+    </bean>
+
 <!--     UserController bean -->
 
     <bean id="userController" class="com.marpen.shop.controller.UserController">
@@ -175,6 +195,7 @@
         <constructor-arg name="registrationValidator" ref="registrationValidator"/>
         <constructor-arg name="securityFacade" ref="securityFacade"/>
         <constructor-arg name="basketFacade" ref="basketFacade"/>
+        <constructor-arg name="orderFacade" ref="orderFacade"/>
     </bean>
 
     <bean id="securityFacade" class="com.marpen.shop.facade.impl.SecurityFacadeImpl">
@@ -220,6 +241,7 @@
         <sec:intercept-url pattern="/basket" access="hasRole('ROLE_USER')"/>
         <sec:intercept-url pattern="/catalog" access="permitAll()"/>
         <sec:intercept-url pattern="/userdata" access="hasRole('ROLE_USER')"/>
+        <sec:intercept-url pattern="/userorders" access="hasRole('ROLE_USER')"/>
         <sec:intercept-url pattern="/admindata" access="hasRole('ROLE_ADMIN')"/>
         <sec:form-login login-page="/login" default-target-url="/userdata"
                         authentication-failure-url="/login?error"

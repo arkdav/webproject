@@ -22,8 +22,13 @@
     <div class="main-block">
 <%--            <p>Your login is <sec:authentication property="principal.username" /></p>--%>
 <%--    ${pageContext.request.userPrincipal.name}--%>
-        <p>Your login is ${currentUser.login}</p>
-        <p>Your email is ${currentUser.email}</p>
+        <h2><tag:message code="userdata.title"/></h2>
+        <p><tag:message code="userdata.login"/> ${currentUser.login}</p>
+        <p><tag:message code="userdata.email"/> ${currentUser.email}</p>
+        <p><tag:message code="userdata.name"/> ${currentUser.name}</p>
+        <p><tag:message code="userdata.surname"/> ${currentUser.surname}</p>
+        <p><tag:message code="userdata.birthdate"/> ${currentUser.birthdate}</p>
+        <p><tag:message code="userdata.phone"/> ${currentUser.phone}</p>
     <form method="POST" action="/logout" class="form-signin" style="width: 40%">
         <div class="form-group">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

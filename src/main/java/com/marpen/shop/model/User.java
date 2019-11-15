@@ -15,6 +15,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="user_id")
     private int userId;
 
     @Column(name = "username")
@@ -49,7 +50,7 @@ public class User {
     }
 
     public User(int userId, String username, String password, int roleId, String name, String surname, String email, String phone, Date birthDate) {
-        this.userId = userId;
+        this.userId=userId;
         this.username = username;
         this.password = password;
         this.roleId = roleId;

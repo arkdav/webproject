@@ -26,21 +26,29 @@
 <main>
     <div class="main-block">
         <c:if test="${!empty basketList}">
+            <c:if test="${!empty basketList.products}">
             <c:forEach items="${basketList.products}" var="product">
                 <div class="product col-8">
-                    <div><a href="/productdata/${product.productDto.productId}">Товар: ${product.productDto.name}<a/></div>
-                    <div>Информация: ${product.productDto.information}</div>
-                    <div>Цена за штуку: ${product.productDto.price}$</div>
-                    <div>Количество: ${product.amount}</div>
-                    <div>Цена за этот товар: ${product.totalPrice}$</div>
+                    <div><a href="/productdata/${product.productDto.productId}"><tag:message code="basket.product"/> ${product.productDto.name}<a/></div>
+                    <div><tag:message code="basket.information"/> ${product.productDto.information}</div>
+                    <div><tag:message code="basket.productprice"/> ${product.productDto.price}$</div>
+                    <div><tag:message code="basket.amount"/> ${product.amount}</div>
+                    <div><tag:message code="basket.totalproductprice"/> ${product.totalPrice}$</div>
+                    <form class="form-inline my-2 my-lg-0" method="post" action="/basket?product_id=${product.productDto.productId}" >
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <button type="submit" class="btn btn-outline-success my-2 my-sm-0" ><tag:message code="product.removeFromBasket"/></button>
+                    </form>
                 </div>
             </c:forEach>
-            <div class="product col-8">Общая стоимость: ${basketList.basketPrice}$</div>
+            <div class="product col-8"><tag:message code="basket.totalprice"/> ${basketList.basketPrice}$</div>
+                <form class="form-inline my-2 my-lg-0" method="post" action="/order">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <button type="submit" class="btn btn-outline-success my-2 my-sm-0"><tag:message
+                            code="basket.checkout"/></button>
+                </form>
+            </c:if>
         </c:if>
-        <form class="form-inline my-2 my-lg-0" method="post" action="">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Checkout</button>
-        </form>
+
     </div>
 </main>
 <%@include file="footer.jsp" %>

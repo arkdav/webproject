@@ -7,12 +7,12 @@ public class SecurityFacadeImpl implements SecurityFacade {
 
     private SecurityService securityService;
 
-    public SecurityFacadeImpl(SecurityService securityService){
-        this.securityService=securityService;
+    public SecurityFacadeImpl(SecurityService securityService) {
+        this.securityService = securityService;
     }
 
     @Override
-    public void autologin(String login, String password){
+    public void autologin(String login, String password) {
         securityService.autoLogin(login, password);
     }
 

@@ -32,4 +32,7 @@ public class CartDaoImpl implements CartDao {
         currentSession().save(cart);
     }
 
+    @Override
+    public void remove(Cart cart){currentSession().delete(cart);}
+
 }

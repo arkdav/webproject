@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import java.util.List;
 
 public class CartEntryDaoImpl implements CartEntryDao {
+
     private SessionFactory sessionFactory;
 
     public CartEntryDaoImpl(SessionFactory sessionFactory) {
@@ -41,5 +42,10 @@ public class CartEntryDaoImpl implements CartEntryDao {
     @Override
     public void update(CartEntry cartEntry) {
         currentSession().update(cartEntry);
+    }
+
+    @Override
+    public void remove(CartEntry cartEntry) {
+        currentSession().delete(cartEntry);
     }
 }

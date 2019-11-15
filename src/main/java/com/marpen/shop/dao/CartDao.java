@@ -7,4 +7,6 @@ public interface CartDao {
     Cart getCartByUserId(int userId);
 
     void save(Cart cart);
+
+    void remove(Cart cart);
 }

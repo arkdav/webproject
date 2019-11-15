@@ -5,7 +5,7 @@ import com.marpen.shop.dto.UserDto;
 
 public interface UserFacade {
 
-    UserDto save(RegistrationDto registrationDto);
+    void save(RegistrationDto registrationDto);
 
     UserDto getUserInformation(String username);
 }

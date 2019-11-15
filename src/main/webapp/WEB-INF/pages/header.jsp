@@ -30,6 +30,9 @@
                     <li class="nav-item ">
                         <a class="nav-link" href="/userdata"><tag:message code="header.userdata"/> </a>
                     </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/userorders"><tag:message code="header.userorders"/> </a>
+                    </li>
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <li class="nav-item ">

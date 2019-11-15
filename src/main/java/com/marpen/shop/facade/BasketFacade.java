@@ -7,4 +7,8 @@ public interface BasketFacade {
     BasketDto getBasketByUserId(int userId);
 
     void addProductToBasket(int userId, int productId);
+
+    void removeProductFromBasket(int userId, int productId);
+
+    void removeBasket(int userId);
 }

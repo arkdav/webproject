@@ -36,9 +36,15 @@ public class CartServiceImpl implements CartService {
     public void save(int userId){
         Cart cart=new Cart();
         Date dateNow = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         cart.setDate(dateNow);
         cart.setUserId(userId);
         cartDao.save(cart);
+    }
+
+    @Override
+    public void removeCart(int userId) {
+        Cart cart=cartDao.getCartByUserId(userId);
+        cartDao.remove(cart);
     }
 }

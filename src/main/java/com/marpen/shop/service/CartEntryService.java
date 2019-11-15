@@ -17,4 +17,8 @@ public interface CartEntryService {
     void save(int cartId, int productId, int amount);
 
     void updateCartEntry(CartEntry cartEntry);
+
+    void removeCartEntry(CartEntry cartEntry);
+
+    void removeCartEntries(int cartId);
 }

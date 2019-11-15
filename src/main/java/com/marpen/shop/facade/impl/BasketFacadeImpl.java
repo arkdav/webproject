@@ -29,28 +29,42 @@ public class BasketFacadeImpl implements BasketFacade {
     @Override
     public BasketDto getBasketByUserId(int userId) {
         Cart cart = cartService.getCartByUserId(userId);
-        List<CartEntry> cartEntries=null;
-        if(cart!=null) {
+        List<CartEntry> cartEntries = null;
+        if (cart != null) {
             cartEntries = cartEntryService.getCartEntriesByCartId(cart.getCartId());
         } else {
             cartService.save(userId);
-            cart=cartService.getCartByUserId(userId);
+            cart = cartService.getCartByUserId(userId);
             cartEntries = cartEntryService.getCartEntriesByCartId(cart.getCartId());
         }
-        BasketDto basketDto = fromCartAndEntriesToBasketDto(cart,cartEntries);
+        BasketDto basketDto = fromCartAndEntriesToBasketDto(cart, cartEntries);
         return basketDto;
     }
 
     @Override
     public void addProductToBasket(int userId, int productId) {
         Cart cart = cartService.getCartByUserId(userId);
-        CartEntry cartEntry=cartEntryService.getCartEntryByProductId(cart.getCartId(), productId);
-        if(cartEntry!=null){
-            cartEntry.setAmount(cartEntry.getAmount()+1);
+        CartEntry cartEntry = cartEntryService.getCartEntryByProductId(cart.getCartId(), productId);
+        if (cartEntry != null) {
+            cartEntry.setAmount(cartEntry.getAmount() + 1);
             cartEntryService.updateCartEntry(cartEntry);
         } else {
             cartEntryService.save(cart.getCartId(), productId);
         }
+    }
+
+    @Override
+    public void removeProductFromBasket(int userId, int productId) {
+        Cart cart = cartService.getCartByUserId(userId);
+        CartEntry cartEntry = cartEntryService.getCartEntryByProductId(cart.getCartId(), productId);
+        cartEntryService.removeCartEntry(cartEntry);
+    }
+
+    @Override
+    public void removeBasket(int userId) {
+        Cart cart = cartService.getCartByUserId(userId);
+        cartEntryService.removeCartEntries(cart.getCartId());
+        cartService.removeCart(userId);
     }
 
     private BasketDto fromCartAndEntriesToBasketDto(Cart cart, List<CartEntry> cartEntries) {
@@ -58,17 +72,17 @@ public class BasketFacadeImpl implements BasketFacade {
         basketDto.setBasketId(cart.getCartId());
         basketDto.setUserId(cart.getUserId());
         basketDto.setDate(cart.getDate());
-        List<BasketProductDto> products=new ArrayList<>();
-        double basketPrice=0;
-        if(cartEntries!=null) {
+        List<BasketProductDto> products = new ArrayList<>();
+        double basketPrice = 0;
+        if (cartEntries != null) {
             for (CartEntry cartEntry :
                     cartEntries) {
                 BasketProductDto basketProductDto = new BasketProductDto();
                 basketProductDto.setAmount(cartEntry.getAmount());
                 ProductDto productDto = productFacade.getProductById(cartEntry.getProductId());
                 basketProductDto.setProductDto(productDto);
-                basketProductDto.setTotalPrice(cartEntry.getAmount()*productDto.getPrice());
-                basketPrice+=basketProductDto.getTotalPrice();
+                basketProductDto.setTotalPrice(cartEntry.getAmount() * productDto.getPrice());
+                basketPrice += basketProductDto.getTotalPrice();
                 products.add(basketProductDto);
             }
         }

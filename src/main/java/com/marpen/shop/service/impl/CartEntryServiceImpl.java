@@ -52,4 +52,18 @@ public class CartEntryServiceImpl implements CartEntryService {
     public void updateCartEntry(CartEntry cartEntry){
         cartEntryDao.update(cartEntry);
     }
+
+    @Override
+    public void removeCartEntry(CartEntry cartEntry){
+        cartEntryDao.remove(cartEntry);
+    }
+
+    @Override
+    public void removeCartEntries(int cartId) {
+        List<CartEntry> cartEntries=cartEntryDao.getCartEntriesByCartId(cartId);
+        for (CartEntry cartEntry:
+             cartEntries) {
+            cartEntryDao.remove(cartEntry);
+        }
+    }
 }

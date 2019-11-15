@@ -1,25 +1,25 @@
 package com.marpen.shop.dto;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 public class UserDto {
 
     private int userId;
     private String login;
-    private String password;
     private String name;
     private String surname;
     private String email;
     private String phone;
-    private Date birthdate;
+    private String birthdate;
 
     public UserDto(){
     }
 
-    public UserDto(int userId, String login, String password, String name, String surname, String email, String phone, Date birthdate) {
+    public UserDto(int userId,
+                   String login, String name, String surname, String email, String phone, String birthdate) {
         this.userId = userId;
         this.login = login;
-        this.password = password;
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -41,14 +41,6 @@ public class UserDto {
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {
@@ -83,11 +75,11 @@ public class UserDto {
         this.phone = phone;
     }
 
-    public Date getBirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 }
