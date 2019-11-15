@@ -19,7 +19,7 @@ CREATE TABLE `webdb`.`products` (
   `type` VARCHAR(225) NULL,
   `catver_id` INT NULL,
   PRIMARY KEY (`product_id`),
-  FOREIGN KEY (`catver_id`) REFERENCES `webdb`.`catalogversion`(`catver_id`) ON DELETE CASCADE )
+  FOREIGN KEY (`catver_id`) REFERENCES `webdb`.`catalogversion`(`catver_id`) ON UPDATE CASCADE ON DELETE CASCADE )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
@@ -49,7 +49,7 @@ CREATE TABLE `webdb`.`images` (
   `link` VARCHAR(225) NULL,
   `product_id` INT NULL,
   PRIMARY KEY (`image_id`),
-  FOREIGN KEY (`product_id`) REFERENCES `webdb`.`products`(`product_id`) ON DELETE CASCADE
+  FOREIGN KEY (`product_id`) REFERENCES `webdb`.`products`(`product_id`) ON UPDATE CASCADE ON DELETE CASCADE
 )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -79,7 +79,7 @@ CREATE TABLE `webdb`.`price` (
   `product_id` INT NOT NULL,
   `price` DOUBLE NOT NULL,
   PRIMARY KEY (`product_id`),
-  FOREIGN KEY (`product_id`) REFERENCES `webdb`.`products`(`product_id`) ON DELETE CASCADE )
+  FOREIGN KEY (`product_id`) REFERENCES `webdb`.`products`(`product_id`) ON UPDATE CASCADE ON DELETE CASCADE )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
@@ -123,7 +123,7 @@ CREATE TABLE `webdb`.`users` (
   `phone` VARCHAR(225) NULL,
   `birthdate` DATE NULL,
   PRIMARY KEY (`user_id`),
-  FOREIGN KEY (`role_id`) REFERENCES `webdb`.`roles`(`role_id`) ON DELETE CASCADE )
+  FOREIGN KEY (`role_id`) REFERENCES `webdb`.`roles`(`role_id`) ON UPDATE CASCADE ON DELETE CASCADE )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
@@ -135,7 +135,7 @@ CREATE TABLE `webdb`.`cart` (
   `user_id` INT NOT NULL,
   `date` DATE NOT NULL,
   PRIMARY KEY (`cart_id`),
-  FOREIGN KEY (`user_id`) REFERENCES `webdb`.`users`(`user_id`) ON DELETE CASCADE )
+  FOREIGN KEY (`user_id`) REFERENCES `webdb`.`users`(`user_id`) ON UPDATE CASCADE ON DELETE CASCADE )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
@@ -146,8 +146,8 @@ CREATE TABLE `webdb`.`cartentry` (
   `product_id` INT NOT NULL,
   `amount` INT NOT NULL,
   PRIMARY KEY (`entry_id`),
-  FOREIGN KEY (`cart_id`) REFERENCES `webdb`.`cart`(`cart_id`) ON DELETE CASCADE ,
-  FOREIGN KEY (`product_id`) REFERENCES `webdb`.`products`(`product_id`) ON DELETE CASCADE )
+  FOREIGN KEY (`cart_id`) REFERENCES `webdb`.`cart`(`cart_id`) ON UPDATE CASCADE ON DELETE CASCADE ,
+  FOREIGN KEY (`product_id`) REFERENCES `webdb`.`products`(`product_id`) ON UPDATE CASCADE ON DELETE CASCADE )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
@@ -159,7 +159,7 @@ CREATE TABLE `webdb`.`orders` (
   `date` DATE NOT NULL,
   `totalprice` DOUBLE NOT NULL,
   PRIMARY KEY (`order_id`),
-  FOREIGN KEY (`user_id`) REFERENCES `webdb`.`users`(`user_id`) ON DELETE CASCADE )
+  FOREIGN KEY (`user_id`) REFERENCES `webdb`.`users`(`user_id`) ON UPDATE CASCADE ON DELETE CASCADE )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
@@ -171,8 +171,8 @@ CREATE TABLE `webdb`.`orderentry` (
   `amount` INT NOT NULL,
   `price` DOUBLE NOT NULL,
   PRIMARY KEY (`orderentry_id`),
-  FOREIGN KEY (`order_id`) REFERENCES `webdb`.`orders`(`order_id`) ON DELETE CASCADE,
-  FOREIGN KEY (`product_id`) REFERENCES `webdb`.`products`(`product_id`) ON DELETE CASCADE)
+  FOREIGN KEY (`order_id`) REFERENCES `webdb`.`orders`(`order_id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (`product_id`) REFERENCES `webdb`.`products`(`product_id`) ON UPDATE CASCADE ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
