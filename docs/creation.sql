@@ -1,47 +1,46 @@
 CREATE SCHEMA `webdb` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `webdb`.`catalogversion` (
-                                          `catver_id` INT NOT NULL,
-                                          `name` VARCHAR(225) NOT NULL,
-                                          PRIMARY KEY (`catver_id`))
+    `catver_id` INT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(225) NOT NULL,
+    PRIMARY KEY (`catver_id`))
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8
     COLLATE = utf8_unicode_ci;
 
 INSERT INTO `webdb`.`catalogversion` (`catver_id`, `name`) VALUES ('1', 'present');
-INSERT INTO `webdb`.`catalogversion` (`catver_id`, `name`) VALUES ('2', 'future');
-INSERT INTO `webdb`.`catalogversion` (`catver_id`, `name`) VALUES ('3', 'past');
+INSERT INTO `webdb`.`catalogversion` (`catver_id`, `name`) VALUES ('2', 'notpresent');
 
 CREATE TABLE `webdb`.`products` (
   `product_id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(225) NULL,
-  `information` VARCHAR(225) NULL,
-  `type` VARCHAR(225) NULL,
-  `catver_id` INT NULL,
+  `name` VARCHAR(225) NOT NULL,
+  `description` VARCHAR(225) NOT NULL,
+  `type` VARCHAR(225) NOT NULL,
+  `catver_id` INT NOT NULL,
   PRIMARY KEY (`product_id`),
   FOREIGN KEY (`catver_id`) REFERENCES `webdb`.`catalogversion`(`catver_id`) ON UPDATE CASCADE ON DELETE CASCADE )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('1', 'Album #2', 'infaboutalbum2','album','1');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('2', 'Pen #30', 'infaboutpen33','pen','1');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('3', 'Album #66', 'infaboutalbum66','album','1');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('4', 'Album #67', 'infaboutalbum67','album','1');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('5', 'Album #68', 'infaboutalbum68','album','1');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('6', 'Album #32', 'infaboutalbum32','album','1');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('7', 'Album #71', 'infaboutalbum71','album','1');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('8', 'Album #72', 'infaboutalbum72','album','1');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('9', 'Album #73', 'infaboutalbum73','album','1');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('10', 'Album #74', 'infaboutalbum74','album','1');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('11', 'Album #75', 'infaboutalbum75','album','1');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('12', 'Album #76', 'infaboutalbum76','album','1');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('13', 'Album #77', 'infaboutalbum77','album','1');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('14', 'Album #78', 'infaboutalbum78','album','1');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('15', 'Album #79', 'infaboutalbum79','album','1');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('16', 'Album #80', 'infaboutalbum80','album','1');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('17', 'Album #81', 'infaboutalbum81','album','1');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `information`,`type`,`catver_id`) VALUES ('18', 'Album #82', 'infaboutalbum82','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('1', 'Album #2', 'infaboutalbum2','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('2', 'Pen #30', 'infaboutpen33','pen','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('3', 'Album #66', 'infaboutalbum66','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('4', 'Album #67', 'infaboutalbum67','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('5', 'Album #68', 'infaboutalbum68','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('6', 'Album #32', 'infaboutalbum32','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('7', 'Album #71', 'infaboutalbum71','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('8', 'Album #72', 'infaboutalbum72','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('9', 'Album #73', 'infaboutalbum73','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('10', 'Album #74', 'infaboutalbum74','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('11', 'Album #75', 'infaboutalbum75','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('12', 'Album #76', 'infaboutalbum76','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('13', 'Album #77', 'infaboutalbum77','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('14', 'Album #78', 'infaboutalbum78','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('15', 'Album #79', 'infaboutalbum79','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('16', 'Album #80', 'infaboutalbum80','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('17', 'Album #81', 'infaboutalbum81','album','1');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`type`,`catver_id`) VALUES ('18', 'Album #82', 'infaboutalbum82','album','1');
 
 
 CREATE TABLE `webdb`.`images` (

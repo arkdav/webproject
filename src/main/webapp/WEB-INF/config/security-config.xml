@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:b="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/security
+            http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <http auto-config="true">
+        <intercept-url pattern="/" access="permitAll()"/>
+        <intercept-url pattern="/home" access="permitAll()"/>
+        <intercept-url pattern="/basket" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/catalog" access="permitAll()"/>
+        <intercept-url pattern="/userdata" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/userorders" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/admindata" access="hasRole('ROLE_ADMIN')"/>
+        <form-login login-page="/login" default-target-url="/userdata"
+                        authentication-failure-url="/login?error"
+                        username-parameter="username" password-parameter="password"/>
+        <logout logout-url="/logout" logout-success-url="/home" invalidate-session="true"/>
+    </http>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="userDetailsService">
+            <password-encoder ref="encoder" />
+        </authentication-provider>
+    </authentication-manager>
+    <!--    <sec:remember-me />-->
+
+    <b:bean id="encoder"
+          class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <b:constructor-arg name="strength" value="11"/>
+    </b:bean>
+
+    <b:bean id="userDetailsService" class="com.marpen.shop.service.impl.UserDetailsServiceImpl">
+        <b:constructor-arg name="userService" ref="userService"/>
+        <b:constructor-arg name="roleDao" ref="roleDao"/>
+    </b:bean>
+
+    <b:bean id="securityFacade" class="com.marpen.shop.facade.impl.SecurityFacadeImpl">
+        <b:constructor-arg name="securityService" ref="securityService"/>
+    </b:bean>
+    <b:bean id="securityService" class="com.marpen.shop.service.impl.SecurityServiceImpl">
+        <b:constructor-arg name="authenticationManager" ref="authenticationManager"/>
+        <b:constructor-arg name="userService" ref="userService"/>
+        <b:constructor-arg name="userDetailsService" ref="userDetailsService"/>
+    </b:bean>
+</b:beans>

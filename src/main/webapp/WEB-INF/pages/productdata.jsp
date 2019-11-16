@@ -23,7 +23,7 @@
         <br>
         <p>Name:  ${productinf.name}</p>
         <p>Type: ${productinf.type}</p>
-        <p>Information: ${productinf.information}</p>
+        <p>Information: ${productinf.description}</p>
         <p>Price: ${productinf.price}</p>
         <br>
             <c:if test="${!empty images}">

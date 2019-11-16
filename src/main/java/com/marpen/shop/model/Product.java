@@ -18,8 +18,8 @@ public class Product {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "information")
-    private String information;
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "type")
     private String type;
@@ -31,10 +31,10 @@ public class Product {
     public Product() {
     }
 
-    public Product(int productId, String name, String information, String type, int catverId) {
+    public Product(int productId, String name, String description, String type, int catverId) {
         this.productId = productId;
         this.name = name;
-        this.information = information;
+        this.description = description;
         this.type = type;
         this.catverId = catverId;
     }
@@ -59,14 +59,14 @@ public class Product {
         this.name = name;
     }
 
-    public String getInformation() {
+    public String getDescription() {
 
-        return information;
+        return description;
     }
 
-    public void setInformation(String info) {
+    public void setDescription(String info) {
 
-        this.information = info;
+        this.description = info;
     }
 
     public String getType() {
@@ -93,7 +93,7 @@ public class Product {
         return "Product{" +
                 "productId=" + productId +
                 ", name='" + name + '\'' +
-                ", information='" + information + '\'' +
+                ", information='" + description + '\'' +
                 ", type='" + type + '\'' +
                 ", catverId=" + catverId +
                 '}';

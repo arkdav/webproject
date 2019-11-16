@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-//@SessionAttributes("currentUser")
 public class UserController {
 
     private UserFacade userFacade;

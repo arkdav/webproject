@@ -18,11 +18,6 @@
                 <li class="nav-item ">
                     <a class="nav-link" href="/catalog"><tag:message code="header.catalog"/></a>
                 </li>
-                <sec:authorize access="!isAuthenticated()">
-                <li class="nav-item ">
-                    <a class="nav-link" href="/login"><tag:message code="header.login"/> </a>
-                </li>
-                </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_USER')">
                     <li class="nav-item ">
                         <a class="nav-link" href="/basket"><tag:message code="header.basket"/></a>
@@ -49,6 +44,16 @@
                     </div>
                 </li>
             </ul>
+            <sec:authorize access="isAnonymous()">
+            <ul class="navbar-nav">
+                <li class="nav-item ">
+                    <div class="my-lg-0">
+                        <a class="nav-link" href="/login"><tag:message code="header.login"/> </a>
+                        <a class="nav-link" href="/registration"><tag:message code="registration.create"/></a>
+                    </div>
+                </li>
+            </ul>
+            </sec:authorize>
         </div>
     </nav>
 </header>

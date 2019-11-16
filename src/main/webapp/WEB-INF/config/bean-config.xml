@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- ProductDao and ProductService beans -->
+    <bean id="productDao" class="com.marpen.shop.dao.impl.ProductDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="productService" class="com.marpen.shop.service.impl.ProductServiceImpl">
+        <constructor-arg name="productDao" ref="productDao"/>
+    </bean>
+    <!-- PriceDao and PriceService beans -->
+    <bean id="priceDao" class="com.marpen.shop.dao.impl.PriceDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="priceService" class="com.marpen.shop.service.impl.PriceServiceImpl">
+        <constructor-arg name="priceDao" ref="priceDao"/>
+    </bean>
+    <!-- ImageDao and ImageService beans -->
+    <bean id="imageDao" class="com.marpen.shop.dao.impl.ImageDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="imageService" class="com.marpen.shop.service.impl.ImageServiceImpl">
+        <constructor-arg name="imageDao" ref="imageDao"/>
+    </bean>
+    <!-- CartDao and CartService beans -->
+    <bean id="cartDao" class="com.marpen.shop.dao.impl.CartDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="cartService" class="com.marpen.shop.service.impl.CartServiceImpl">
+        <constructor-arg name="cartDao" ref="cartDao"/>
+    </bean>
+    <!-- CartEntryDao and CartEntryService beans -->
+    <bean id="cartEntryDao" class="com.marpen.shop.dao.impl.CartEntryDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="cartEntryService" class="com.marpen.shop.service.impl.CartEntryServiceImpl">
+        <constructor-arg name="cartEntryDao" ref="cartEntryDao"/>
+    </bean>
+    <!-- OrderDao and OrderService beans -->
+    <bean id="orderDao" class="com.marpen.shop.dao.impl.OrderDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="orderService" class="com.marpen.shop.service.impl.OrderServiceImpl">
+        <constructor-arg name="orderDao" ref="orderDao"/>
+    </bean>
+    <!-- OrderEntryDao and OrderEntryService beans -->
+    <bean id="orderEntryDao" class="com.marpen.shop.dao.impl.OrderEntryDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="orderEntryService" class="com.marpen.shop.service.impl.OrderEntryServiceImpl">
+        <constructor-arg name="orderEntryDao" ref="orderEntryDao"/>
+    </bean>
+
+    <!-- ProductController and ProductFacadeImpl beans -->
+    <bean id="productController" class="com.marpen.shop.controller.ProductController">
+        <constructor-arg ref="productFacade"/>
+    </bean>
+    <bean id="productFacade" class="com.marpen.shop.facade.impl.ProductFacadeImpl">
+        <constructor-arg name="productService" ref="productService"/>
+        <constructor-arg name="priceService" ref="priceService"/>
+        <constructor-arg name="imageService" ref="imageService"/>
+    </bean>
+
+    <!-- BasketFacade bean -->
+    <bean id="basketFacade" class="com.marpen.shop.facade.impl.BasketFacadeImpl">
+        <constructor-arg name="cartService" ref="cartService"/>
+        <constructor-arg name="cartEntryService" ref="cartEntryService"/>
+        <constructor-arg name="productFacade" ref="productFacade"/>
+    </bean>
+
+    <!-- OrderFacade bean -->
+    <bean id="orderFacade" class="com.marpen.shop.facade.impl.OrderFacadeImpl">
+        <constructor-arg name="orderService" ref="orderService"/>
+        <constructor-arg name="orderEntryService" ref="orderEntryService"/>
+        <constructor-arg name="basketFacade" ref="basketFacade"/>
+    </bean>
+
+    <!--     UserController bean -->
+    <bean id="userController" class="com.marpen.shop.controller.UserController">
+        <constructor-arg name="userFacade" ref="userFacade"/>
+        <constructor-arg name="registrationValidator" ref="registrationValidator"/>
+        <constructor-arg name="securityFacade" ref="securityFacade"/>
+        <constructor-arg name="basketFacade" ref="basketFacade"/>
+        <constructor-arg name="orderFacade" ref="orderFacade"/>
+    </bean>
+
+    <bean id="userFacade" class="com.marpen.shop.facade.impl.UserFacadeImpl">
+        <constructor-arg name="userService" ref="userService"/>
+        <constructor-arg name="bCryptPasswordEncoder" ref="encoder"/>
+    </bean>
+
+    <bean id="userDao" class="com.marpen.shop.dao.impl.UserDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="roleDao" class="com.marpen.shop.dao.impl.RoleDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="userService" class="com.marpen.shop.service.impl.UserServiceImpl">
+        <constructor-arg name="userDao" ref="userDao"/>
+        <constructor-arg name="roleDao" ref="roleDao"/>
+    </bean>
+
+    <bean id="registrationValidator" class="com.marpen.shop.validator.RegistrationValidator">
+        <constructor-arg name="userService" ref="userService"/>
+    </bean>
+</beans>

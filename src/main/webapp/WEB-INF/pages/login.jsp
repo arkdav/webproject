@@ -27,7 +27,7 @@
             <span>${error}</span>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <button class="btn btn-lg btn-primary btn-block" type="submit"><tag:message code="header.login"/></button>
-            <h4 class="text-center"><a href="/registration"><tag:message code="registration.create"/></a></h4>
+
         </div>
     </form>
 </div>

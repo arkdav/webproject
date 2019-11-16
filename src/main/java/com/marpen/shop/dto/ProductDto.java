@@ -5,17 +5,17 @@ public class ProductDto {
 
     private int productId;
     private String name;
-    private String information;
+    private String description;
     private String type;
     private Double price;
     private String link;
 
     public ProductDto(){}
 
-    public ProductDto(int productId, String name, String information, String type, Double price, String link) {
+    public ProductDto(int productId, String name, String description, String type, Double price, String link) {
         this.productId = productId;
         this.name=name;
-        this.information=information;
+        this.description = description;
         this.type=type;
         this.price=price;
         this.link=link;
@@ -37,12 +37,12 @@ public class ProductDto {
         this.name = name;
     }
 
-    public String getInformation() {
-        return information;
+    public String getDescription() {
+        return description;
     }
 
-    public void setInformation(String information) {
-        this.information = information;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getType() {
@@ -70,7 +70,7 @@ public class ProductDto {
         return "ProductDto{" +
                 "productId=" + productId +
                 ", name='" + name + '\'' +
-                ", information='" + information + '\'' +
+                ", information='" + description + '\'' +
                 ", type='" + type + '\'' +
                 ", price=" + price + '\''+
                 ", link="+ link +

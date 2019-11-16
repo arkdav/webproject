@@ -85,7 +85,7 @@ public class ProductFacadeImpl implements ProductFacade {
     private ProductDto getProductDtoFromProduct(Product product) {
         return new ProductDto(product.getProductId(),
                 product.getName(),
-                product.getInformation(),
+                product.getDescription(),
                 product.getType(),
                 priceService.getPriceByProductId(product.getProductId()).getPrice(),
                 imageService.getImageByProductId(product.getProductId()).getLink()

@@ -30,7 +30,7 @@
             <c:forEach items="${basketList.products}" var="product">
                 <div class="product col-8">
                     <div><a href="/productdata/${product.productDto.productId}"><tag:message code="basket.product"/> ${product.productDto.name}<a/></div>
-                    <div><tag:message code="basket.information"/> ${product.productDto.information}</div>
+                    <div><tag:message code="basket.information"/> ${product.productDto.description}</div>
                     <div><tag:message code="basket.productprice"/> ${product.productDto.price}$</div>
                     <div><tag:message code="basket.amount"/> ${product.amount}</div>
                     <div><tag:message code="basket.totalproductprice"/> ${product.totalPrice}$</div>
