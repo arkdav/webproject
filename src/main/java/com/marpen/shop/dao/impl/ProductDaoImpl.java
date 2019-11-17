@@ -54,14 +54,6 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Product> getProductsListByType(String type, int pageId, int productsPerPage) {
-        String sql="select * from products where type like :type and catver_id=1 limit "+(pageId-1)+","+productsPerPage;
-        List <Product>products=currentSession().createSQLQuery(sql).addEntity(Product.class).setParameter("type", type).list();
-        return products;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
     public List<Product> getProductsListByName(String name, int pageId, int productsPerPage) {
         String nameForSql="%"+name+"%";
         String sql="select * from products where name like :name and catver_id=1 limit "+(pageId-1)+","+productsPerPage;
@@ -73,12 +65,6 @@ public class ProductDaoImpl implements ProductDao {
     public int getAmountOfProducts(){
         String sql="select product_id from products";
         return currentSession().createSQLQuery(sql).list().size();
-    }
-
-    @Override
-    public int getAmountOfProductsByType(String type){
-        String sql="select product_id from products where type like :type";
-        return currentSession().createSQLQuery(sql).setParameter("type", type).list().size();
     }
 
     @Override

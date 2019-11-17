@@ -35,4 +35,9 @@ public class CartDaoImpl implements CartDao {
     @Override
     public void remove(Cart cart){currentSession().delete(cart);}
 
+    @Override
+    public void update(Cart cart) {
+        currentSession().update(cart);
+    }
+
 }

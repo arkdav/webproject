@@ -1,8 +1,8 @@
 package com.marpen.shop.facade.impl;
 
-import com.marpen.shop.dto.BasketDto;
-import com.marpen.shop.dto.BasketProductDto;
-import com.marpen.shop.facade.BasketFacade;
+import com.marpen.shop.dto.CartDto;
+import com.marpen.shop.dto.CartProductDto;
+import com.marpen.shop.facade.CartFacade;
 import com.marpen.shop.facade.OrderFacade;
 import com.marpen.shop.model.Order;
 import com.marpen.shop.model.OrderEntry;
@@ -16,20 +16,20 @@ import java.util.List;
 public class OrderFacadeImpl implements OrderFacade {
     private OrderService orderService;
     private OrderEntryService orderEntryService;
-    private BasketFacade basketFacade;
+    private CartFacade cartFacade;
 
 
-    public OrderFacadeImpl(OrderService orderService, OrderEntryService orderEntryService, BasketFacade basketFacade) {
+    public OrderFacadeImpl(OrderService orderService, OrderEntryService orderEntryService, CartFacade cartFacade) {
         this.orderService = orderService;
         this.orderEntryService = orderEntryService;
-        this.basketFacade = basketFacade;
+        this.cartFacade = cartFacade;
     }
 
     @Override
-    public void addBasketToOrder(int userId) {
-        BasketDto basketDto = basketFacade.getBasketByUserId(userId);
-        Order order = fromBasketDtoToOrder(basketDto);
-        List<OrderEntry> orderEntries = fromBasketDtoToOrderEntries(basketDto);
+    public void addCartToOrder(int userId) {
+        CartDto cartDto = cartFacade.getCartByUserId(userId);
+        Order order = fromCartDtoToOrder(cartDto);
+        List<OrderEntry> orderEntries = fromCartDtoToOrderEntries(cartDto, order.getOrderId());
         orderService.save(order);
         for (OrderEntry orderEntry :
                 orderEntries) {
@@ -37,25 +37,24 @@ public class OrderFacadeImpl implements OrderFacade {
         }
     }
 
-    private Order fromBasketDtoToOrder(BasketDto basketDto) {
+    private Order fromCartDtoToOrder(CartDto cartDto) {
         Date dateNow = new Date();
         Order order = new Order();
-        order.setUserId(basketDto.getUserId());
+        order.setUserId(cartDto.getUserId());
         order.setDate(dateNow);
-        order.setTotalprice(basketDto.getBasketPrice());
+        order.setTotalprice(Double.valueOf(cartDto.getCartPrice()));
         return order;
     }
 
-    private List<OrderEntry> fromBasketDtoToOrderEntries(BasketDto basketDto) {
+    private List<OrderEntry> fromCartDtoToOrderEntries(CartDto cartDto, int orderId) {
         List<OrderEntry> orderEntries = new ArrayList<>();
-        List<BasketProductDto> basketProductDtos = basketDto.getProducts();
-        for (BasketProductDto basketProductDto :
-                basketProductDtos) {
+        List<CartProductDto> cartProductDtos = cartDto.getProducts();
+        for (CartProductDto cartProductDto :
+                cartProductDtos) {
             OrderEntry orderEntry = new OrderEntry();
-            orderEntry.setCartId(basketDto.getBasketId());
-            orderEntry.setAmount(basketProductDto.getAmount());
-            orderEntry.setPrice(basketProductDto.getTotalPrice());
-            orderEntry.setProductId(basketProductDto.getProductDto().getProductId());
+            orderEntry.setOrderId(orderId);
+            orderEntry.setAmount(cartProductDto.getAmount());
+            orderEntry.setProductId(cartProductDto.getProductDto().getProductId());
             orderEntries.add(orderEntry);
         }
         return orderEntries;

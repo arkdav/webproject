@@ -13,10 +13,10 @@ public class OrderEntry {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "orderentry_id")
-    private int entryId;
+    private int orderEntryId;
 
     @Column(name = "order_id")
-    private int cartId;
+    private int orderId;
 
     @Column(name = "product_id")
     private int productId;
@@ -24,28 +24,31 @@ public class OrderEntry {
     @Column(name = "amount")
     private int amount;
 
-    @Column(name = "price")
-    private double price;
-
     public OrderEntry() {
     }
 
-    public int getEntryId() {
-        return entryId;
+    public OrderEntry(int orderEntryId, int orderId, int productId, int amount) {
+        this.orderEntryId=orderEntryId;
+        this.orderId = orderId;
+        this.productId = productId;
+        this.amount = amount;
     }
 
-    public void setEntryId(int entryId) {
-        this.entryId = entryId;
+    public int getOrderEntryId() {
+        return orderEntryId;
     }
 
-    public int getCartId() {
-        return cartId;
+    public void setEntryEntryId(int orderEntryId) {
+        this.orderEntryId = orderEntryId;
     }
 
-    public void setCartId(int cartId) {
-        this.cartId = cartId;
+    public int getOrderId() {
+        return orderId;
     }
 
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
     public int getProductId() {
         return productId;
     }
@@ -62,11 +65,5 @@ public class OrderEntry {
         this.amount = amount;
     }
 
-    public double getPrice() {
-        return price;
-    }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
 }

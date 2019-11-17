@@ -17,13 +17,9 @@ public interface ProductDao {
 
         List<Product> getProductsListByPage(int pageId, int productsPerPage);
 
-        List<Product> getProductsListByType(String type, int pageId, int productsPerPage);
-
         List<Product> getProductsListByName(String name, int pageId, int productsPerPage);
 
         int getAmountOfProducts();
-
-        int getAmountOfProductsByType(String type);
 
         int getAmountOfProductsByName(String name);
 }

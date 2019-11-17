@@ -39,7 +39,6 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
-    //@DateTimeFormat(pattern = "dd.MM.yyyy")
     @Column(name = "birthdate")
     private Date birthDate;
 

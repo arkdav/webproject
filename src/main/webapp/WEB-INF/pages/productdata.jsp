@@ -22,21 +22,18 @@
         <h1>Product Details</h1>
         <br>
         <p>Name:  ${productinf.name}</p>
-        <p>Type: ${productinf.type}</p>
         <p>Information: ${productinf.description}</p>
         <p>Price: ${productinf.price}</p>
         <br>
-            <c:if test="${!empty images}">
-                <c:forEach items="${images}" var="image" >
-                    <p><img src="../../images/${image.link}"></p>
-                </c:forEach>
-            </c:if>
-            <sec:authorize access="isAuthenticated()">
-                <form class="form-inline my-2 my-lg-0" method="post" action="/addtobasket?product_id=${productinf.productId}" >
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <button type="submit" class="btn btn-outline-success my-2 my-sm-0" ><tag:message code="product.addToBasket"/></button>
-                </form>
-            </sec:authorize>
+        <p><img src="../../images/${productinf.imageLink}"></p>
+        <sec:authorize access="hasRole('ROLE_CUSTOMER')">
+            <form class="form-inline my-2 my-lg-0" method="post"
+                  action="${pageContext.request.contextPath}/addtobasket?product_id=${productinf.productId}">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-outline-success my-2 my-sm-0"><tag:message
+                        code="product.addToBasket"/></button>
+            </form>
+        </sec:authorize>
     </div>
 </main>
 <%@include file="footer.jsp" %>

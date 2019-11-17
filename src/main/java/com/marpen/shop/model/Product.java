@@ -21,8 +21,8 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "type")
-    private String type;
+    @Column(name = "imageurl")
+    private String imageLink;
 
     @Column(name = "catver_id")
     private int catverId;
@@ -31,11 +31,11 @@ public class Product {
     public Product() {
     }
 
-    public Product(int productId, String name, String description, String type, int catverId) {
+    public Product(int productId, String name, String description, String imageLink, int catverId) {
         this.productId = productId;
         this.name = name;
         this.description = description;
-        this.type = type;
+        this.imageLink = imageLink;
         this.catverId = catverId;
     }
 
@@ -69,14 +69,14 @@ public class Product {
         this.description = info;
     }
 
-    public String getType() {
+    public String getImageLink() {
 
-        return type;
+        return imageLink;
     }
 
-    public void setType(String type) {
+    public void setImageLink(String imageLink) {
 
-        this.type = type;
+        this.imageLink = imageLink;
     }
 
     public Integer getCatverId() {
@@ -93,8 +93,8 @@ public class Product {
         return "Product{" +
                 "productId=" + productId +
                 ", name='" + name + '\'' +
-                ", information='" + description + '\'' +
-                ", type='" + type + '\'' +
+                ", description='" + description + '\'' +
+                ", imageLink='" + imageLink + '\'' +
                 ", catverId=" + catverId +
                 '}';
     }

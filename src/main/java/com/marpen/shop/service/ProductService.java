@@ -17,13 +17,9 @@ public interface ProductService {
 
     List<Product> getProductsListByPage(int pageid, int productsPerPage);
 
-   List<Product> getProductsListByType(String type, int pageid, int productsPerPage);
-
     List<Product> getProductsListByName(String name, int pageid, int productsPerPage);
 
     int getAmountOfProducts();
-
-    int getAmountOfProductsByType(String type);
 
     int getAmountOfProductsByName(String name);
 }

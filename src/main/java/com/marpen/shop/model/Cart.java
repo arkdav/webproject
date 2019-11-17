@@ -23,9 +23,11 @@ public class Cart {
     @Column(name="date")
     private Date date;
 
+    @Column(name="totalprice")
+    private Double totalPrice;
+
     public Cart() {
     }
-
 
     public int getCartId() {
         return cartId;
@@ -50,4 +52,8 @@ public class Cart {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public Double getTotalPrice() { return totalPrice; }
+
+    public void setTotalPrice(Double totalPrice) { this.totalPrice = totalPrice; }
 }

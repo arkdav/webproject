@@ -44,12 +44,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsListByType(String type, int pageId, int productsPerPage){
-
-        return productDao.getProductsListByType(type, pageId, productsPerPage);
-    }
-
-    @Override
     public List<Product> getProductsListByName(String name, int pageId, int productsPerPage){
 
         return productDao.getProductsListByName(name, pageId, productsPerPage);
@@ -58,11 +52,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public int getAmountOfProducts(){
         return  productDao.getAmountOfProducts();
-    }
-
-    @Override
-    public int getAmountOfProductsByType(String type){
-        return  productDao.getAmountOfProductsByType(type);
     }
 
     @Override

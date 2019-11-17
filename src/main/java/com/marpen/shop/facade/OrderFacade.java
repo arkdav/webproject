@@ -2,6 +2,6 @@ package com.marpen.shop.facade;
 
 public interface OrderFacade {
 
-    void addBasketToOrder(int userId);
+    void addCartToOrder(int userId);
 
 }

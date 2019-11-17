@@ -6,20 +6,20 @@ public class ProductDto {
     private int productId;
     private String name;
     private String description;
-    private String type;
+    private String imageLink;
     private Double price;
-    private String link;
 
-    public ProductDto(){}
-
-    public ProductDto(int productId, String name, String description, String type, Double price, String link) {
-        this.productId = productId;
-        this.name=name;
-        this.description = description;
-        this.type=type;
-        this.price=price;
-        this.link=link;
+    public ProductDto() {
     }
+
+    public ProductDto(int productId, String name, String description, String imageLink, Double price) {
+        this.productId = productId;
+        this.name = name;
+        this.description = description;
+        this.imageLink = imageLink;
+        this.price = price;
+    }
+
 
     public int getProductId() {
         return productId;
@@ -45,12 +45,12 @@ public class ProductDto {
         this.description = description;
     }
 
-    public String getType() {
-        return type;
+    public String getImageLink() {
+        return imageLink;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
 
     public Double getPrice() {
@@ -59,21 +59,5 @@ public class ProductDto {
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public String getLink() {return link;}
-
-    public void setLink(String link) { this.link=link; }
-
-    @Override
-    public String toString() {
-        return "ProductDto{" +
-                "productId=" + productId +
-                ", name='" + name + '\'' +
-                ", information='" + description + '\'' +
-                ", type='" + type + '\'' +
-                ", price=" + price + '\''+
-                ", link="+ link +
-                '}';
     }
 }

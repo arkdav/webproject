@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name="orders")
+@Table(name="order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

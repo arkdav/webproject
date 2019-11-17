@@ -13,26 +13,32 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item ">
-                    <a class="nav-link" href="/home"><tag:message code="header.home"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/home"><tag:message code="header.home"/></a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="/catalog"><tag:message code="header.catalog"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/catalog"><tag:message code="header.catalog"/></a>
                 </li>
-                <sec:authorize access="hasRole('ROLE_USER')">
+                <sec:authorize access="hasRole('ROLE_CUSTOMER')">
                     <li class="nav-item ">
-                        <a class="nav-link" href="/basket"><tag:message code="header.basket"/></a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/basket"><tag:message code="header.basket"/></a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="/userdata"><tag:message code="header.userdata"/> </a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/userdata"><tag:message code="header.userdata"/> </a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="/userorders"><tag:message code="header.userorders"/> </a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/userorders"><tag:message code="header.userorders"/> </a>
                     </li>
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <li class="nav-item ">
-                    <a class="nav-link" href="/admindata"><tag:message code="header.admindata"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/admindata"><tag:message code="header.admindata"/></a>
                 </li>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ROLE_BUSINESS_USER')">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/businessdata"><tag:message
+                                code="header.businessdata"/></a>
+                    </li>
                 </sec:authorize>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -45,14 +51,30 @@
                 </li>
             </ul>
             <sec:authorize access="isAnonymous()">
-            <ul class="navbar-nav">
-                <li class="nav-item ">
-                    <div class="my-lg-0">
-                        <a class="nav-link" href="/login"><tag:message code="header.login"/> </a>
-                        <a class="nav-link" href="/registration"><tag:message code="registration.create"/></a>
-                    </div>
-                </li>
-            </ul>
+                <div class="my-lg-0">
+                    <ul class="navbar-nav">
+                        <li class="nav-item ">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/login"><tag:message code="header.login"/> </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/registration"><tag:message code="registration.create"/></a>
+                        </li>
+                    </ul>
+                </div>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+                <div class="my-lg-0">
+                    <ul class="navbar-nav">
+                        <li class="nav-item ">
+                            <form method="POST" action="${pageContext.request.contextPath}/logout" class="form-signin">
+                                <div class="form-group">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                    <button class="btn btn-lg btn-primary btn-block" imageLink="submit"><tag:message code="userdata.logout"/></button>
+                                </div>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </sec:authorize>
         </div>
     </nav>

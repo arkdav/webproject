@@ -1,6 +1,5 @@
 package com.marpen.shop.facade;
 
-import com.marpen.shop.dto.ImageDto;
 import com.marpen.shop.dto.PageDto;
 import com.marpen.shop.dto.ProductDto;
 
@@ -18,5 +17,4 @@ public interface ProductFacade {
 
     List<PageDto> getIdListSearch(final String searchName, int productsPerPage);
 
-    List<ImageDto> getImageListByProductId(int productId);
 }

@@ -13,8 +13,8 @@ public class CartEntry {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name="entry_id")
-    private int entryId;
+    @Column(name="cartentry_id")
+    private int cartEntryId;
 
     @Column(name="cart_id")
     private int cartId;
@@ -28,12 +28,12 @@ public class CartEntry {
     public CartEntry() {
     }
 
-    public int getEntryId() {
-        return entryId;
+    public int getCartEntryId() {
+        return cartEntryId;
     }
 
-    public void setEntryId(int entryId) {
-        this.entryId = entryId;
+    public void setCartEntryId(int cartEntryId) {
+        this.cartEntryId = cartEntryId;
     }
 
     public int getCartId() {
@@ -59,5 +59,6 @@ public class CartEntry {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
 }
 

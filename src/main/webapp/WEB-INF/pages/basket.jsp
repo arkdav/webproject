@@ -34,21 +34,21 @@
                     <div><tag:message code="basket.productprice"/> ${product.productDto.price}$</div>
                     <div><tag:message code="basket.amount"/> ${product.amount}</div>
                     <div><tag:message code="basket.totalproductprice"/> ${product.totalPrice}$</div>
-                    <form class="form-inline my-2 my-lg-0" method="post" action="/basket?product_id=${product.productDto.productId}" >
+                    <form class="form-inline my-2 my-lg-0" method="post" action="${pageContext.request.contextPath}/basket?product_id=${product.productDto.productId}" >
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <button type="submit" class="btn btn-outline-success my-2 my-sm-0" ><tag:message code="product.removeFromBasket"/></button>
                     </form>
                 </div>
             </c:forEach>
-            <div class="product col-8"><tag:message code="basket.totalprice"/> ${basketList.basketPrice}$</div>
-                <form class="form-inline my-2 my-lg-0" method="post" action="/order">
+            <div class="product col-8"><tag:message code="basket.totalprice"/> ${basketList.cartPrice}$</div>
+                <form class="form-inline my-2 my-lg-0" method="post" action="${pageContext.request.contextPath}/order">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <button type="submit" class="btn btn-outline-success my-2 my-sm-0"><tag:message
                             code="basket.checkout"/></button>
                 </form>
             </c:if>
         </c:if>
-
+        <div class="product col-8"><tag:message code="basket.date"/> ${basketList.date}</div>
     </div>
 </main>
 <%@include file="footer.jsp" %>

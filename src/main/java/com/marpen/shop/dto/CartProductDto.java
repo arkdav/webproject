@@ -1,12 +1,12 @@
 package com.marpen.shop.dto;
 
-public class BasketProductDto {
+public class CartProductDto {
 
     private ProductDto productDto;
     private int amount;
     private double totalPrice;
 
-    public BasketProductDto() {
+    public CartProductDto() {
     }
 
     public ProductDto getProductDto() {

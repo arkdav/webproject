@@ -39,6 +39,7 @@ public class CartServiceImpl implements CartService {
         //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         cart.setDate(dateNow);
         cart.setUserId(userId);
+        cart.setTotalPrice(0.00);
         cartDao.save(cart);
     }
 
@@ -46,5 +47,10 @@ public class CartServiceImpl implements CartService {
     public void removeCart(int userId) {
         Cart cart=cartDao.getCartByUserId(userId);
         cartDao.remove(cart);
+    }
+
+    @Override
+    public void updateCart(Cart cart){
+        cartDao.update(cart);
     }
 }

@@ -9,4 +9,6 @@ public interface CartDao {
     void save(Cart cart);
 
     void remove(Cart cart);
+
+    void update(Cart cart);
 }

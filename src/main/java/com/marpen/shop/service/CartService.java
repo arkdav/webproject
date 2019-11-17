@@ -13,4 +13,6 @@ public interface CartService {
     void save(int userId);
 
     void removeCart(int userId);
+
+    void updateCart(Cart cart);
 }

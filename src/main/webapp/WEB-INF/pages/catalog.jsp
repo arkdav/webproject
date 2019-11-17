@@ -29,10 +29,10 @@
                                 <c:forEach items="${productsList}" var="product" >
                                     <div class="product col-4" >
                                         <div class="product-img">
-                                           <img src="../../images/${product.link}">
+                                           <img src="../../images/${product.imageLink}">
                                         </div>
                                         <div>
-                                            <h2 class="product-name"><a href="/productdata/${product.productId}">${product.name}</a></h2>
+                                            <h2 class="product-name"><a href="${pageContext.request.contextPath}/productdata/${product.productId}">${product.name}</a></h2>
                                             <h4 class="product-price">${product.price}$</h4>
                                         </div>
                                     </div>
@@ -50,14 +50,14 @@
                         <c:when test="${search!=null}">
                             <c:if test="${!empty productsList}">
                                 <c:forEach items="${pagesList}" var="mpage">
-                                    <li class="page-item"><a class="page-link" href="/catalog?pageid=${mpage.pageId}&searchString=${search}">${mpage.pageId}</a></li>
+                                    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/catalog?pageid=${mpage.pageId}&searchString=${search}">${mpage.pageId}</a></li>
                                 </c:forEach>
                             </c:if>
                         </c:when>
                         <c:otherwise>
                             <c:if test="${!empty productsList}">
                                 <c:forEach items="${pagesList}" var="mpage">
-                                    <li class="page-item"><a class="page-link" href="/catalog?pageid=${mpage.pageId}">${mpage.pageId}</a></li>
+                                    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/catalog?pageid=${mpage.pageId}">${mpage.pageId}</a></li>
                                 </c:forEach>
                             </c:if>
                         </c:otherwise>
