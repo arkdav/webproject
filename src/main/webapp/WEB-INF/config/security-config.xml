@@ -10,12 +10,14 @@
     <http auto-config="true">
         <intercept-url pattern="/" access="permitAll()"/>
         <intercept-url pattern="/home" access="permitAll()"/>
-        <intercept-url pattern="/basket" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/basket" access="hasRole('ROLE_CUSTOMER')"/>
         <intercept-url pattern="/catalog" access="permitAll()"/>
-        <intercept-url pattern="/userdata" access="hasRole('ROLE_USER')"/>
-        <intercept-url pattern="/userorders" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/userdata" access="hasRole('ROLE_CUSTOMER')"/>
+        <intercept-url pattern="/addtobasket" access="hasRole('ROLE_CUSTOMER')"/>
+        <intercept-url pattern="/userorders" access="hasRole('ROLE_CUSTOMER')"/>
         <intercept-url pattern="/admindata" access="hasRole('ROLE_ADMIN')"/>
-        <form-login login-page="/login" default-target-url="/userdata"
+        <intercept-url pattern="/businessdata" access="hasRole('ROLE_BUSINESS_USER')"/>
+        <form-login login-page="/login" default-target-url="/catalog"
                         authentication-failure-url="/login?error"
                         username-parameter="username" password-parameter="password"/>
         <logout logout-url="/logout" logout-success-url="/home" invalidate-session="true"/>
@@ -41,6 +43,7 @@
     <b:bean id="securityFacade" class="com.marpen.shop.facade.impl.SecurityFacadeImpl">
         <b:constructor-arg name="securityService" ref="securityService"/>
     </b:bean>
+
     <b:bean id="securityService" class="com.marpen.shop.service.impl.SecurityServiceImpl">
         <b:constructor-arg name="authenticationManager" ref="authenticationManager"/>
         <b:constructor-arg name="userService" ref="userService"/>
