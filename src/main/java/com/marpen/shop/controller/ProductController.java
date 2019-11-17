@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.jsp.PageContext;
+
 
 @Controller
 public class ProductController {
@@ -48,8 +50,8 @@ public class ProductController {
     public String productData(@PathVariable("product_id") int productId,
                               Model model) {
         model.addAttribute("productinf", this.productFacade.getProductById(productId));
-        model.addAttribute("images", this.productFacade.getImageListByProductId(productId));
         return "productdata";
     }
 
 }
+
