@@ -22,7 +22,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List <Order> getOrdersByUserId(int userId) {
-        String sql = "select * from order where user_id like :user_id";
+        String sql = "select * from orders where user_id like :user_id";
         List<Order> orders = currentSession().createSQLQuery(sql).addEntity(Order.class).setParameter("user_id", userId).list();
         return orders;
     }

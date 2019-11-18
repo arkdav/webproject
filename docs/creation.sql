@@ -126,7 +126,7 @@ DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
 
-CREATE TABLE `webdb`.`order` (
+CREATE TABLE `webdb`.`orders` (
   `order_id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `date` DATE NOT NULL,
