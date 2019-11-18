@@ -143,7 +143,7 @@ CREATE TABLE `webdb`.`orderentry` (
   `product_id` INT NOT NULL,
   `amount` INT NOT NULL,
   PRIMARY KEY (`orderentry_id`),
-  FOREIGN KEY (`order_id`) REFERENCES `webdb`.`order`(`order_id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (`order_id`) REFERENCES `webdb`.`orders`(`order_id`) ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (`product_id`) REFERENCES `webdb`.`products`(`product_id`) ON UPDATE CASCADE ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8

@@ -25,7 +25,7 @@ public class OrderEntryDaoImpl implements OrderEntryDao {
     @Override
     public List<OrderEntry> getOrderEntriesByOrderId(int orderId) {
         String sql = "select * from orderentry where order_id like :order_id";
-        List<OrderEntry> orderEntries = currentSession().createSQLQuery(sql).addEntity(OrderEntry.class).setParameter("cart_id", orderId).list();
+        List<OrderEntry> orderEntries = currentSession().createSQLQuery(sql).addEntity(OrderEntry.class).setParameter("order_id", orderId).list();
         return orderEntries;
     }
 

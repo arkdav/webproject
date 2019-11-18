@@ -29,6 +29,7 @@ public class CartOrderController {
 
     @RequestMapping(value = "/addtobasket", method = RequestMethod.POST)
     public String addToCart(@RequestParam(value = "product_id") int productId) {
+        CartDto cartDto = cartFacade.getCartByUserId(getUserId());
         cartFacade.addProductToCart(getUserId(), productId);
         return "redirect:/basket";
     }
