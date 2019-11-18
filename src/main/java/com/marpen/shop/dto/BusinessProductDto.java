@@ -1,23 +1,24 @@
 package com.marpen.shop.dto;
 
-
-public class ProductDto {
+public class BusinessProductDto {
 
     private int productId;
     private String name;
     private String description;
     private String imageLink;
     private String price;
+    private String catalogVersion;
 
-    public ProductDto() {
+    public BusinessProductDto() {
     }
 
-    public ProductDto(int productId, String name, String description, String imageLink, String price) {
+    public BusinessProductDto(int productId, String name, String description, String imageLink, String price, String catalogVersion) {
         this.productId = productId;
         this.name = name;
         this.description = description;
         this.imageLink = imageLink;
         this.price = price;
+        this.catalogVersion=catalogVersion;
     }
 
 
@@ -60,4 +61,9 @@ public class ProductDto {
     public void setPrice(String price) {
         this.price = price;
     }
+
+    public String getCatalogVersion() { return catalogVersion; }
+
+    public void setCatalogVersion(String catalogVersion) { this.catalogVersion = catalogVersion; }
+
 }

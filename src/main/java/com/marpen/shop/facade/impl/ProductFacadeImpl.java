@@ -1,10 +1,11 @@
 package com.marpen.shop.facade.impl;
 
-import com.marpen.shop.dto.ImageDto;
+import com.marpen.shop.dto.BusinessProductDto;
 import com.marpen.shop.dto.PageDto;
 import com.marpen.shop.dto.ProductDto;
 import com.marpen.shop.facade.ProductFacade;
 import com.marpen.shop.model.Product;
+import com.marpen.shop.service.CatalogVersionService;
 import com.marpen.shop.service.PriceService;
 import com.marpen.shop.service.ProductService;
 
@@ -15,27 +16,22 @@ public class ProductFacadeImpl implements ProductFacade {
 
     private ProductService productService;
     private PriceService priceService;
+    private CatalogVersionService catalogVersionService;
 
-    public ProductFacadeImpl(ProductService productService, PriceService priceService) {
+    public ProductFacadeImpl(ProductService productService, PriceService priceService, CatalogVersionService catalogVersionService) {
         this.productService = productService;
         this.priceService = priceService;
+        this.catalogVersionService=catalogVersionService;
     }
 
     @Override
-    public List<ProductDto> getCatalogList(int pageId, int productsPerPage) {
-        List<Product> products = this.productService.getProductsListByPage(pageId, productsPerPage);
-        List<ProductDto> list = new ArrayList<>(products.size());
-        for (Product product :
-                products) {
-            ProductDto pr = getProductDtoFromProduct(product);
-            list.add(pr);
+    public List<ProductDto> getCatalogList(String searchName, int pageId, int productsPerPage) {
+        List<Product> products;
+        if(searchName==null){
+            products = this.productService.getProductsListByPage(pageId, productsPerPage);
+        } else{
+            products = this.productService.getProductsListByName(searchName, pageId, productsPerPage);
         }
-        return list;
-    }
-
-    @Override
-    public List<ProductDto> getCatalogListSearch(String searchName, int pageId, int productsPerPage) {
-        List<Product> products = this.productService.getProductsListByName(searchName, pageId, productsPerPage);
         List<ProductDto> list = new ArrayList<>(products.size());
         for (Product product :
                 products) {
@@ -52,15 +48,26 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
-    public List<PageDto> getIdList(int productsPerPage) {
-        int amountOfProducts = this.productService.getAmountOfProducts();
+    public List<PageDto> getIdList(String searchName, int productsPerPage) {
+        int amountOfProducts;
+        if(searchName==null){
+            amountOfProducts = this.productService.getAmountOfProducts();
+        } else {
+            amountOfProducts = this.productService.getAmountOfProductsByName(searchName);
+        }
         return getPageDtoList(amountOfProducts,productsPerPage);
     }
 
     @Override
-    public List<PageDto> getIdListSearch(final String searchName, int productsPerPage) {
-        int amountOfProducts = this.productService.getAmountOfProductsByName(searchName);
-        return getPageDtoList(amountOfProducts,productsPerPage);
+    public List<BusinessProductDto> getProductsList(){
+        List<Product> products=productService.getProductsList();
+        List<BusinessProductDto> list = new ArrayList<>(products.size());
+        for (Product product :
+                products) {
+            BusinessProductDto pr = getBusinessProductDtoFromProduct(product);
+            list.add(pr);
+        }
+        return list;
     }
 
     private ProductDto getProductDtoFromProduct(Product product) {
@@ -68,8 +75,19 @@ public class ProductFacadeImpl implements ProductFacade {
                 product.getName(),
                 product.getDescription(),
                 product.getImageLink(),
-                priceService.getPriceByProductId(product.getProductId()).getPrice()
+                Double.toString(priceService.getPriceByProductId(product.getProductId()).getPrice())
         );
+    }
+
+    private BusinessProductDto getBusinessProductDtoFromProduct(Product product) {
+        BusinessProductDto businessProductDto=new BusinessProductDto();
+        businessProductDto.setProductId(product.getProductId());
+        businessProductDto.setName(product.getName());
+        businessProductDto.setDescription( product.getDescription());
+        businessProductDto.setImageLink(product.getImageLink());
+        businessProductDto.setPrice(Double.toString(priceService.getPriceByProductId(product.getProductId()).getPrice()));
+        businessProductDto.setCatalogVersion(catalogVersionService.getCatalogVersionNameById(product.getCatverId()));
+        return businessProductDto;
     }
 
     private List<PageDto> getPageDtoList(int amountOfProducts, int productsPerPage){

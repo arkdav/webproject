@@ -55,16 +55,12 @@ public class CartOrderController {
 
     @RequestMapping(value = "/userorders", method = RequestMethod.GET)
     public String order(Model model) {
-        //model.addAttribute("orderList");
+        model.addAttribute("orders", orderFacade.getOrdersByUserId(getUserId()));
         return "userorders";
     }
 
     private int getUserId() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return userFacade.getUserInformation(auth.getName()).getUserId();
-    }
-
-    private String getUserLogin() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

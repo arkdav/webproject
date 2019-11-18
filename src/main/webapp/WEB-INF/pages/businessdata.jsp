@@ -19,8 +19,28 @@
 <body>
 <%@include file="header.jsp" %>
 <main>
-    <div class="main-block">
-    </div>
+    <c:if test="${!empty productsList}">
+            <c:forEach items="${productsList}" var="product">
+                <div class="product col-8">
+                    <div><a href="/productdata/${product.productId}"><tag:message code="basket.product"/> ${product.productId}<a/></div>
+                    <div><tag:message code="basket.information"/> ${product.name}</div>
+                    <div><tag:message code="basket.productprice"/> ${product.price}$</div>
+                    <div><tag:message code="basket.amount"/> ${product.description}</div>
+                    <div><tag:message code="basket.totalproductprice"/> ${product.imageLink}</div>
+
+                    <form class="form-inline my-2 my-lg-0" method="post" action="${pageContext.request.contextPath}/basket?product_id=${product.productDto.productId}" >
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <button type="submit" class="btn btn-outline-success my-2 my-sm-0" ><tag:message code="product.removeFromBasket"/></button>
+                    </form>
+                </div>
+            </c:forEach>
+            <div class="product col-8"><tag:message code="basket.totalprice"/> ${basketList.cartPrice}$</div>
+            <form class="form-inline my-2 my-lg-0" method="post" action="${pageContext.request.contextPath}/order">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-outline-success my-2 my-sm-0"><tag:message
+                        code="basket.checkout"/></button>
+            </form>
+    </c:if>
 </main>
 <%@include file="footer.jsp" %>
 </body>

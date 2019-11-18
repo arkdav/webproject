@@ -18,17 +18,20 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void addProduct(Product product) {
-        this.productDao.addProduct(product);
+        this.productDao.create(product);
     }
 
     @Override
     public void updateProduct(Product product) {
-        this.productDao.updateProduct(product);
+        this.productDao.update(product);
     }
 
     @Override
     public void deleteProduct(int productId) {
-        this.productDao.deleteProduct(productId);
+        Product product=productDao.getProductById(productId);
+        if(product!=null){
+            this.productDao.delete(product);
+        }
     }
 
     @Override
@@ -38,14 +41,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsListByPage(int pageId, int productsPerPage) {
+    public List<Product> getProductsList() {
+        return this.productDao.getProductsList();
+    }
 
+    @Override
+    public List<Product> getProductsListByPage(int pageId, int productsPerPage) {
         return this.productDao.getProductsListByPage(pageId,productsPerPage);
     }
 
     @Override
     public List<Product> getProductsListByName(String name, int pageId, int productsPerPage){
-
         return productDao.getProductsListByName(name, pageId, productsPerPage);
     }
 

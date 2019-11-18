@@ -4,15 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class CartDto {
-
+public class OrderDto {
     private int userId;
-    private int cartId;
+    private int orderId;
     private String date;
-    private List<CartProductDto> products;
-    private Double cartPrice;
+    private List<OrderProductDto> products;
+    private Double orderPrice;
 
-    public CartDto() {
+    public OrderDto() {
     }
 
     public int getUserId() {
@@ -23,12 +22,12 @@ public class CartDto {
         this.userId = userId;
     }
 
-    public int getCartId() {
-        return cartId;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setCartId(int cartId) {
-        this.cartId = cartId;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public String getDate() {
@@ -40,20 +39,20 @@ public class CartDto {
         this.date = formatForDate.format(date);
     }
 
-    public List<CartProductDto> getProducts() {
+    public List<OrderProductDto> getProducts() {
         return products;
     }
 
-    public void setProducts(List<CartProductDto> products) {
+    public void setProducts(List<OrderProductDto> products) {
         this.products = products;
     }
 
-    public Double getCartPrice() {
-        return cartPrice;
+    public Double getOrderPrice() {
+        return orderPrice;
     }
 
-    public void setCartPrice(Double cartPrice) {
-        //String formattedDouble=String.format("%.2f", cartPrice);
-        this.cartPrice = cartPrice;
+    public void setOrderPrice(Double orderPrice) {
+        //String formattedDouble = String.format("%.2f", orderPrice);
+        this.orderPrice = orderPrice;
     }
 }

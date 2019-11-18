@@ -10,6 +10,13 @@
     <bean id="productService" class="com.marpen.shop.service.impl.ProductServiceImpl">
         <constructor-arg name="productDao" ref="productDao"/>
     </bean>
+    <!-- CatalogVersionDao and CatalogVersionService beans -->
+    <bean id="catalogVersionDao" class="com.marpen.shop.dao.impl.CatalogVersionDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="catalogVersionService" class="com.marpen.shop.service.impl.CatalogVersionServiceImpl">
+        <constructor-arg name="catalogVersionDao" ref="catalogVersionDao"/>
+    </bean>
     <!-- PriceDao and PriceService beans -->
     <bean id="priceDao" class="com.marpen.shop.dao.impl.PriceDaoImpl">
         <constructor-arg name="sessionFactory" ref="sessionFactory" />
@@ -53,6 +60,7 @@
     <bean id="productFacade" class="com.marpen.shop.facade.impl.ProductFacadeImpl">
         <constructor-arg name="productService" ref="productService"/>
         <constructor-arg name="priceService" ref="priceService"/>
+        <constructor-arg name="catalogVersionService" ref="catalogVersionService"/>
     </bean>
 
     <!-- CartFacade bean -->
@@ -67,6 +75,7 @@
         <constructor-arg name="orderService" ref="orderService"/>
         <constructor-arg name="orderEntryService" ref="orderEntryService"/>
         <constructor-arg name="cartFacade" ref="cartFacade"/>
+        <constructor-arg name="productFacade" ref="productFacade"/>
     </bean>
 
     <!-- CartOrderController bean -->

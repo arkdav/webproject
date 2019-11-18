@@ -7,19 +7,21 @@ import java.util.List;
 public interface ProductDao {
 
 
-        void addProduct(Product product);
+    void create(Product product);
 
-        void updateProduct(Product product);
+    void update(Product product);
 
-        void deleteProduct(int productId);
+    void delete(Product product);
 
-        Product getProductById(int productId);
+    Product getProductById(int productId);
 
-        List<Product> getProductsListByPage(int pageId, int productsPerPage);
+    List<Product> getProductsList();
 
-        List<Product> getProductsListByName(String name, int pageId, int productsPerPage);
+    List<Product> getProductsListByPage(int pageId, int productsPerPage);
 
-        int getAmountOfProducts();
+    List<Product> getProductsListByName(String name, int pageId, int productsPerPage);
 
-        int getAmountOfProductsByName(String name);
+    int getAmountOfProducts();
+
+    int getAmountOfProductsByName(String name);
 }

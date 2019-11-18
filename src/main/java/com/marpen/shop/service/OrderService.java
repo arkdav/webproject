@@ -10,6 +10,8 @@ public interface OrderService {
 
     Order  getOrderByOrderId(int orderId);
 
+    int  getOrderId(Order order);
+
     void save(Order order);
 
 }

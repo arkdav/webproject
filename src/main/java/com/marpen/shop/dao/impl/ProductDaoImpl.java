@@ -20,21 +20,18 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public void addProduct(Product product) {
+    public void create(Product product) {
        currentSession().persist(product);
     }
 
     @Override
-    public void updateProduct(Product product){
+    public void update(Product product){
         currentSession().update(product);
     }
 
     @Override
-    public void deleteProduct(int productId){
-        Product product=(Product) currentSession().load(Product.class,productId);
-        if(product!=null){
-            currentSession().delete(product);
-        }
+    public void delete(Product product){
+        currentSession().delete(product);
     }
 
     @Override
@@ -45,11 +42,18 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     @SuppressWarnings("unchecked")
+    public List<Product> getProductsList(){
+        String sql="select * from products";
+        List<Product> products=currentSession().createSQLQuery(sql).addEntity(Product.class).list();
+        return products;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public List<Product> getProductsListByPage(int pageId, int productsPerPage){
         String sql="select * from products where catver_id=1 limit "+(pageId-1)+","+productsPerPage;
         List<Product> products=currentSession().createSQLQuery(sql).addEntity(Product.class).list();
        return products;
-
     }
 
     @Override

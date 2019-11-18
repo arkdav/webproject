@@ -31,11 +31,6 @@ public class UserController {
         return "admindata";
     }
 
-    @RequestMapping(value = "/businessdata", method = RequestMethod.GET)
-    public String getBusinessPage() {
-        return "businessdata";
-    }
-
     private int getUserId() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return userFacade.getUserInformation(auth.getName()).getUserId();

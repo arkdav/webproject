@@ -29,14 +29,8 @@ public class ProductController {
         if (pageid != 1) {
             pageid = (pageid - 1) * productsPerPage + 1;
         }
-        if (searchName == null) {
-            model.addAttribute("productsList", this.productFacade.getCatalogList(pageid, productsPerPage));
-            model.addAttribute("pagesList", this.productFacade.getIdList(productsPerPage));
-        } else {
-            model.addAttribute("search", searchName);
-            model.addAttribute("productsList", this.productFacade.getCatalogListSearch(searchName, pageid, productsPerPage));
-            model.addAttribute("pagesList", this.productFacade.getIdListSearch(searchName, productsPerPage));
-        }
+        model.addAttribute("productsList", this.productFacade.getCatalogList(searchName, pageid, productsPerPage));
+        model.addAttribute("pagesList", this.productFacade.getIdList(searchName, productsPerPage));
         return "catalog";
     }
 
@@ -51,6 +45,12 @@ public class ProductController {
                               Model model) {
         model.addAttribute("productinf", this.productFacade.getProductById(productId));
         return "productdata";
+    }
+
+    @RequestMapping(value = "/businessdata", method = RequestMethod.GET)
+    public String getBusinessPage(Model model) {
+        model.addAttribute("productsList", this.productFacade.getProductsList());
+        return "businessdata";
     }
 
 }

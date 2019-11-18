@@ -51,11 +51,11 @@ public class CartFacadeImpl implements CartFacade {
         if (cartEntryProduct != null) {
             cartEntryProduct.setAmount(cartEntryProduct.getAmount() + 1);
             cartEntryService.updateCartEntry(cartEntryProduct);
-            newTotalPrice=cart.getTotalPrice()+productFacade.getProductById(productId).getPrice();
+            newTotalPrice=cart.getTotalPrice()+Double.valueOf(productFacade.getProductById(productId).getPrice());
         } else {
             cartEntryService.save(cart.getCartId(), productId);
             cartEntryProduct=cartEntryService.getCartEntryByProductId(cart.getCartId(),productId);
-            newTotalPrice=cart.getTotalPrice()+cartEntryProduct.getAmount()*productFacade.getProductById(productId).getPrice();
+            newTotalPrice=cart.getTotalPrice()+cartEntryProduct.getAmount()*Double.valueOf(productFacade.getProductById(productId).getPrice());
         }
         cart.setTotalPrice(newTotalPrice);
         cartService.updateCart(cart);
@@ -66,7 +66,7 @@ public class CartFacadeImpl implements CartFacade {
         Cart cart = cartService.getCartByUserId(userId);
         CartEntry cartEntry = cartEntryService.getCartEntryByProductId(cart.getCartId(), productId);
         cartEntryService.removeCartEntry(cartEntry);
-        cart.setTotalPrice(cart.getTotalPrice()-cartEntry.getAmount()*productFacade.getProductById(cartEntry.getProductId()).getPrice());
+        cart.setTotalPrice(cart.getTotalPrice()-cartEntry.getAmount()*Double.valueOf(productFacade.getProductById(productId).getPrice()));
         cartService.updateCart(cart);
     }
 
@@ -81,11 +81,8 @@ public class CartFacadeImpl implements CartFacade {
         CartDto cartDto = new CartDto();
         cartDto.setCartId(cart.getCartId());
         cartDto.setUserId(cart.getUserId());
-        Date date=cart.getDate();
-        SimpleDateFormat formatForDate = new SimpleDateFormat("dd.MM.yyyy");
-        cartDto.setDate(formatForDate.format(date));
-        String formattedDouble=String.format("%.2f", cart.getTotalPrice());
-        cartDto.setCartPrice(formattedDouble);
+        cartDto.setDate(cart.getDate());
+        cartDto.setCartPrice(cart.getTotalPrice());
         List<CartProductDto> products = new ArrayList<>();
         if (!cartEntries.isEmpty()) {
             for (CartEntry cartEntry :
@@ -94,7 +91,7 @@ public class CartFacadeImpl implements CartFacade {
                 cartProductDto.setAmount(cartEntry.getAmount());
                 ProductDto productDto = productFacade.getProductById(cartEntry.getProductId());
                 cartProductDto.setProductDto(productDto);
-                cartProductDto.setTotalPrice(cartEntry.getAmount() * productDto.getPrice());
+                cartProductDto.setTotalPrice(cartEntry.getAmount()*Double.valueOf(productDto.getPrice()));
                 products.add(cartProductDto);
             }
         }

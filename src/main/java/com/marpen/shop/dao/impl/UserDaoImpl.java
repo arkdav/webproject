@@ -48,4 +48,13 @@ public class UserDaoImpl implements UserDao {
         return users;
     }
 
+    @Override
+    public void update(User user){
+        currentSession().update(user);
+    }
+
+    @Override
+    public void delete(User user){
+        currentSession().delete(user);
+    }
 }

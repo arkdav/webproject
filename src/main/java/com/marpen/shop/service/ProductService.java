@@ -15,6 +15,8 @@ public interface ProductService {
 
     Product getProductById(int productId);
 
+    List<Product> getProductsList();
+
     List<Product> getProductsListByPage(int pageid, int productsPerPage);
 
     List<Product> getProductsListByName(String name, int pageid, int productsPerPage);

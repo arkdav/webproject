@@ -13,4 +13,8 @@ public interface UserDao {
     void save(User user);
 
     List<User> getUserList(int roleId);
+
+    void update(User user);
+
+    void delete(User user);
 }

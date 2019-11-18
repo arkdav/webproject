@@ -7,4 +7,8 @@ public interface UserService {
     void save(User user);
 
     User getUserByUsername(String username);
+
+    void update(User user);
+
+    void delete(User user);
 }
