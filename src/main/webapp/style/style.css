@@ -67,3 +67,28 @@ div{
     border-bottom: 1px solid gray;
     padding-bottom: 5px;
 }
+.cart-product-img{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+.cart-product-img img{
+    width: 100%;
+    height: auto;
+}
+.cart-product-name a{
+    color: black;
+    font-size: larger;
+}
+.right-content-button{
+    text-align: center;
+}
+.cart-product{
+    margin-bottom: 20px;
+}
+.cart-product-amount input{
+    width: 30px;
+}
+.search input{
+    width: 100%;
+}
