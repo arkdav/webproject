@@ -38,7 +38,7 @@ public class OrderEntry {
         return orderEntryId;
     }
 
-    public void setEntryEntryId(int orderEntryId) {
+    public void setOrderEntryId(int orderEntryId) {
         this.orderEntryId = orderEntryId;
     }
 
