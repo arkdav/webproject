@@ -16,14 +16,15 @@ public class RegistrationValidator implements Validator {
 
     private UserService userService;
 
-    public RegistrationValidator(UserService userService){
-        this.userService=userService;
+    public RegistrationValidator(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
     public boolean supports(Class<?> aClass) {
         return RegistrationDto.class.equals(aClass);
     }
+
     @Override
     public void validate(Object o, Errors errors) {
         RegistrationDto user = (RegistrationDto) o;
@@ -48,7 +49,7 @@ public class RegistrationValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "birthdate", "Required");
         try {
-            Date date1=new SimpleDateFormat("dd.MM.yyyy").parse(user.getBirthdate());
+            Date date1 = new SimpleDateFormat("dd.MM.yyyy").parse(user.getBirthdate());
         } catch (ParseException e) {
             errors.rejectValue("birthdate", "Format.birthdate");
         }
