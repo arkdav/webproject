@@ -19,5 +19,15 @@ public class PriceServiceImpl implements PriceService {
         return this.priceDao.getPriceByProductId(productId);
     }
 
+    @Override
+    public void savePrice(Price price){
+        priceDao.save(price);
+    }
+
+    @Override
+    public void updatePrice(Price price){
+        priceDao.update(price);
+    }
+
 
 }

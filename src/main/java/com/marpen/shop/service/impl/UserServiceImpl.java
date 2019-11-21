@@ -19,13 +19,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
-        user.setRoleId(roleDao.getRoleIdByRole("ROLE_USER"));
+        user.setRoleId(roleDao.getRoleIdByRole("ROLE_CUSTOMER"));
         userDao.save(user);
     }
 
     @Override
     public User getUserByUsername(String username) {
         return userDao.getUserByUsername(username);
+    }
+
+    @Override
+    public User getUserById(int userId) {
+        return userDao.getUserById(userId);
     }
 
     @Override

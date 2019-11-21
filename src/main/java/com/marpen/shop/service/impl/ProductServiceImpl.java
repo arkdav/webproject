@@ -1,7 +1,7 @@
 package com.marpen.shop.service.impl;
 
-import com.marpen.shop.model.Product;
 import com.marpen.shop.dao.ProductDao;
+import com.marpen.shop.model.Product;
 import com.marpen.shop.service.ProductService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,13 +12,13 @@ public class ProductServiceImpl implements ProductService {
 
     private ProductDao productDao;
 
-    public ProductServiceImpl(ProductDao productDao){
+    public ProductServiceImpl(ProductDao productDao) {
         this.productDao = productDao;
     }
 
     @Override
-    public void addProduct(Product product) {
-        this.productDao.create(product);
+    public void createProduct(Product product) {
+        this.productDao.save(product);
     }
 
     @Override
@@ -28,16 +28,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(int productId) {
-        Product product=productDao.getProductById(productId);
-        if(product!=null){
+        Product product = productDao.get(productId);
+        if (product != null) {
             this.productDao.delete(product);
         }
     }
 
     @Override
     public Product getProductById(int productId) {
-
-        return this.productDao.getProductById(productId);
+        return this.productDao.get(productId);
     }
 
     @Override
@@ -46,22 +45,27 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsListByPage(int pageId, int productsPerPage) {
-        return this.productDao.getProductsListByPage(pageId,productsPerPage);
+    public List<Product> getOnlineProductsListByPage(int pageId, int productsPerPage) {
+        return this.productDao.getOnlineProductsListByPage(pageId, productsPerPage);
     }
 
     @Override
-    public List<Product> getProductsListByName(String name, int pageId, int productsPerPage){
-        return productDao.getProductsListByName(name, pageId, productsPerPage);
+    public List<Product> getOnlineProductsListByName(String name, int pageId, int productsPerPage) {
+        return productDao.getOnlineProductsListByName(name, pageId, productsPerPage);
     }
 
     @Override
-    public int getAmountOfProducts(){
-        return  productDao.getAmountOfProducts();
+    public int getOnlineAmountOfProducts() {
+        return productDao.getOnlineAmountOfProducts();
     }
 
     @Override
-    public int getAmountOfProductsByName(String name){
-        return productDao.getAmountOfProductsByName(name);
+    public int getOnlineAmountOfProductsByName(String name) {
+        return productDao.getOnlineAmountOfProductsByName(name);
+    }
+
+    @Override
+    public List<Integer> getIdList() {
+        return productDao.getIdList();
     }
 }

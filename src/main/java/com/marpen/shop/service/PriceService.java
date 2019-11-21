@@ -6,4 +6,8 @@ public interface PriceService {
 
     Price getPriceByProductId(int productId);
 
+    void savePrice(Price price);
+
+    void updatePrice(Price price);
+
 }

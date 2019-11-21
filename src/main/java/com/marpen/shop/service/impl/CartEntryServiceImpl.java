@@ -11,17 +11,17 @@ import java.util.List;
 public class CartEntryServiceImpl implements CartEntryService {
     private CartEntryDao cartEntryDao;
 
-    public CartEntryServiceImpl(CartEntryDao cartEntryDao){
-        this.cartEntryDao=cartEntryDao;
+    public CartEntryServiceImpl(CartEntryDao cartEntryDao) {
+        this.cartEntryDao = cartEntryDao;
     }
 
     @Override
-    public List <CartEntry> getCartEntriesByCartId(int cartId) {
+    public List<CartEntry> getCartEntriesByCartId(int cartId) {
         return cartEntryDao.getCartEntriesByCartId(cartId);
     }
 
     @Override
-    public CartEntry getCartEntryByProductId(int cartId, int productId){
+    public CartEntry getCartEntryByProductId(int cartId, int productId) {
         return cartEntryDao.getCartEntryByProductId(cartId, productId);
     }
 
@@ -32,7 +32,7 @@ public class CartEntryServiceImpl implements CartEntryService {
 
     @Override
     public void save(int cartId, int productId, int amount) {
-        CartEntry cartEntry =new CartEntry();
+        CartEntry cartEntry = new CartEntry();
         cartEntry.setCartId(cartId);
         cartEntry.setProductId(productId);
         cartEntry.setAmount(amount);
@@ -41,7 +41,7 @@ public class CartEntryServiceImpl implements CartEntryService {
 
     @Override
     public void save(int cartId, int productId) {
-        CartEntry cartEntry =new CartEntry();
+        CartEntry cartEntry = new CartEntry();
         cartEntry.setCartId(cartId);
         cartEntry.setProductId(productId);
         cartEntry.setAmount(1);
@@ -49,21 +49,21 @@ public class CartEntryServiceImpl implements CartEntryService {
     }
 
     @Override
-    public void updateCartEntry(CartEntry cartEntry){
+    public void updateCartEntry(CartEntry cartEntry) {
         cartEntryDao.update(cartEntry);
     }
 
     @Override
-    public void removeCartEntry(CartEntry cartEntry){
-        cartEntryDao.remove(cartEntry);
+    public void removeCartEntry(CartEntry cartEntry) {
+        cartEntryDao.delete(cartEntry);
     }
 
     @Override
     public void removeCartEntries(int cartId) {
-        List<CartEntry> cartEntries=cartEntryDao.getCartEntriesByCartId(cartId);
-        for (CartEntry cartEntry:
-             cartEntries) {
-            cartEntryDao.remove(cartEntry);
+        List<CartEntry> cartEntries = cartEntryDao.getCartEntriesByCartId(cartId);
+        for (CartEntry cartEntry :
+                cartEntries) {
+            cartEntryDao.delete(cartEntry);
         }
     }
 }

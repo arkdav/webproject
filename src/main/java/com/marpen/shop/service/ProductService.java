@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    void addProduct(Product product);
+    void createProduct(Product product);
 
     void updateProduct(Product product);
 
@@ -17,11 +17,13 @@ public interface ProductService {
 
     List<Product> getProductsList();
 
-    List<Product> getProductsListByPage(int pageid, int productsPerPage);
+    List<Product> getOnlineProductsListByPage(int pageid, int productsPerPage);
 
-    List<Product> getProductsListByName(String name, int pageid, int productsPerPage);
+    List<Product> getOnlineProductsListByName(String name, int pageid, int productsPerPage);
 
-    int getAmountOfProducts();
+    int getOnlineAmountOfProducts();
 
-    int getAmountOfProductsByName(String name);
+    int getOnlineAmountOfProductsByName(String name);
+
+    List<Integer> getIdList();
 }
