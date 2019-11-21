@@ -12,7 +12,7 @@
         <intercept-url pattern="/home" access="permitAll()"/>
         <intercept-url pattern="/basket" access="hasRole('ROLE_CUSTOMER')"/>
         <intercept-url pattern="/catalog" access="permitAll()"/>
-        <intercept-url pattern="/userdata" access="hasRole('ROLE_CUSTOMER')"/>
+        <intercept-url pattern="/userdata" access="hasAnyRole('ROLE_CUSTOMER','ROLE_BUSINESS_USER')"/>
         <intercept-url pattern="/addtobasket" access="hasRole('ROLE_CUSTOMER')"/>
         <intercept-url pattern="/userorders" access="hasRole('ROLE_CUSTOMER')"/>
         <intercept-url pattern="/admindata" access="hasRole('ROLE_ADMIN')"/>

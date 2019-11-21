@@ -55,19 +55,60 @@
 
     <!-- ProductController and ProductFacadeImpl beans -->
     <bean id="productController" class="com.marpen.shop.controller.ProductController">
-        <constructor-arg ref="productFacade"/>
+        <constructor-arg name="productFacade" ref="productFacade"/>
+        <constructor-arg name="businessProductValidator" ref="businessProductValidator"/>
+        <constructor-arg name="productCreationValidator" ref="productCreationValidator"/>
     </bean>
+
+    <bean id="businessProductValidator" class="com.marpen.shop.validator.BusinessProductValidator" />
+    <bean id="productCreationValidator" class="com.marpen.shop.validator.ProductCreationValidator" />
+
     <bean id="productFacade" class="com.marpen.shop.facade.impl.ProductFacadeImpl">
         <constructor-arg name="productService" ref="productService"/>
         <constructor-arg name="priceService" ref="priceService"/>
+        <constructor-arg name="toProductDto" ref="toProductDto"/>
+        <constructor-arg name="toBusinessProductDto" ref="toBusinessProductDto"/>
+        <constructor-arg name="fromBusinessProductDto" ref="fromBusinessProductDto"/>
+        <constructor-arg name="fromBusinessProductDtoToPrice" ref="fromBusinessProductDtoToPrice"/>
+        <constructor-arg name="fromBusinessProductCreationDto" ref="fromBusinessProductCreationDto"/>
+        <constructor-arg name="fromBusinessProductCreationDtoToPrice" ref="fromBusinessProductCreationDtoToPrice"/>
+    </bean>
+    <bean id="toBusinessProductDto" class="com.marpen.shop.converter.forms.ToBusinessProductDto">
+        <constructor-arg name="priceService" ref="priceService"/>
         <constructor-arg name="catalogVersionService" ref="catalogVersionService"/>
     </bean>
+    <bean id="fromBusinessProductDto" class="com.marpen.shop.converter.forms.FromBusinessProductDto">
+        <constructor-arg name="productService" ref="productService"/>
+        <constructor-arg name="catalogVersionService" ref="catalogVersionService"/>
+    </bean>
+    <bean id="fromBusinessProductDtoToPrice" class="com.marpen.shop.converter.forms.FromBusinessProductDtoToPrice">
+        <constructor-arg name="priceService" ref="priceService"/>
+    </bean>
+    <bean id="fromBusinessProductCreationDto" class="com.marpen.shop.converter.forms.FromBusinessProductCreationDto">
+        <constructor-arg name="catalogVersionService" ref="catalogVersionService"/>
+    </bean>
+    <bean id="fromBusinessProductCreationDtoToPrice" class="com.marpen.shop.converter.forms.FromBusinessProductCreationDtoToPrice"> </bean>
 
     <!-- CartFacade bean -->
     <bean id="cartFacade" class="com.marpen.shop.facade.impl.CartFacadeImpl">
         <constructor-arg name="cartService" ref="cartService"/>
         <constructor-arg name="cartEntryService" ref="cartEntryService"/>
         <constructor-arg name="productFacade" ref="productFacade"/>
+        <constructor-arg name="toCartDto" ref="toCartDto"/>
+    </bean>
+
+    <bean id="toCartDto" class="com.marpen.shop.converter.ToCartDto">
+        <constructor-arg name="cartEntryService" ref="cartEntryService"/>
+        <constructor-arg name="toCartProductDto" ref="toCartProductDto"/>
+    </bean>
+
+    <bean id="toCartProductDto" class="com.marpen.shop.converter.ToCartProductDto">
+        <constructor-arg name="productService" ref="productService"/>
+        <constructor-arg name="toProductDto" ref="toProductDto"/>
+    </bean>
+
+    <bean id="toProductDto" class="com.marpen.shop.converter.ToProductDto">
+        <constructor-arg name="priceService" ref="priceService"/>
     </bean>
 
     <!-- OrderFacade bean -->
@@ -75,8 +116,22 @@
         <constructor-arg name="orderService" ref="orderService"/>
         <constructor-arg name="orderEntryService" ref="orderEntryService"/>
         <constructor-arg name="cartFacade" ref="cartFacade"/>
-        <constructor-arg name="productFacade" ref="productFacade"/>
+        <constructor-arg name="toOrderDto" ref="toOrderDto"/>
+        <constructor-arg name="fromCartDto" ref="fromCartDto"/>
+        <constructor-arg name="fromCartProductDto" ref="fromCartProductDto"/>
     </bean>
+
+    <bean id="toOrderDto" class="com.marpen.shop.converter.ToOrderDto">
+        <constructor-arg name="orderEntryService" ref="orderEntryService"/>
+        <constructor-arg name="toOrderProductDto" ref="toOrderProductDto"/>
+    </bean>
+    <bean id="toOrderProductDto" class="com.marpen.shop.converter.ToOrderProductDto">
+        <constructor-arg name="productService" ref="productService"/>
+        <constructor-arg name="toProductDto" ref="toProductDto"/>
+    </bean>
+
+    <bean id="fromCartDto" class="com.marpen.shop.converter.FromCartDto"> </bean>
+    <bean id="fromCartProductDto" class="com.marpen.shop.converter.FromCartProductDto"> </bean>
 
     <!-- CartOrderController bean -->
     <bean id="cartOrderController" class="com.marpen.shop.controller.CartOrderController">
@@ -88,13 +143,31 @@
     <!--     UserFacade bean -->
     <bean id="userFacade" class="com.marpen.shop.facade.impl.UserFacadeImpl">
         <constructor-arg name="userService" ref="userService"/>
+        <constructor-arg name="fromRegistrationDto" ref="fromRegistrationDto"/>
+        <constructor-arg name="fromUserDataDto" ref="fromUserDataDto"/>
+        <constructor-arg name="toUserDto" ref="toUserDto"/>
+    </bean>
+
+    <bean id="fromRegistrationDto" class="com.marpen.shop.converter.forms.FromRegistrationDto">
         <constructor-arg name="bCryptPasswordEncoder" ref="encoder"/>
+    </bean>
+
+    <bean id="fromUserDataDto" class="com.marpen.shop.converter.forms.FromUserDataDto">
+        <constructor-arg name="bCryptPasswordEncoder" ref="encoder"/>
+        <constructor-arg name="userService" ref="userService"/>
+    </bean>
+
+    <bean id="toUserDto" class="com.marpen.shop.converter.ToUserDto">
     </bean>
 
     <!--     UserController bean -->
     <bean id="userController" class="com.marpen.shop.controller.UserController">
         <constructor-arg name="userFacade" ref="userFacade"/>
+        <constructor-arg name="userDataValidator" ref="userDataValidator" />
     </bean>
+
+    <bean id="userDataValidator" class="com.marpen.shop.validator.UserDataValidator" />
+
 
     <!--     UserDao bean -->
     <bean id="userDao" class="com.marpen.shop.dao.impl.UserDaoImpl">
@@ -121,4 +194,9 @@
     <bean id="registrationValidator" class="com.marpen.shop.validator.RegistrationValidator">
         <constructor-arg name="userService" ref="userService"/>
     </bean>
+
+    <bean abstract="true" id="genericDao" class="com.marpen.shop.dao.impl.GenericDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
 </beans>
