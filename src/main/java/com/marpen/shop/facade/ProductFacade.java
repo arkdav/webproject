@@ -1,5 +1,6 @@
 package com.marpen.shop.facade;
 
+import com.marpen.shop.dto.BusinessProductCreationDto;
 import com.marpen.shop.dto.BusinessProductDto;
 import com.marpen.shop.dto.PageDto;
 import com.marpen.shop.dto.ProductDto;
@@ -12,8 +13,18 @@ public interface ProductFacade {
 
     ProductDto getProductById(int productId);
 
-    List<PageDto> getIdList(String searchName, int productsPerPage);
+    List<PageDto> getCatalogIdList(String searchName, int productsPerPage);
 
     List<BusinessProductDto> getProductsList();
+
+    List<Integer> getIdList();
+
+    BusinessProductDto getBusinessProductDtoById(int productId);
+
+    void deleteProduct(int product_id);
+
+    void updateProduct(BusinessProductDto businessProductDto);
+
+    void createProduct(BusinessProductCreationDto businessProductCreationDto);
 
 }

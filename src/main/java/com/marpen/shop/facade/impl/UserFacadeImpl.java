@@ -1,34 +1,41 @@
 package com.marpen.shop.facade.impl;
 
+import com.marpen.shop.converter.ToUserDto;
+import com.marpen.shop.converter.forms.FromRegistrationDto;
+import com.marpen.shop.converter.forms.FromUserDataDto;
 import com.marpen.shop.dto.RegistrationDto;
+import com.marpen.shop.dto.UserDataDto;
 import com.marpen.shop.dto.UserDto;
 import com.marpen.shop.facade.UserFacade;
 import com.marpen.shop.model.User;
 import com.marpen.shop.service.UserService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 public class UserFacadeImpl implements UserFacade {
 
     private UserService userService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private FromRegistrationDto fromRegistrationDto;
+    private FromUserDataDto fromUserDataDto;
+    private ToUserDto toUserDto;
 
-    public UserFacadeImpl(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserFacadeImpl(UserService userService, FromRegistrationDto fromRegistrationDto,
+                          FromUserDataDto fromUserDataDto, ToUserDto toUserDto) {
         this.userService = userService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.fromRegistrationDto = fromRegistrationDto;
+        this.fromUserDataDto = fromUserDataDto;
+        this.toUserDto = toUserDto;
     }
 
     @Override
-    public void save(RegistrationDto userForm) {
-        User user = null;
-        try {
-            user = fromRegistrationDtoToUser(userForm);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    public void save(RegistrationDto registrationDto) {
+        User user = fromRegistrationDto.convert(registrationDto);
         userService.save(user);
+    }
+
+    @Override
+    public void update(int userId, UserDataDto userDataDto) {
+        userDataDto.setUserId(userId);
+        User user = fromUserDataDto.convert(userDataDto);
+        userService.update(user);
     }
 
     @Override
@@ -36,32 +43,8 @@ public class UserFacadeImpl implements UserFacade {
         User user = userService.getUserByUsername(username);
         UserDto userDto = null;
         if (user != null) {
-            userDto = fromUserToUserDto(user);
+            userDto = toUserDto.convert(user);
         }
         return userDto;
-    }
-
-    public UserDto fromUserToUserDto(User user) {
-        UserDto userDto = new UserDto();
-        userDto.setUserId(user.getUserId());
-        userDto.setLogin(user.getUsername());
-        userDto.setName(user.getName());
-        userDto.setSurname(user.getSurname());
-        userDto.setEmail(user.getEmail());
-        userDto.setPhone(user.getPhone());
-        userDto.setBirthdate(new SimpleDateFormat("dd.MM.yyyy").format(user.getBirthDate()));
-        return userDto;
-    }
-
-    private User fromRegistrationDtoToUser(RegistrationDto registrationDto) throws ParseException {
-        User user = new User();
-        user.setUsername(registrationDto.getLogin());
-        user.setPassword(bCryptPasswordEncoder.encode(registrationDto.getConfirmPassword()));
-        user.setName(registrationDto.getName());
-        user.setSurname(registrationDto.getSurname());
-        user.setEmail(registrationDto.getEmail());
-        user.setPhone(registrationDto.getPhone());
-        user.setBirthDate(new SimpleDateFormat("dd.MM.yyyy").parse(registrationDto.getBirthdate()));
-        return user;
     }
 }

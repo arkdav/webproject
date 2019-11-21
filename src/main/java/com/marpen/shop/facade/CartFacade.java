@@ -8,6 +8,8 @@ public interface CartFacade {
 
     void addProductToCart(int userId, int productId);
 
+    void updateProductInCart(int userId, int productId, int productAmount);
+
     void removeProductFromCart(int userId, int productId);
 
     void removeCart(int userId);

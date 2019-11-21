@@ -1,8 +1,7 @@
 package com.marpen.shop.facade.impl;
 
+import com.marpen.shop.converter.ToCartDto;
 import com.marpen.shop.dto.CartDto;
-import com.marpen.shop.dto.CartProductDto;
-import com.marpen.shop.dto.ProductDto;
 import com.marpen.shop.facade.CartFacade;
 import com.marpen.shop.facade.ProductFacade;
 import com.marpen.shop.model.Cart;
@@ -10,54 +9,59 @@ import com.marpen.shop.model.CartEntry;
 import com.marpen.shop.service.CartEntryService;
 import com.marpen.shop.service.CartService;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 public class CartFacadeImpl implements CartFacade {
 
     private CartService cartService;
     private CartEntryService cartEntryService;
     private ProductFacade productFacade;
+    private ToCartDto toCartDto;
 
 
-    public CartFacadeImpl(CartService cartService, CartEntryService cartEntryService, ProductFacade productFacade) {
+    public CartFacadeImpl(CartService cartService, CartEntryService cartEntryService, ProductFacade productFacade,
+                          ToCartDto toCartDto) {
         this.cartService = cartService;
         this.cartEntryService = cartEntryService;
         this.productFacade = productFacade;
+        this.toCartDto = toCartDto;
     }
 
     @Override
     public CartDto getCartByUserId(int userId) {
         Cart cart = cartService.getCartByUserId(userId);
-        List<CartEntry> cartEntries;
-        if (cart != null) {
-            cartEntries = cartEntryService.getCartEntriesByCartId(cart.getCartId());
-        } else {
+        if (cart == null) {
             cartService.save(userId);
             cart = cartService.getCartByUserId(userId);
-            cartEntries = cartEntryService.getCartEntriesByCartId(cart.getCartId());
         }
-        CartDto cartDto = fromCartAndEntriesToCartDto(cart, cartEntries);
-        return cartDto;
+        return toCartDto.convert(cart);
     }
 
     @Override
     public void addProductToCart(int userId, int productId) {
         Cart cart = cartService.getCartByUserId(userId);
         CartEntry cartEntryProduct = cartEntryService.getCartEntryByProductId(cart.getCartId(), productId);
-        Double newTotalPrice;
+        double newTotalPrice;
         if (cartEntryProduct != null) {
             cartEntryProduct.setAmount(cartEntryProduct.getAmount() + 1);
             cartEntryService.updateCartEntry(cartEntryProduct);
-            newTotalPrice=cart.getTotalPrice()+Double.valueOf(productFacade.getProductById(productId).getPrice());
+            newTotalPrice = cart.getTotalPrice() + Double.parseDouble(productFacade.getProductById(productId).getPrice());
         } else {
             cartEntryService.save(cart.getCartId(), productId);
-            cartEntryProduct=cartEntryService.getCartEntryByProductId(cart.getCartId(),productId);
-            newTotalPrice=cart.getTotalPrice()+cartEntryProduct.getAmount()*Double.valueOf(productFacade.getProductById(productId).getPrice());
+            cartEntryProduct = cartEntryService.getCartEntryByProductId(cart.getCartId(), productId);
+            newTotalPrice = cart.getTotalPrice() + cartEntryProduct.getAmount() * Double.parseDouble(productFacade.getProductById(productId).getPrice());
         }
         cart.setTotalPrice(newTotalPrice);
+        cartService.updateCart(cart);
+    }
+
+    @Override
+    public void updateProductInCart(int userId, int productId, int productAmount) {
+        Cart cart = cartService.getCartByUserId(userId);
+        CartEntry cartEntryProduct = cartEntryService.getCartEntryByProductId(cart.getCartId(), productId);
+        double totalPrice = cart.getTotalPrice() - cartEntryProduct.getAmount() * Double.parseDouble(productFacade.getProductById(productId).getPrice());
+        cartEntryProduct.setAmount(productAmount);
+        cartEntryService.updateCartEntry(cartEntryProduct);
+        totalPrice += cartEntryProduct.getAmount() * Double.parseDouble(productFacade.getProductById(productId).getPrice());
+        cart.setTotalPrice(totalPrice);
         cartService.updateCart(cart);
     }
 
@@ -66,7 +70,7 @@ public class CartFacadeImpl implements CartFacade {
         Cart cart = cartService.getCartByUserId(userId);
         CartEntry cartEntry = cartEntryService.getCartEntryByProductId(cart.getCartId(), productId);
         cartEntryService.removeCartEntry(cartEntry);
-        cart.setTotalPrice(cart.getTotalPrice()-cartEntry.getAmount()*Double.valueOf(productFacade.getProductById(productId).getPrice()));
+        cart.setTotalPrice(cart.getTotalPrice() - cartEntry.getAmount() * Double.parseDouble(productFacade.getProductById(productId).getPrice()));
         cartService.updateCart(cart);
     }
 
@@ -75,27 +79,5 @@ public class CartFacadeImpl implements CartFacade {
         Cart cart = cartService.getCartByUserId(userId);
         cartEntryService.removeCartEntries(cart.getCartId());
         cartService.removeCart(userId);
-    }
-
-    private CartDto fromCartAndEntriesToCartDto(Cart cart, List<CartEntry> cartEntries) {
-        CartDto cartDto = new CartDto();
-        cartDto.setCartId(cart.getCartId());
-        cartDto.setUserId(cart.getUserId());
-        cartDto.setDate(cart.getDate());
-        cartDto.setCartPrice(cart.getTotalPrice());
-        List<CartProductDto> products = new ArrayList<>();
-        if (!cartEntries.isEmpty()) {
-            for (CartEntry cartEntry :
-                    cartEntries) {
-                CartProductDto cartProductDto = new CartProductDto();
-                cartProductDto.setAmount(cartEntry.getAmount());
-                ProductDto productDto = productFacade.getProductById(cartEntry.getProductId());
-                cartProductDto.setProductDto(productDto);
-                cartProductDto.setTotalPrice(cartEntry.getAmount()*Double.valueOf(productDto.getPrice()));
-                products.add(cartProductDto);
-            }
-        }
-        cartDto.setProducts(products);
-        return cartDto;
     }
 }
