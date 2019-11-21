@@ -1,22 +1,16 @@
 package com.marpen.shop.dto;
 
-public class BusinessProductDto {
+import org.springframework.web.multipart.MultipartFile;
 
-    private int productId;
+public class BusinessProductCreationDto {
+
     private String name;
     private String description;
     private String price;
     private String catalogVersion;
+    private MultipartFile image;
 
-    public BusinessProductDto() {
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public BusinessProductCreationDto() {
     }
 
     public String getName() {
@@ -47,4 +41,11 @@ public class BusinessProductDto {
 
     public void setCatalogVersion(String catalogVersion) { this.catalogVersion = catalogVersion; }
 
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
 }
