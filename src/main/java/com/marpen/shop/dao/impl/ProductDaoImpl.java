@@ -7,76 +7,65 @@ import org.hibernate.SessionFactory;
 
 import java.util.List;
 
-public class ProductDaoImpl implements ProductDao {
+public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDao {
 
-    private SessionFactory sessionFactory;
+    private Session session;
 
     public ProductDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory=sessionFactory;
+        if (super.getSessionFactory() == null) {
+            super.setSessionFactory(sessionFactory);
+
+        }
+        this.session = super.getSession();
     }
 
     private Session currentSession() {
-        return sessionFactory.getCurrentSession();
-    }
-
-    @Override
-    public void create(Product product) {
-       currentSession().persist(product);
-    }
-
-    @Override
-    public void update(Product product){
-        currentSession().update(product);
-    }
-
-    @Override
-    public void delete(Product product){
-        currentSession().delete(product);
-    }
-
-    @Override
-    public Product getProductById(int productId) {
-       Product p= (Product) currentSession().load(Product.class, productId);
-       return p;
+        return this.session;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Product> getProductsList(){
-        String sql="select * from products";
-        List<Product> products=currentSession().createSQLQuery(sql).addEntity(Product.class).list();
+    public List<Product> getProductsList() {
+        String sql = "select * from products order by product_id desc";
+        List<Product> products = currentSession().createSQLQuery(sql).addEntity(Product.class).list();
         return products;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Product> getProductsListByPage(int pageId, int productsPerPage){
-        String sql="select * from products where catver_id=1 limit "+(pageId-1)+","+productsPerPage;
-        List<Product> products=currentSession().createSQLQuery(sql).addEntity(Product.class).list();
-       return products;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Product> getProductsListByName(String name, int pageId, int productsPerPage) {
-        String nameForSql="%"+name+"%";
-        String sql="select * from products where name like :name and catver_id=1 limit "+(pageId-1)+","+productsPerPage;
-        List <Product>products=currentSession().createSQLQuery(sql).addEntity(Product.class).setParameter("name", nameForSql).list();
+    public List<Product> getOnlineProductsListByPage(int pageId, int productsPerPage) {
+        String sql = "select * from products where catver_id=1 limit " + (pageId - 1) + "," + productsPerPage;
+        List<Product> products = currentSession().createSQLQuery(sql).addEntity(Product.class).list();
         return products;
     }
 
     @Override
-    public int getAmountOfProducts(){
-        String sql="select product_id from products";
-        return currentSession().createSQLQuery(sql).list().size();
+    @SuppressWarnings("unchecked")
+    public List<Product> getOnlineProductsListByName(String name, int pageId, int productsPerPage) {
+        String nameForSql = "%" + name + "%";
+        String sql = "select * from products where name like :name and catver_id=1 limit " + (pageId - 1) + "," + productsPerPage;
+        List<Product> products = currentSession().createSQLQuery(sql).addEntity(Product.class).setParameter("name", nameForSql).list();
+        return products;
     }
 
     @Override
-    public int getAmountOfProductsByName(String name){
-        String nameForSql="%"+name+"%";
-        String sql="select product_id from products where name like :name";
-        return currentSession().createSQLQuery(sql).setParameter("name", nameForSql).list().size();
+    public int getOnlineAmountOfProducts() {
+        String sql = "select product_id from products where catver_id=1";
+        return session.createSQLQuery(sql).list().size();
     }
 
+    @Override
+    public int getOnlineAmountOfProductsByName(String name) {
+        String nameForSql = "%" + name + "%";
+        String sql = "select product_id from products where name like :name and catver_id=1";
+        return session.createSQLQuery(sql).setParameter("name", nameForSql).list().size();
+    }
+
+    @Override
+    public List<Integer> getIdList() {
+        String sql = "select product_id from products";
+        List<Integer> idList = session.createSQLQuery(sql).list();
+        return idList;
+    }
 }
 

@@ -7,54 +7,34 @@ import org.hibernate.SessionFactory;
 
 import java.util.List;
 
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 
-    private SessionFactory sessionFactory;
+    private Session session;
 
     public UserDaoImpl(SessionFactory sessionFactory) {
+        if (super.getSessionFactory() == null) {
+            super.setSessionFactory(sessionFactory);
 
-        this.sessionFactory=sessionFactory;
+        }
+        this.session = super.getSession();
     }
 
     private Session currentSession() {
-        return sessionFactory.getCurrentSession();
+        return this.session;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public User getUserByUsername(String username) {
-        String sql="select * from users where username like :username";
-        List<User> users=currentSession().createSQLQuery(sql).addEntity(User.class).setParameter("username", username).list();
-        return  users.isEmpty()?null:users.get(0);
+        String sql = "select * from users where username like :username";
+        List<User> users = currentSession().createSQLQuery(sql).addEntity(User.class).setParameter("username", username).list();
+        return users.isEmpty() ? null : users.get(0);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public int getRoleIdByUsername(String username){
-        String sql="Select role_id from users where username like :username";
-        List<User> users=currentSession().createSQLQuery(sql).addEntity(User.class).setParameter("username", username).list();
-        return  users.isEmpty()?null:users.get(0).getRoleId();
-    }
-
-    @Override
-    public void save(User user){
-        currentSession().save(user);
-    }
-
-    @Override
-    public List<User> getUserList(int roleId) {
-        String sql="Select * from users where role_id like :role_id";
-        List<User> users=currentSession().createSQLQuery(sql).addEntity(User.class).setParameter("role_id",roleId).list();
-        return users;
-    }
-
-    @Override
-    public void update(User user){
-        currentSession().update(user);
-    }
-
-    @Override
-    public void delete(User user){
-        currentSession().delete(user);
+    public User getUserById(int userId) {
+        String sql = "select * from users where user_id like :user_id";
+        List<User> users = currentSession().createSQLQuery(sql).addEntity(User.class).setParameter("user_id", userId).list();
+        return users.isEmpty() ? null : users.get(0);
     }
 }

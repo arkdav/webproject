@@ -7,33 +7,28 @@ import org.hibernate.SessionFactory;
 
 import java.util.List;
 
-public class RoleDaoImpl implements RoleDao {
+public class RoleDaoImpl extends GenericDaoImpl<Role> implements RoleDao {
 
-    private SessionFactory sessionFactory;
+    private Session session;
 
     public RoleDaoImpl(SessionFactory sessionFactory) {
+        if (super.getSessionFactory() == null) {
+            super.setSessionFactory(sessionFactory);
 
-        this.sessionFactory=sessionFactory;
+        }
+        this.session = super.getSession();
     }
 
     private Session currentSession() {
-        return sessionFactory.getCurrentSession();
+        return this.session;
     }
-
 
     @Override
     @SuppressWarnings("unchecked")
     public int getRoleIdByRole(String role) {
-        String sql="Select * from roles where rolename like :role";
-        List <Role> roles=currentSession().createSQLQuery(sql).addEntity(Role.class).setParameter("role", role).list();
-        return  roles.isEmpty()?null:roles.get(0).getRoleId();
+        String sql = "Select * from roles where rolename like :role";
+        List<Role> roles = currentSession().createSQLQuery(sql).addEntity(Role.class).setParameter("role", role).list();
+        return roles.isEmpty() ? 0 : roles.get(0).getRoleId();
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public String getRoleNameById(int roleId){
-        String sql="Select * from roles where role_id like :role_id";
-        List <Role> roles=currentSession().createSQLQuery(sql).addEntity(Role.class).setParameter("role_id", roleId).list();
-        return  roles.isEmpty()?null:roles.get(0).getRolename();
-    }
 }

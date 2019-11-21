@@ -7,30 +7,33 @@ import org.hibernate.SessionFactory;
 
 import java.util.List;
 
-public class CatalogVersionDaoImpl implements CatalogVersionDao {
+public class CatalogVersionDaoImpl extends GenericDaoImpl<CatalogVersion> implements CatalogVersionDao {
 
-    private SessionFactory sessionFactory;
+    private Session session;
 
     public CatalogVersionDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-        sessionFactory.openSession();
+        if (super.getSessionFactory() == null) {
+            super.setSessionFactory(sessionFactory);
+
+        }
+        this.session = super.getSession();
     }
 
     private Session currentSession() {
-        return sessionFactory.getCurrentSession();
+        return this.session;
     }
 
     @Override
     public CatalogVersion getCatalogVersionById(int catVerId) {
-        String sql="Select * from catalogversion where catver_id like :catver_id";
-        List<CatalogVersion> catalogVersions=currentSession().createSQLQuery(sql).addEntity(CatalogVersion.class).setParameter("catver_id", catVerId).list();
-        return  catalogVersions.isEmpty()?null:catalogVersions.get(0);
+        String sql = "Select * from catalogversion where catver_id like :catver_id";
+        List<CatalogVersion> catalogVersions = currentSession().createSQLQuery(sql).addEntity(CatalogVersion.class).setParameter("catver_id", catVerId).list();
+        return catalogVersions.isEmpty() ? null : catalogVersions.get(0);
     }
 
     @Override
     public int getCatalogVersionIdByName(String name) {
-        String sql="Select * from catalogversion where name like :name";
-        List<CatalogVersion> catalogVersions=currentSession().createSQLQuery(sql).addEntity(CatalogVersion.class).setParameter("name", name).list();
-        return  catalogVersions.isEmpty()?null:catalogVersions.get(0).getCatverId();
+        String sql = "Select * from catalogversion where name like :name";
+        List<CatalogVersion> catalogVersions = currentSession().createSQLQuery(sql).addEntity(CatalogVersion.class).setParameter("name", name).list();
+        return catalogVersions.isEmpty() ? 0 : catalogVersions.get(0).getCatverId();
     }
 }

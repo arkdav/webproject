@@ -4,11 +4,9 @@ import com.marpen.shop.model.Order;
 
 import java.util.List;
 
-public interface OrderDao {
+public interface OrderDao extends GenericDao<Order>{
 
     List<Order> getOrdersByUserId(int userId);
 
     Order  getOrderByOrderId(int orderId);
-
-    void save(Order order);
 }

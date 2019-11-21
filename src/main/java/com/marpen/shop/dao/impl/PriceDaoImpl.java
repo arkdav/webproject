@@ -5,22 +5,24 @@ import com.marpen.shop.model.Price;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-public class PriceDaoImpl implements PriceDao {
+public class PriceDaoImpl extends GenericDaoImpl<Price> implements PriceDao {
 
-    private SessionFactory sessionFactory;
+    private Session session;
 
     public PriceDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory=sessionFactory;
-        sessionFactory.openSession();
+        if (super.getSessionFactory() == null) {
+            super.setSessionFactory(sessionFactory);
+
+        }
+        this.session = super.getSession();
     }
 
     private Session currentSession() {
-        return sessionFactory.getCurrentSession();
+        return this.session;
     }
 
     @Override
-    public Price getPriceByProductId(int productId){
-        return  (Price) currentSession().load(Price.class, productId);
+    public Price getPriceByProductId(int productId) {
+        return (Price) currentSession().load(Price.class, productId);
     }
-
 }

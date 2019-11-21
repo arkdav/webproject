@@ -7,17 +7,20 @@ import org.hibernate.SessionFactory;
 
 import java.util.List;
 
-public class CartEntryDaoImpl implements CartEntryDao {
+public class CartEntryDaoImpl extends GenericDaoImpl<CartEntry> implements CartEntryDao {
 
-    private SessionFactory sessionFactory;
+    private Session session;
 
     public CartEntryDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-        sessionFactory.openSession();
+        if (super.getSessionFactory() == null) {
+            super.setSessionFactory(sessionFactory);
+
+        }
+        this.session = super.getSession();
     }
 
     private Session currentSession() {
-        return sessionFactory.getCurrentSession();
+        return this.session;
     }
 
     @Override
@@ -34,18 +37,4 @@ public class CartEntryDaoImpl implements CartEntryDao {
         return cartEntries.isEmpty() ? null : cartEntries.get(0);
     }
 
-    @Override
-    public void save(CartEntry cartEntry) {
-        currentSession().save(cartEntry);
-    }
-
-    @Override
-    public void update(CartEntry cartEntry) {
-        currentSession().update(cartEntry);
-    }
-
-    @Override
-    public void remove(CartEntry cartEntry) {
-        currentSession().delete(cartEntry);
-    }
 }

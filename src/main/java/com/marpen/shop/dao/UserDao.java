@@ -2,19 +2,9 @@ package com.marpen.shop.dao;
 
 import com.marpen.shop.model.User;
 
-import java.util.List;
-
-public interface UserDao {
+public interface UserDao extends GenericDao<User>{
 
     User getUserByUsername(String username);
 
-    int getRoleIdByUsername(String username);
-
-    void save(User user);
-
-    List<User> getUserList(int roleId);
-
-    void update(User user);
-
-    void delete(User user);
+    User getUserById(int userId);
 }

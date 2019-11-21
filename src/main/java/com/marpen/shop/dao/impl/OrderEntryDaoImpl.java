@@ -8,19 +8,21 @@ import org.hibernate.SessionFactory;
 
 import java.util.List;
 
-public class OrderEntryDaoImpl implements OrderEntryDao {
+public class OrderEntryDaoImpl extends GenericDaoImpl<OrderEntry> implements OrderEntryDao {
 
-    private SessionFactory sessionFactory;
+    private Session session;
 
     public OrderEntryDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-        sessionFactory.openSession();
+        if (super.getSessionFactory() == null) {
+            super.setSessionFactory(sessionFactory);
+
+        }
+        this.session = super.getSession();
     }
 
     private Session currentSession() {
-        return sessionFactory.getCurrentSession();
+        return this.session;
     }
-
 
     @Override
     public List<OrderEntry> getOrderEntriesByOrderId(int orderId) {
@@ -34,10 +36,5 @@ public class OrderEntryDaoImpl implements OrderEntryDao {
         String sql = "select * from orderentry where order_id like :order_id and product_id like :product_id";
         List<OrderEntry> orderEntries = currentSession().createSQLQuery(sql).addEntity(OrderEntry.class).setParameter("order_id", orderId).setParameter("product_id", productId).list();
         return orderEntries.isEmpty() ? null : orderEntries.get(0);
-    }
-
-    @Override
-    public void save(OrderEntry orderEntry) {
-        currentSession().save(orderEntry);
     }
 }

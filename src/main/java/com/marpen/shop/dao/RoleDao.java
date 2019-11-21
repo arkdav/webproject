@@ -1,8 +1,8 @@
 package com.marpen.shop.dao;
 
-public interface RoleDao {
+import com.marpen.shop.model.Role;
+
+public interface RoleDao extends GenericDao<Role>{
 
     int getRoleIdByRole(String role);
-
-    String getRoleNameById(int roleId);
 }
