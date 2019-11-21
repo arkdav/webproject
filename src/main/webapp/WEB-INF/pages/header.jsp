@@ -6,7 +6,7 @@
 
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand"><img src="../../images/logo.png" alt=""></a>
+        <a class="navbar-brand"><img src="${pageContext.request.contextPath}/images/logo.png" alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -23,11 +23,13 @@
                         <a class="nav-link" href="${pageContext.request.contextPath}/basket"><tag:message code="header.basket"/></a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/userdata"><tag:message code="header.userdata"/> </a>
-                    </li>
-                    <li class="nav-item ">
                         <a class="nav-link" href="${pageContext.request.contextPath}/userorders"><tag:message code="header.userorders"/> </a>
                     </li>
+                </sec:authorize>
+                <sec:authorize access="hasAnyRole('ROLE_CUSTOMER', 'ROLE_BUSINESS_USER')">
+                <li class="nav-item ">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/userdata"><tag:message code="header.userdata"/> </a>
+                </li>
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <li class="nav-item ">
@@ -69,7 +71,7 @@
                             <form method="POST" action="${pageContext.request.contextPath}/logout" class="form-signin">
                                 <div class="form-group">
                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                    <button class="btn btn-lg btn-primary btn-block" imageLink="submit"><tag:message code="userdata.logout"/></button>
+                                    <button class="btn btn-lg btn-primary btn-block" type="submit"><tag:message code="userdata.logout"/></button>
                                 </div>
                             </form>
                         </li>
