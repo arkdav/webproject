@@ -47,6 +47,19 @@ public class CartOrderController {
         return "basket";
     }
 
+    @RequestMapping(value = "/basketamount", method = RequestMethod.GET)
+    public String newAmountInCart(@RequestParam(value = "product_id") int productId,
+                                  @RequestParam(value = "productAmount", required = false, defaultValue = "1")
+                                          String productAmountString) {
+        Integer productAmount = Integer.valueOf(productAmountString.trim());
+        if (productAmount == 0) {
+            cartFacade.removeProductFromCart(getUserId(), productId);
+        } else if (productAmount > 0) {
+            cartFacade.updateProductInCart(getUserId(), productId, productAmount);
+        }
+        return "redirect:/basket";
+    }
+
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String order() {
         orderFacade.addCartToOrder(getUserId());

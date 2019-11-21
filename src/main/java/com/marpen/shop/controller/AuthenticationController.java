@@ -31,7 +31,8 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") RegistrationDto registrationDto, BindingResult bindingResult, Model model) {
+    public String registration(@ModelAttribute("userForm") RegistrationDto registrationDto,
+                               BindingResult bindingResult) {
         registrationValidator.validate(registrationDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return "registration";
