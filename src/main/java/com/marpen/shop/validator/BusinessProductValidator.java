@@ -18,15 +18,17 @@ public class BusinessProductValidator implements Validator {
     public void validate(Object o, Errors errors) {
         BusinessProductDto businessProductDto = (BusinessProductDto) o;
 
-        if (businessProductDto.getName().length() < 4 || businessProductDto.getName().length() > 32) {
+        if (!businessProductDto.getName().isEmpty() && businessProductDto.getName().length() < 4 || businessProductDto.getName().length() > 32) {
             errors.rejectValue("name", "Size.business.name");
         }
-        try {
-            Double.parseDouble(businessProductDto.getPrice());
-        } catch (NumberFormatException e) {
-            errors.rejectValue("price", "Format.business.price");
+        if(!businessProductDto.getPrice().isEmpty()) {
+            try {
+                Double.parseDouble(businessProductDto.getPrice());
+            } catch (NumberFormatException e) {
+                errors.rejectValue("price", "Format.business.price");
+            }
         }
-        if (businessProductDto.getDescription().length() < 6 || businessProductDto.getDescription().length() > 200) {
+        if (!businessProductDto.getDescription().isEmpty() && businessProductDto.getDescription().length() < 6 || businessProductDto.getDescription().length() > 200) {
             errors.rejectValue("description", "Size.business.description");
         }
     }

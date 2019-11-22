@@ -1,6 +1,5 @@
 package com.marpen.shop.validator;
 
-import com.marpen.shop.dto.RegistrationDto;
 import com.marpen.shop.dto.UserDataDto;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
