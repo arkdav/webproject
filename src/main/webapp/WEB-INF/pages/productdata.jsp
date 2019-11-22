@@ -24,7 +24,7 @@
         <br>
         <p>Name:  ${productinf.name}</p>
         <p>Information: ${productinf.description}</p>
-        <p>Price: ${productinf.price}</p>
+        <p>Price: ${productinf.price}$</p>
         <br>
         <p><img src="${pageContext.request.contextPath}/images/${productinf.imageLink}"></p>
         <sec:authorize access="hasRole('ROLE_CUSTOMER')">

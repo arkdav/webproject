@@ -94,7 +94,7 @@ public class ProductController {
                                 BindingResult bindingResult) {
         businessProductValidator.validate(businessProductDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            return "businessdata";
+            return "redirect:/businessdata?product_id="+businessProductDto.getProductId();
         }
         productFacade.updateProduct(businessProductDto);
         return "redirect:/businessdata";
@@ -118,12 +118,13 @@ public class ProductController {
         String path = request.getContextPath();
         MultipartFile file = businessProductCreationDto.getImage();
         try {
+           // String filename = "/WEB_INF/../images/"+file.getOriginalFilename();
             String filename = System.getenv("CATALINA_HOME") + "\\webapps\\" + path.substring(1) +
-                    "\\images\\" + file.getOriginalFilename();
+                    "\\images\\" + file.getOriginalFilename(); //папка развертывания сервера
             file.transferTo(new File(filename));
             productFacade.createProduct(businessProductCreationDto);
         } catch (IOException e) {
-            e.printStackTrace();
+            return "productcreation";
         }
         return "redirect:/businessdata";
     }
