@@ -18,7 +18,9 @@ public class AuthenticationController {
     private RegistrationValidator registrationValidator;
     private SecurityFacade securityFacade;
 
-    public AuthenticationController(UserFacade userFacade, RegistrationValidator registrationValidator, SecurityFacade securityFacade) {
+    public AuthenticationController(UserFacade userFacade,
+                                    RegistrationValidator registrationValidator,
+                                    SecurityFacade securityFacade) {
         this.userFacade = userFacade;
         this.registrationValidator = registrationValidator;
         this.securityFacade = securityFacade;

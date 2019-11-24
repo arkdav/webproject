@@ -8,10 +8,5 @@ public interface OrderService {
 
     List<Order> getOrdersByUserId(int userId);
 
-    Order  getOrderByOrderId(int orderId);
-
-    int  getOrderId(Order order);
-
     void save(Order order);
-
 }

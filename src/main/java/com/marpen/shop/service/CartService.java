@@ -6,8 +6,6 @@ public interface CartService {
 
     Cart getCartByUserId(int userId);
 
-    int getCartIdByUserId(int userId);
-
     void save(Cart cart);
 
     void save(int userId);

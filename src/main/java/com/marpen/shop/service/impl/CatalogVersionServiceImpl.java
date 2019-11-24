@@ -15,18 +15,13 @@ public class CatalogVersionServiceImpl implements CatalogVersionService {
     }
 
     @Override
-    public CatalogVersion getCatalogVersionById(int catVerId) {
-        return catalogVersionDao.getCatalogVersionById(catVerId);
-    }
-
-    @Override
     public int getCatalogVersionIdByName(String name) {
         return catalogVersionDao.getCatalogVersionIdByName(name);
     }
 
     @Override
     public String getCatalogVersionNameById(int catVerId) {
-        return catalogVersionDao.getCatalogVersionById(catVerId).getName();
+        return catalogVersionDao.get(catVerId).getName();
     }
 
 }

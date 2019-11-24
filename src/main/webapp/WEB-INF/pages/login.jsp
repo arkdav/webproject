@@ -19,7 +19,7 @@
 <body>
 <div class="container">
     <form method="POST" action="${pageContext.request.contextPath}/login" class="form-signin" style="width: 40%">
-        <h2 class="form-heading"></h2>
+        <h2 class="form-heading"><tag:message code="header.login"/></h2>
         <div class="form-group ${error != null ? 'has-error' : ''}">
             <input type="text" name="username" class="form-control" placeholder="<tag:message code="login.username"/>"/>
             <input type="password" name="password" class="form-control" placeholder="<tag:message code="login.password"/>"/>

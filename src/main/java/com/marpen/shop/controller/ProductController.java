@@ -84,8 +84,8 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/business/delete", method = RequestMethod.POST)
-    public String deleteProduct(@RequestParam(value = "product_id") int product_id) {
-        productFacade.deleteProduct(product_id);
+    public String deleteProduct(@RequestParam(value = "productId") int productId) {
+        productFacade.deleteProduct(productId);
         return "redirect:/businessdata";
     }
 
@@ -93,11 +93,10 @@ public class ProductController {
     public String updateProduct(@ModelAttribute("businessDataForm") BusinessProductDto businessProductDto,
                                 BindingResult bindingResult) {
         businessProductValidator.validate(businessProductDto, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return "redirect:/businessdata?product_id="+businessProductDto.getProductId();
+        if (!bindingResult.hasErrors()) {
+            productFacade.updateProduct(businessProductDto);
         }
-        productFacade.updateProduct(businessProductDto);
-        return "redirect:/businessdata";
+        return "redirect:/businessdata?productId="+businessProductDto.getProductId();
     }
 
     @RequestMapping(value = "/business/create", method = RequestMethod.GET)
@@ -118,10 +117,13 @@ public class ProductController {
         String path = request.getContextPath();
         MultipartFile file = businessProductCreationDto.getImage();
         try {
-           // String filename = "/WEB_INF/../images/"+file.getOriginalFilename();
             String filename = System.getenv("CATALINA_HOME") + "\\webapps\\" + path.substring(1) +
                     "\\images\\" + file.getOriginalFilename(); //папка развертывания сервера
+//            String filename = System.getenv("CATALINA_HOME") + "\\images\\" + file.getOriginalFilename();
             file.transferTo(new File(filename));
+            //String absoluteDiskPath = request.getServletContext().getRealPath(/images);
+            //String uploadsFolder = "/var/webproject_war/uploads";
+            //File fileStr=new File(uploadsFolder, file.getOriginalFilename());
             productFacade.createProduct(businessProductCreationDto);
         } catch (IOException e) {
             return "productcreation";

@@ -22,11 +22,6 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public int getCartIdByUserId(int userId) {
-        return cartDao.get(userId).getCartId();
-    }
-
-    @Override
     public void save(Cart cart) {
         cartDao.save(cart);
     }

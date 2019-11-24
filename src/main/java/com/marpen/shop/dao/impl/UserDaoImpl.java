@@ -30,11 +30,4 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
         List<User> users = currentSession().createSQLQuery(sql).addEntity(User.class).setParameter("username", username).list();
         return users.isEmpty() ? null : users.get(0);
     }
-
-    @Override
-    public User getUserById(int userId) {
-        String sql = "select * from users where user_id like :user_id";
-        List<User> users = currentSession().createSQLQuery(sql).addEntity(User.class).setParameter("user_id", userId).list();
-        return users.isEmpty() ? null : users.get(0);
-    }
 }

@@ -23,11 +23,6 @@ public class OrderEntryServiceImpl implements OrderEntryService {
     }
 
     @Override
-    public OrderEntry getOrderEntryByProductId(int orderId, int productId) {
-        return orderEntryDao.getOrderEntryByProductId(orderId, productId);
-    }
-
-    @Override
     public void save(OrderEntry orderEntry) {
         orderEntryDao.save(orderEntry);
     }

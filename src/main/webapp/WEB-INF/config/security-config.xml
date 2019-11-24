@@ -37,7 +37,7 @@
     </b:bean>
 
     <b:bean id="userDetailsService" class="com.marpen.shop.service.impl.UserDetailsServiceImpl">
-        <b:constructor-arg name="userService" ref="userService"/>
+        <b:constructor-arg name="userDao" ref="userDao"/>
         <b:constructor-arg name="roleDao" ref="roleDao"/>
     </b:bean>
 

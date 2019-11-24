@@ -22,16 +22,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getOrderByOrderId(int orderId) {
-        return orderDao.getOrderByOrderId(orderId);
-    }
-
-    @Override
-    public int getOrderId(Order order) {
-        return orderDao.getOrderByOrderId(order.getOrderId()).getOrderId();
-    }
-
-    @Override
     public void save(Order order) {
         orderDao.save(order);
     }

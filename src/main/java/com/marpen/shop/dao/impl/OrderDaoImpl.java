@@ -29,11 +29,4 @@ public class OrderDaoImpl extends GenericDaoImpl<Order> implements OrderDao {
         List<Order> orders = currentSession().createSQLQuery(sql).addEntity(Order.class).setParameter("user_id", userId).list();
         return orders;
     }
-
-    @Override
-    public Order getOrderByOrderId(int orderId) {
-        Order order = (Order) currentSession().load(Order.class, orderId);
-        return order;
-    }
-
 }

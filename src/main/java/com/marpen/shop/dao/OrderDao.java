@@ -7,6 +7,4 @@ import java.util.List;
 public interface OrderDao extends GenericDao<Order>{
 
     List<Order> getOrdersByUserId(int userId);
-
-    Order  getOrderByOrderId(int orderId);
 }

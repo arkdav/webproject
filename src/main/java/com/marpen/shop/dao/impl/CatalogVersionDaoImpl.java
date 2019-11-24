@@ -24,13 +24,6 @@ public class CatalogVersionDaoImpl extends GenericDaoImpl<CatalogVersion> implem
     }
 
     @Override
-    public CatalogVersion getCatalogVersionById(int catVerId) {
-        String sql = "Select * from catalogversion where catver_id like :catver_id";
-        List<CatalogVersion> catalogVersions = currentSession().createSQLQuery(sql).addEntity(CatalogVersion.class).setParameter("catver_id", catVerId).list();
-        return catalogVersions.isEmpty() ? null : catalogVersions.get(0);
-    }
-
-    @Override
     public int getCatalogVersionIdByName(String name) {
         String sql = "Select * from catalogversion where name like :name";
         List<CatalogVersion> catalogVersions = currentSession().createSQLQuery(sql).addEntity(CatalogVersion.class).setParameter("name", name).list();
