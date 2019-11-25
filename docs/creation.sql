@@ -98,7 +98,7 @@ DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
 INSERT INTO `webdb`.`users` (`username`,`password`,`role_id`,`name`,`surname`,`email`,`phone`,`birthdate`)
-VALUES ('tttttt', '$2a$11$tUBWjMmV7xMKjsgCI1sg0eWT/7FSRicP7BeUipoIIrkt2ztJ3Fq56','1','Kate','Gorn','gorn@mail.ru','3089078', '2016-05-12');
+VALUES ('natali', '$2a$11$j4xr0InYy/WVRT3AChOlWOQl6sjJXNRhAyW.irpVqMY4wkqZEQ0Cq','1','Kate','Gorn','gorn@mail.ru','3089078', '2016-05-12');
 INSERT INTO `webdb`.`users` (`username`,`password`,`role_id`,`name`,`surname`,`email`,`phone`,`birthdate`)
 VALUES ('andrey', '$2a$11$pAc9QgTxxF8TD8XETP/SSeosaRx9ZGGI/Xdurga.OEeQnkI1L4cLa','3','Andrey','Ivanov','ivanov.a@mail.ru','2879838', '2000-06-23');
 

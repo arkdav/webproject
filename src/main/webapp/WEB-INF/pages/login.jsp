@@ -29,5 +29,8 @@
         </div>
     </form>
 </div>
+<div>
+    <a href="${pageContext.request.contextPath}/catalog"><tag:message code="login.tocatalog"/></a>
+</div>
 </body>
 </html>

@@ -11,12 +11,12 @@
     <meta charset="UTF-8">
     <title>Registration</title>
 
-    <script src="${pageContext.request.contextPath}/libs/http_stackpath.bootstrapcdn.com_bootstrap_4.3.1_js_bootstrap.js"></script>
-    <script src="${pageContext.request.contextPath}/libs/http_ajax.googleapis.com_ajax_libs_jquery_1.11.2_jquery.js"></script>
-    <script src="${pageContext.request.contextPath}/libs/http_oss.maxcdn.com_html5shiv_3.7.2_html5shiv.js"></script>
-    <script src="${pageContext.request.contextPath}/libs/http_oss.maxcdn.com_respond_1.4.2_respond.min.js"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/libs/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/style.css">
+    <script src="${pageContext.request.contextPath}/resources/js/http_stackpath.bootstrapcdn.com_bootstrap_4.3.1_js_bootstrap.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/http_ajax.googleapis.com_ajax_libs_jquery_1.11.2_jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/http_oss.maxcdn.com_html5shiv_3.7.2_html5shiv.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/http_oss.maxcdn.com_respond_1.4.2_respond.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 
 </head>
 <body>
@@ -65,6 +65,9 @@
 
         <button class="btn btn-lg btn-primary btn-block" type="submit"><tag:message code="registration.submit"/></button>
     </form:form>
+</div>
+<div>
+    <a href="${pageContext.request.contextPath}/catalog"><tag:message code="login.tocatalog"/></a>
 </div>
 </body>
 </html>

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -96,7 +95,7 @@ public class ProductController {
         if (!bindingResult.hasErrors()) {
             productFacade.updateProduct(businessProductDto);
         }
-        return "redirect:/businessdata?productId="+businessProductDto.getProductId();
+        return "redirect:/businessdata?productId=" + businessProductDto.getProductId();
     }
 
     @RequestMapping(value = "/business/create", method = RequestMethod.GET)
@@ -106,24 +105,17 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/business/create", method = RequestMethod.POST)
-    public String createProduct(HttpServletRequest request,
-                                @ModelAttribute("creationBusinessDataForm")
+    public String createProduct(@ModelAttribute("creationBusinessDataForm")
                                         BusinessProductCreationDto businessProductCreationDto,
                                 BindingResult bindingResult) {
         productCreationValidator.validate(businessProductCreationDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return "productcreation";
         }
-        String path = request.getContextPath();
         MultipartFile file = businessProductCreationDto.getImage();
         try {
-            String filename = System.getenv("CATALINA_HOME") + "\\webapps\\" + path.substring(1) +
-                    "\\images\\" + file.getOriginalFilename(); //папка развертывания сервера
-//            String filename = System.getenv("CATALINA_HOME") + "\\images\\" + file.getOriginalFilename();
+            String filename = System.getenv("CATALINA_HOME") + "\\webapps\\images\\" + file.getOriginalFilename();
             file.transferTo(new File(filename));
-            //String absoluteDiskPath = request.getServletContext().getRealPath(/images);
-            //String uploadsFolder = "/var/webproject_war/uploads";
-            //File fileStr=new File(uploadsFolder, file.getOriginalFilename());
             productFacade.createProduct(businessProductCreationDto);
         } catch (IOException e) {
             return "productcreation";

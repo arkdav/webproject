@@ -10,11 +10,11 @@
 <head>
     <meta charset="UTF-8">
     <title>ProductData</title>
-    <script src="${pageContext.request.contextPath}/libs/http_code.jquery.com_jquery-3.3.1.slim.js"></script>
-    <script src="${pageContext.request.contextPath}/libs/http_cdnjs.cloudflare.com_ajax_libs_popper.js_1.14.7_umd_popper.js"></script>
-    <script src="${pageContext.request.contextPath}/libs/http_stackpath.bootstrapcdn.com_bootstrap_4.3.1_js_bootstrap.js"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/libs/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/style.css">
+    <script src="${pageContext.request.contextPath}/resources/js/http_code.jquery.com_jquery-3.3.1.slim.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/http_cdnjs.cloudflare.com_ajax_libs_popper.js_1.14.7_umd_popper.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/http_stackpath.bootstrapcdn.com_bootstrap_4.3.1_js_bootstrap.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 </head>
 <body>
 <%@include file="header.jsp" %>
@@ -26,7 +26,7 @@
         <p>Information: ${productinf.description}</p>
         <p>Price: ${productinf.price}$</p>
         <br>
-        <p><img src="${pageContext.request.contextPath}/images/${productinf.imageLink}"></p>
+        <p><img src="<c:url value='/images/${productinf.imageLink}'/>"></p>
         <sec:authorize access="hasRole('ROLE_CUSTOMER')">
             <form class="form-inline my-2 my-lg-0" method="post"
                   action="${pageContext.request.contextPath}/addtobasket?product_id=${productinf.productId}">
