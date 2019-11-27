@@ -9,6 +9,9 @@ import com.marpen.shop.model.CartEntry;
 import com.marpen.shop.service.CartEntryService;
 import com.marpen.shop.service.CartService;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class CartFacadeImpl implements CartFacade {
 
     private CartService cartService;
@@ -61,7 +64,7 @@ public class CartFacadeImpl implements CartFacade {
         cartEntryProduct.setAmount(productAmount);
         cartEntryService.updateCartEntry(cartEntryProduct);
         totalPrice += cartEntryProduct.getAmount() * Double.parseDouble(productFacade.getProductById(productId).getPrice());
-        cart.setTotalPrice(totalPrice);
+        cart.setTotalPrice(new BigDecimal(totalPrice).setScale(2, RoundingMode.HALF_UP).doubleValue());
         cartService.updateCart(cart);
     }
 

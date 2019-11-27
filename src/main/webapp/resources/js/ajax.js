@@ -1,15 +1,24 @@
 // $(document).ready(function(){
-//         $('#search').submit(function(){
+//         $('#searchform').submit(function(){
 //             $.ajax({
-//                 type: "get",
-//                 method: "GET",
+//                 type:"POST",
+//                 method: "post",
 //                 url: "catalog",
+//                 dataType: "json",
 //                 data: "searchString="+$("#searchString").val(),
-//                 success: function(html) {
-//                     $("#content").html(html);
+//                 success: function(data) {
+//                     var productsList = [];
+//                     for (var i=0; i<data.result.length; i++){
+//                         productsList[i].productId=data.result[i].productId;
+//                         productsList[i].name=data.result[i].name;
+//                         productsList[i].description=data.result[i].description;
+//                         productsList[i].imageLink=data.result[i].imageLink;
+//                         productsList[i].price=data.result[i].price;
+//                     }
+//                     $('#row').html(productsList);
+//                     alert('Load was performed.');
 //                 }
 //             });
 //             return false;
 //             });
 //     });
-// $('#row').replaceWith(catalogajax);

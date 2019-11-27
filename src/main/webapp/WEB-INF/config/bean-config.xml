@@ -58,6 +58,7 @@
         <constructor-arg name="productFacade" ref="productFacade"/>
         <constructor-arg name="businessProductValidator" ref="businessProductValidator"/>
         <constructor-arg name="productCreationValidator" ref="productCreationValidator"/>
+        <constructor-arg name="userFacade" ref="userFacade"/>
     </bean>
 
     <bean id="businessProductValidator" class="com.marpen.shop.validator.BusinessProductValidator" />

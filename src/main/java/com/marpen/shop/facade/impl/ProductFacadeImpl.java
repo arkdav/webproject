@@ -81,8 +81,8 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
-    public List<BusinessProductDto> getProductsList() {
-        List<Product> products = productService.getProductsList();
+    public List<BusinessProductDto> getProductsListByUserId(int userId) {
+        List<Product> products = productService.getProductsListByUserId(userId);
         List<BusinessProductDto> list = new ArrayList<>(products.size());
         for (Product product :
                 products) {
@@ -90,11 +90,6 @@ public class ProductFacadeImpl implements ProductFacade {
             list.add(pr);
         }
         return list;
-    }
-
-    @Override
-    public List<Integer> getIdList() {
-        return productService.getIdList();
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface ProductService {
 
     Product getProductById(int productId);
 
-    List<Product> getProductsList();
+    List<Product> getProductsListByUserId(int userId);
 
     List<Product> getOnlineProductsListByPage(int pageid, int productsPerPage);
 
@@ -25,5 +25,4 @@ public interface ProductService {
 
     int getOnlineAmountOfProductsByName(String name);
 
-    List<Integer> getIdList();
 }

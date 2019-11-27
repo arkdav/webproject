@@ -9,6 +9,7 @@ public class BusinessProductCreationDto {
     private String price;
     private String catalogVersion;
     private MultipartFile image;
+    private int userId;
 
     public BusinessProductCreationDto() {
     }
@@ -47,5 +48,13 @@ public class BusinessProductCreationDto {
 
     public void setImage(MultipartFile image) {
         this.image = image;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

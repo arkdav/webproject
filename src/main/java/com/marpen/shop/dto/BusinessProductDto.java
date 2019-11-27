@@ -7,6 +7,8 @@ public class BusinessProductDto {
     private String description;
     private String price;
     private String catalogVersion;
+    private String imageLink;
+    private int userId;
 
     public BusinessProductDto() {
     }
@@ -47,4 +49,19 @@ public class BusinessProductDto {
 
     public void setCatalogVersion(String catalogVersion) { this.catalogVersion = catalogVersion; }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
 }

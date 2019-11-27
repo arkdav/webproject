@@ -10,14 +10,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Registration</title>
-
     <script src="${pageContext.request.contextPath}/resources/js/http_stackpath.bootstrapcdn.com_bootstrap_4.3.1_js_bootstrap.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/http_ajax.googleapis.com_ajax_libs_jquery_1.11.2_jquery.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/http_oss.maxcdn.com_html5shiv_3.7.2_html5shiv.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/http_oss.maxcdn.com_respond_1.4.2_respond.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
-
 </head>
 <body>
 <div class="container">

@@ -28,6 +28,7 @@ public class FromBusinessProductDto implements Converter<BusinessProductDto, Pro
         if (businessProductDto.getCatalogVersion() != null && !businessProductDto.getCatalogVersion().isEmpty()) {
             product.setCatverId(catalogVersionService.getCatalogVersionIdByName(businessProductDto.getCatalogVersion()));
         }
+        product.setUserId(businessProductDto.getUserId());
         return product;
     }
 }

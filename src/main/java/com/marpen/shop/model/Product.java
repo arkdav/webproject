@@ -32,16 +32,19 @@ public class Product {
     @Column(name = "catver_id")
     private int catverId;
 
+    @Column(name = "user_id")
+    private int userId;
 
     public Product() {
     }
 
-    public Product(int productId, String name, String description, String imageLink, int catverId) {
+    public Product(int productId, String name, String description, String imageLink, int catverId, int userId) {
         this.productId = productId;
         this.name = name;
         this.description = description;
         this.imageLink = imageLink;
         this.catverId = catverId;
+        this.userId = userId;
     }
 
     public Integer getProductId() {
@@ -84,24 +87,21 @@ public class Product {
         this.imageLink = imageLink;
     }
 
-    public Integer getCatverId() {
+    public int getCatverId() {
         return catverId;
     }
 
-    public void setCatverId(Integer catverId) {
+    public void setCatverId(int catverId) {
 
         this.catverId = catverId;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "productId=" + productId +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", imageLink='" + imageLink + '\'' +
-                ", catverId=" + catverId +
-                '}';
+
+    public int getUserId() {
+        return userId;
     }
 
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 }

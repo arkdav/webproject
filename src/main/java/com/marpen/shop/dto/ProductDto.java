@@ -1,12 +1,19 @@
 package com.marpen.shop.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ProductDto {
 
+    @JsonProperty
     private int productId;
+    @JsonProperty
     private String name;
+    @JsonProperty
     private String description;
+    @JsonProperty
     private String imageLink;
+    @JsonProperty
     private String price;
 
     public ProductDto() {

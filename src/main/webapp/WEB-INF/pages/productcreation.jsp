@@ -38,7 +38,6 @@
     <div class="form-group">
         <form:label path="image"><tag:message code="businessdata.image"/></form:label>
         <form:input type="file" path="image" class="form-control"/>
-            <%--            <form:errors path="image" />--%>
     </div>
     <div class="form-group">
         <tag:message code="businessdata.catalogversion"/>
@@ -47,12 +46,11 @@
             <form:option value="offline">Offline</form:option>
         </form:select>
     </div>
-    <%--        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
     <form:button class="btn btn-lg btn-primary btn-block" type="submit"><tag:message
             code="businessdata.create"/></form:button>
 </form:form>
 </div>
-
-<a href="${pageContext.request.contextPath}/businessdata">Return to business page</a>
+<a href="${pageContext.request.contextPath}/businessdata"><tag:message
+        code="business.tobusinessdata"/></a>
 </body>
 </html>

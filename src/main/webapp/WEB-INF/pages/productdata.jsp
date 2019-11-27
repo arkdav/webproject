@@ -20,11 +20,11 @@
 <%@include file="header.jsp" %>
 <main>
     <div class="main-block">
-        <h1>Product Details</h1>
+        <h1><tag:message code="productdata.title"/></h1>
         <br>
-        <p>Name:  ${productinf.name}</p>
-        <p>Information: ${productinf.description}</p>
-        <p>Price: ${productinf.price}$</p>
+        <p><tag:message code="productdata.name"/>  ${productinf.name}</p>
+        <p><tag:message code="productdata.description"/> ${productinf.description}</p>
+        <p><tag:message code="productdata.price"/> ${productinf.price}$</p>
         <br>
         <p><img src="<c:url value='/images/${productinf.imageLink}'/>"></p>
         <sec:authorize access="hasRole('ROLE_CUSTOMER')">

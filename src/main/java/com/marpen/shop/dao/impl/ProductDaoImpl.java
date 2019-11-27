@@ -25,9 +25,9 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Product> getProductsList() {
-        String sql = "select * from products order by product_id desc";
-        List<Product> products = currentSession().createSQLQuery(sql).addEntity(Product.class).list();
+    public List<Product> getProductsListByUserId(int userId) {
+        String sql = "select * from products where user_id like :user_id order by product_id desc";
+        List<Product> products = currentSession().createSQLQuery(sql).addEntity(Product.class).setParameter("user_id", userId).list();
         return products;
     }
 
@@ -59,13 +59,6 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
         String nameForSql = "%" + name + "%";
         String sql = "select product_id from products where name like :name and catver_id=1";
         return session.createSQLQuery(sql).setParameter("name", nameForSql).list().size();
-    }
-
-    @Override
-    public List<Integer> getIdList() {
-        String sql = "select product_id from products";
-        List<Integer> idList = session.createSQLQuery(sql).list();
-        return idList;
     }
 }
 

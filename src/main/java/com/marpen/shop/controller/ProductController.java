@@ -3,8 +3,11 @@ package com.marpen.shop.controller;
 import com.marpen.shop.dto.BusinessProductCreationDto;
 import com.marpen.shop.dto.BusinessProductDto;
 import com.marpen.shop.facade.ProductFacade;
+import com.marpen.shop.facade.UserFacade;
 import com.marpen.shop.validator.BusinessProductValidator;
 import com.marpen.shop.validator.ProductCreationValidator;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 
 @Controller
@@ -26,17 +28,20 @@ public class ProductController {
     private ProductFacade productFacade;
     private BusinessProductValidator businessProductValidator;
     private ProductCreationValidator productCreationValidator;
+    private UserFacade userFacade;
 
     public ProductController(ProductFacade productFacade,
                              BusinessProductValidator businessProductValidator,
-                             ProductCreationValidator productCreationValidator) {
+                             ProductCreationValidator productCreationValidator,
+                             UserFacade userFacade) {
 
         this.productFacade = productFacade;
         this.businessProductValidator = businessProductValidator;
         this.productCreationValidator = productCreationValidator;
+        this.userFacade = userFacade;
     }
 
-    @RequestMapping(value = "/catalog", method = {RequestMethod.GET})
+    @RequestMapping(value = "/catalog", method = RequestMethod.GET)
     public String getProductsList(@RequestParam(value = "pageid", required = false, defaultValue = "1") Integer pageid,
                                   @RequestParam(value = "searchString", required = false) String searchName,
                                   Model model) {
@@ -52,15 +57,6 @@ public class ProductController {
         return "catalog";
     }
 
-    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
-    public String toHome() {
-        return "redirect:/home";
-    }
-
-    @RequestMapping(value = {"/home"}, method = RequestMethod.GET)
-    public String getHome() {
-        return "home";
-    }
 
     @RequestMapping(value = "/productdata/{product_id}", method = RequestMethod.GET)
     public String productData(@PathVariable("product_id") int productId,
@@ -70,15 +66,8 @@ public class ProductController {
     }
 
     @RequestMapping(value = {"/businessdata"}, method = RequestMethod.GET)
-    public String getBusinessPage(@RequestParam(value = "productId", required = false) Integer productId,
-                                  Model model) {
-        List<Integer> productIdList = productFacade.getIdList();
-        if (productId == null) {
-            productId = productIdList.get(0);
-        }
-        model.addAttribute("businessProduct", this.productFacade.getBusinessProductDtoById(productId));
-        model.addAttribute("businessDataForm", new BusinessProductDto());
-        model.addAttribute("productIdList", productIdList);
+    public String getBusinessPage(Model model) {
+        model.addAttribute("businessProductsList", this.productFacade.getProductsListByUserId(getUserId()));
         return "businessdata";
     }
 
@@ -88,14 +77,24 @@ public class ProductController {
         return "redirect:/businessdata";
     }
 
+    @RequestMapping(value = "/business/update", method = RequestMethod.GET)
+    public String createProduct(@RequestParam(value = "productId") int productId,
+                                Model model) {
+        model.addAttribute("businessProduct", this.productFacade.getBusinessProductDtoById(productId));
+        model.addAttribute("businessDataForm", new BusinessProductDto());
+        return "productupdate";
+    }
+
     @RequestMapping(value = "/business/update", method = RequestMethod.POST)
     public String updateProduct(@ModelAttribute("businessDataForm") BusinessProductDto businessProductDto,
                                 BindingResult bindingResult) {
         businessProductValidator.validate(businessProductDto, bindingResult);
-        if (!bindingResult.hasErrors()) {
-            productFacade.updateProduct(businessProductDto);
+        if (bindingResult.hasErrors()) {
+            return "productupdate";
         }
-        return "redirect:/businessdata?productId=" + businessProductDto.getProductId();
+        businessProductDto.setUserId(getUserId());
+        productFacade.updateProduct(businessProductDto);
+        return "redirect:/businessdata";
     }
 
     @RequestMapping(value = "/business/create", method = RequestMethod.GET)
@@ -116,11 +115,17 @@ public class ProductController {
         try {
             String filename = System.getenv("CATALINA_HOME") + "\\webapps\\images\\" + file.getOriginalFilename();
             file.transferTo(new File(filename));
+            businessProductCreationDto.setUserId(getUserId());
             productFacade.createProduct(businessProductCreationDto);
         } catch (IOException e) {
             return "productcreation";
         }
         return "redirect:/businessdata";
+    }
+
+    private int getUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userFacade.getUserInformation(auth.getName()).getUserId();
     }
 
 }

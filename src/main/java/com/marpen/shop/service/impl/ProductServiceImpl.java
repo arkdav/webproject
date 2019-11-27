@@ -40,8 +40,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsList() {
-        return this.productDao.getProductsList();
+    public List<Product> getProductsListByUserId(int userId) {
+        return this.productDao.getProductsListByUserId(userId);
     }
 
     @Override
@@ -64,8 +64,4 @@ public class ProductServiceImpl implements ProductService {
         return productDao.getOnlineAmountOfProductsByName(name);
     }
 
-    @Override
-    public List<Integer> getIdList() {
-        return productDao.getIdList();
-    }
 }

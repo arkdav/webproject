@@ -15,9 +15,7 @@ public interface ProductFacade {
 
     List<PageDto> getCatalogIdList(String searchName, int productsPerPage);
 
-    List<BusinessProductDto> getProductsList();
-
-    List<Integer> getIdList();
+    List<BusinessProductDto> getProductsListByUserId(int userId);
 
     BusinessProductDto getBusinessProductDtoById(int productId);
 

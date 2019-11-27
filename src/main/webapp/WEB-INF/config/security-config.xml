@@ -9,19 +9,18 @@
 
     <http auto-config="true">
         <intercept-url pattern="/" access="permitAll()"/>
-        <intercept-url pattern="/home" access="permitAll()"/>
+        <intercept-url pattern="/userdata" access="hasAnyRole('ROLE_CUSTOMER','ROLE_BUSINESS_USER')"/>
         <intercept-url pattern="/basket" access="hasRole('ROLE_CUSTOMER')"/>
         <intercept-url pattern="/catalog" access="permitAll()"/>
-        <intercept-url pattern="/userdata" access="hasAnyRole('ROLE_CUSTOMER','ROLE_BUSINESS_USER')"/>
         <intercept-url pattern="/addtobasket" access="hasRole('ROLE_CUSTOMER')"/>
         <intercept-url pattern="/userorders" access="hasRole('ROLE_CUSTOMER')"/>
         <intercept-url pattern="/admindata" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/businessdata" access="hasRole('ROLE_BUSINESS_USER')"/>
         <intercept-url pattern="/business/*" access="hasRole('ROLE_BUSINESS_USER')"/>
-        <form-login login-page="/login" default-target-url="/catalog"
+        <form-login login-page="/login" default-target-url="/userdata"
                         authentication-failure-url="/login?error"
                         username-parameter="username" password-parameter="password"/>
-        <logout logout-url="/logout" logout-success-url="/home" invalidate-session="true"/>
+        <logout logout-url="/logout" logout-success-url="/catalog" invalidate-session="true"/>
     </http>
 
     <authentication-manager alias="authenticationManager">
@@ -29,7 +28,6 @@
             <password-encoder ref="encoder" />
         </authentication-provider>
     </authentication-manager>
-    <!--    <sec:remember-me />-->
 
     <b:bean id="encoder"
           class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
