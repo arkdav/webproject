@@ -70,7 +70,7 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
-    public List<PageDto> getCatalogIdList(String searchName, int productsPerPage) {
+    public List<PageDto> getCatalogPagesList(String searchName, int productsPerPage) {
         int amountOfProducts;
         if (searchName == null) {
             amountOfProducts = this.productService.getOnlineAmountOfProducts();

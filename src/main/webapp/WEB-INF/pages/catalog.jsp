@@ -9,10 +9,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Catalog</title>
-    <script src="${pageContext.request.contextPath}/resources/js/http_code.jquery.com_jquery-3.3.1.slim.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/http_code.jquery.com_jquery-3.4.1.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/http_cdnjs.cloudflare.com_ajax_libs_popper.js_1.14.7_umd_popper.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/http_stackpath.bootstrapcdn.com_bootstrap_4.3.1_js_bootstrap.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/ajax.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 </head>
@@ -64,14 +63,12 @@
                             <c:otherwise>
                                 <c:if test="${!empty productsList}">
                                     <c:forEach items="${pagesList}" var="mpage">
-                                        <div class="catalog-pages">
                                         <li class="page-item">
                                             <a class="page-link"
                                                href="${pageContext.request.contextPath}/catalog?pageid=${mpage.pageId}">
                                                     ${mpage.pageId}
                                             </a>
                                         </li>
-                                        </div>
                                     </c:forEach>
                                 </c:if>
                             </c:otherwise>

@@ -13,7 +13,7 @@ public interface ProductFacade {
 
     ProductDto getProductById(int productId);
 
-    List<PageDto> getCatalogIdList(String searchName, int productsPerPage);
+    List<PageDto> getCatalogPagesList(String searchName, int productsPerPage);
 
     List<BusinessProductDto> getProductsListByUserId(int userId);
 

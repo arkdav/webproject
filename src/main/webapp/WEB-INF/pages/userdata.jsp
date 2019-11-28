@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="tag" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="tag" uri="http://www.springframework.org/tags" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,46 +19,50 @@
 <%@include file="header.jsp" %>
 <main>
     <div class="main-block">
-        <h2><tag:message code="userdata.title"/></h2>
-        <p><tag:message code="userdata.login"/> ${currentUser.login}</p>
-        <form:form method="POST" modelAttribute="userDataForm" class="form-signin" action="${pageContext.request.contextPath}/userdata">
-            <label for="password"><tag:message code="userdata.password"/></label>
-        <div class="form-group">
-            <form:input type="password" id="password" path="password" class="form-control" placeholder="" />
-            <form:errors path="password" />
+        <div class="container">
+            <h2><tag:message code="header.userinformation"/></h2>
+            <p><tag:message code="userdata.login"/> ${currentUser.login}</p>
+            <form:form method="POST" modelAttribute="userDataForm" class="form-signin"
+                       action="${pageContext.request.contextPath}/userdata">
+                <label for="password"><tag:message code="userdata.password"/></label>
+                <div class="form-group">
+                    <form:input type="password" id="password" path="password" class="form-control"/>
+                    <form:errors path="password"/>
+                </div>
+                <label for="name"><tag:message code="userdata.name"/></label>
+                <div class="form-group">
+                    <form:input type="name" id="name" path="name" class="form-control"
+                                placeholder="${currentUser.name}"/>
+                    <form:errors path="name"/>
+                </div>
+                <label for="surname"><tag:message code="userdata.surname"/></label>
+                <div class="form-group">
+                    <form:input type="surname" id="surname" path="surname" class="form-control"
+                                placeholder="${currentUser.surname}"/>
+                    <form:errors path="surname"/>
+                </div>
+                <label for="email"><tag:message code="userdata.email"/></label>
+                <div class="form-group">
+                    <form:input type="email" id="email" path="email" class="form-control"
+                                placeholder="${currentUser.email}"/>
+                    <form:errors path="email"/>
+                </div>
+                <label for="phone"><tag:message code="userdata.phone"/></label>
+                <div class="form-group">
+                    <form:input type="phone" id="phone" path="phone" class="form-control"
+                                placeholder="${currentUser.phone}"/>
+                    <form:errors path="phone"/>
+                </div>
+                <label for="birthdate"><tag:message code="userdata.birthdate"/></label>
+                <div class="form-group">
+                    <form:input type="birthdate" id="birthdate" path="birthdate" class="form-control"
+                                placeholder="${currentUser.birthdate}"/>
+                    <form:errors path="birthdate"/>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit"><tag:message
+                        code="userdata.change"/></button>
+            </form:form>
         </div>
-        <label for="name"><tag:message code="userdata.name"/></label>
-        <div class="form-group">
-            <form:input type="name" id="name" path="name" class="form-control"
-                        placeholder="${currentUser.name}" />
-            <form:errors path="name" />
-        </div>
-            <label for="surname"><tag:message code="userdata.surname"/></label>
-            <div class="form-group">
-            <form:input type="surname" id="surname" path="surname" class="form-control"
-                        placeholder="${currentUser.surname}" />
-            <form:errors path="surname" />
-        </div>
-            <label for="email"><tag:message code="userdata.email"/></label>
-            <div class="form-group">
-            <form:input type="email" id="email" path="email" class="form-control"
-                        placeholder="${currentUser.email}" />
-            <form:errors path="email" />
-        </div>
-            <label for="phone"><tag:message code="userdata.phone"/></label>
-        <div class="form-group">
-            <form:input type="phone" id="phone" path="phone" class="form-control"
-                        placeholder="${currentUser.phone}" />
-            <form:errors path="phone" />
-        </div>
-            <label for="birthdate"><tag:message code="userdata.birthdate"/></label>
-            <div class="form-group" >
-            <form:input type="birthdate" id="birthdate" path="birthdate" class="form-control"
-                        placeholder="${currentUser.birthdate}" />
-            <form:errors path="birthdate" />
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit"><tag:message code="userdata.change"/></button>
-        </form:form>
     </div>
 </main>
 <%@include file="footer.jsp" %>

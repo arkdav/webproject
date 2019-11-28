@@ -23,36 +23,37 @@
                         <a class="nav-link" href="${pageContext.request.contextPath}/basket"><tag:message
                                 code="header.basket"/></a>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/userorders"><tag:message
-                                code="header.userorders"/> </a>
-                    </li>
                 </sec:authorize>
                 <sec:authorize access="hasAnyRole('ROLE_CUSTOMER', 'ROLE_BUSINESS_USER')">
-                    <li class="nav-item ">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/userdata"><tag:message
-                                code="header.userdata"/> </a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownUser" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <tag:message code="header.userdata"/>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownUser">
+                            <a class="dropdown-item" href="${pageContext.request.contextPath}/userdata">
+                                <tag:message code="header.userinformation"/>
+                            </a>
+                            <sec:authorize access="hasRole('ROLE_CUSTOMER')">
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/userorders">
+                                    <tag:message code="header.userorders"/>
+                                </a>
+                            </sec:authorize>
+                            <sec:authorize access="hasRole('ROLE_BUSINESS_USER')">
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/businessdata">
+                                    <tag:message code="header.businessdata.catalog"/>
+                                </a>
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/business/create">
+                                    <tag:message code="header.businessdata.create"/>
+                                </a>
+                            </sec:authorize>
+                        </div>
                     </li>
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
                     <li class="nav-item ">
                         <a class="nav-link" href="${pageContext.request.contextPath}/admindata"><tag:message
                                 code="header.admindata"/></a>
-                    </li>
-                </sec:authorize>
-                <sec:authorize access="hasRole('ROLE_BUSINESS_USER')">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdownBus" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false" href="${pageContext.request.contextPath}/businessdata"><tag:message
-                                code="header.businessdata"/></a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownBus">
-                            <a class="dropdown-item" href="${pageContext.request.contextPath}/businessdata">
-                                <tag:message code="header.businessdata.catalog"/>
-                            </a>
-                            <a class="dropdown-item" href="${pageContext.request.contextPath}/business/create">
-                                <tag:message code="header.businessdata.create"/>
-                            </a>
-                        </div>
                     </li>
                 </sec:authorize>
                 <li class="nav-item dropdown">

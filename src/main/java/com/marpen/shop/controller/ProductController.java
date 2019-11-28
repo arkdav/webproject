@@ -53,10 +53,14 @@ public class ProductController {
             model.addAttribute("search", searchName);
         }
         model.addAttribute("productsList", this.productFacade.getCatalogList(searchName, pageid, productsPerPage));
-        model.addAttribute("pagesList", this.productFacade.getCatalogIdList(searchName, productsPerPage));
+        model.addAttribute("pagesList", this.productFacade.getCatalogPagesList(searchName, productsPerPage));
         return "catalog";
     }
 
+    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
+    public String getCatalog() {
+        return "redirect:/catalog";
+    }
 
     @RequestMapping(value = "/productdata/{product_id}", method = RequestMethod.GET)
     public String productData(@PathVariable("product_id") int productId,
