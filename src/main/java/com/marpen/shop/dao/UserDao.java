@@ -4,5 +4,4 @@ import com.marpen.shop.model.User;
 
 public interface UserDao extends GenericDao<User>{
 
-    User getUserByUsername(String username);
 }

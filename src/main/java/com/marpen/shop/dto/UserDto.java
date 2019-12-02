@@ -5,7 +5,6 @@ import java.util.Date;
 
 public class UserDto {
 
-    private int userId;
     private String login;
     private String name;
     private String surname;
@@ -16,9 +15,9 @@ public class UserDto {
     public UserDto(){
     }
 
-    public UserDto(int userId,
+    public UserDto(//int userId,
                    String login, String name, String surname, String email, String phone, String birthdate) {
-        this.userId = userId;
+        //this.userId = userId;
         this.login = login;
         this.name = name;
         this.surname = surname;
@@ -27,13 +26,13 @@ public class UserDto {
         this.birthdate = birthdate;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+//    public int getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(int userId) {
+//        this.userId = userId;
+//    }
 
     public String getLogin() {
         return login;

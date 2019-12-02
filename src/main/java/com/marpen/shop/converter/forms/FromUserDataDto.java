@@ -21,8 +21,7 @@ public class FromUserDataDto implements Converter<UserDataDto, User> {
 
     @Override
     public User convert(UserDataDto userDataDto) {
-        User user = userService.getUserById(userDataDto.getUserId());
-
+        User user = userService.getUserByLogin(userDataDto.getLogin());
         if (userDataDto.getName() != null && !userDataDto.getName().isEmpty()) {
             user.setName(userDataDto.getName());
         }

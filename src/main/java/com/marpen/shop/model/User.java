@@ -1,25 +1,21 @@
 package com.marpen.shop.model;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.util.Date;
 
 @Entity
 @Table(name = "users")
+@Proxy(lazy = false)
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="user_id")
-    private int userId;
-
-    @Column(name = "username")
-    private String username;
+    @Column(name = "login")
+    private String login;
 
     @Column(name = "password")
     private String password;
@@ -42,15 +38,12 @@ public class User {
     @Column(name = "birthdate")
     private Date birthDate;
 
-    @Transient
-    private String confirmPassword;
-
-    public User(){
+    public User() {
     }
 
-    public User(int userId, String username, String password, int roleId, String name, String surname, String email, String phone, Date birthDate) {
-        this.userId=userId;
-        this.username = username;
+    public User(String login, String password, int roleId, String name, String surname,
+                String email, String phone, Date birthDate) {
+        this.login = login;
         this.password = password;
         this.roleId = roleId;
         this.name = name;
@@ -60,20 +53,12 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {
@@ -90,14 +75,6 @@ public class User {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 
     public String getName() {
@@ -139,4 +116,5 @@ public class User {
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
+
 }

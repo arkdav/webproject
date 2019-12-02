@@ -29,18 +29,18 @@ public class CartFacadeImpl implements CartFacade {
     }
 
     @Override
-    public CartDto getCartByUserId(int userId) {
-        Cart cart = cartService.getCartByUserId(userId);
+    public CartDto getCartByUserLogin(String userLogin) {
+        Cart cart = cartService.getCartByUserLogin(userLogin);
         if (cart == null) {
-            cartService.save(userId);
-            cart = cartService.getCartByUserId(userId);
+            cartService.save(userLogin);
+            cart = cartService.getCartByUserLogin(userLogin);
         }
         return toCartDto.convert(cart);
     }
 
     @Override
-    public void addProductToCart(int userId, int productId) {
-        Cart cart = cartService.getCartByUserId(userId);
+    public void addProductToCart(String userLogin, int productId) {
+        Cart cart = cartService.getCartByUserLogin(userLogin);
         CartEntry cartEntryProduct = cartEntryService.getCartEntryByProductId(cart.getCartId(), productId);
         double newTotalPrice;
         if (cartEntryProduct != null) {
@@ -57,8 +57,8 @@ public class CartFacadeImpl implements CartFacade {
     }
 
     @Override
-    public void updateProductInCart(int userId, int productId, int productAmount) {
-        Cart cart = cartService.getCartByUserId(userId);
+    public void updateProductInCart(String userLogin, int productId, int productAmount) {
+        Cart cart = cartService.getCartByUserLogin(userLogin);
         CartEntry cartEntryProduct = cartEntryService.getCartEntryByProductId(cart.getCartId(), productId);
         double totalPrice = cart.getTotalPrice() - cartEntryProduct.getAmount() * Double.parseDouble(productFacade.getProductById(productId).getPrice());
         cartEntryProduct.setAmount(productAmount);
@@ -69,8 +69,8 @@ public class CartFacadeImpl implements CartFacade {
     }
 
     @Override
-    public void removeProductFromCart(int userId, int productId) {
-        Cart cart = cartService.getCartByUserId(userId);
+    public void removeProductFromCart(String userLogin, int productId) {
+        Cart cart = cartService.getCartByUserLogin(userLogin);
         CartEntry cartEntry = cartEntryService.getCartEntryByProductId(cart.getCartId(), productId);
         cartEntryService.removeCartEntry(cartEntry);
         cart.setTotalPrice(cart.getTotalPrice() - cartEntry.getAmount() * Double.parseDouble(productFacade.getProductById(productId).getPrice()));
@@ -78,9 +78,9 @@ public class CartFacadeImpl implements CartFacade {
     }
 
     @Override
-    public void removeCart(int userId) {
-        Cart cart = cartService.getCartByUserId(userId);
+    public void removeCart(String userLogin) {
+        Cart cart = cartService.getCartByUserLogin(userLogin);
         cartEntryService.removeCartEntries(cart.getCartId());
-        cartService.removeCart(userId);
+        cartService.removeCart(userLogin);
     }
 }

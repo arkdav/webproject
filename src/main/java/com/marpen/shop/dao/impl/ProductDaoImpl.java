@@ -3,31 +3,24 @@ package com.marpen.shop.dao.impl;
 import com.marpen.shop.dao.ProductDao;
 import com.marpen.shop.model.Product;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import java.util.List;
 
 public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDao {
 
-    private Session session;
-
-    public ProductDaoImpl(SessionFactory sessionFactory) {
-        if (super.getSessionFactory() == null) {
-            super.setSessionFactory(sessionFactory);
-
-        }
-        this.session = super.getSession();
+    private ProductDaoImpl() {
+        super();
     }
 
     private Session currentSession() {
-        return this.session;
+        return super.getSession();
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Product> getProductsListByUserId(int userId) {
-        String sql = "select * from products where user_id like :user_id order by product_id desc";
-        List<Product> products = currentSession().createSQLQuery(sql).addEntity(Product.class).setParameter("user_id", userId).list();
+    public List<Product> getProductsListByUserLogin(String userLogin) {
+        String sql = "select * from products where user_login like :user_login order by product_id desc";
+        List<Product> products = currentSession().createSQLQuery(sql).addEntity(Product.class).setParameter("user_login", userLogin).list();
         return products;
     }
 
@@ -51,14 +44,14 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
     @Override
     public int getOnlineAmountOfProducts() {
         String sql = "select product_id from products where catver_id=1";
-        return session.createSQLQuery(sql).list().size();
+        return currentSession().createSQLQuery(sql).list().size();
     }
 
     @Override
     public int getOnlineAmountOfProductsByName(String name) {
         String nameForSql = "%" + name + "%";
         String sql = "select product_id from products where name like :name and catver_id=1";
-        return session.createSQLQuery(sql).setParameter("name", nameForSql).list().size();
+        return currentSession().createSQLQuery(sql).setParameter("name", nameForSql).list().size();
     }
 }
 

@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
@@ -24,7 +25,6 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
-        sessionFactory.openSession();
     }
 
     public SessionFactory getSessionFactory() {
@@ -53,9 +53,8 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
         getSession().update(domain);
     }
 
-    public T get(int id) {
-        T object = (T) getSession().load(entityClass, id);
+    public T get(Object id) {
+        T object = (T) getSession().load(entityClass, (Serializable) id);
         return object;
     }
-
 }

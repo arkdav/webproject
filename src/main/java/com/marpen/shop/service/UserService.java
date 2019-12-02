@@ -6,9 +6,7 @@ public interface UserService {
 
     void save(User user);
 
-    User getUserByUsername(String username);
-
-    User getUserById(int userId);
+    User getUserByLogin(String login);
 
     void update(User user);
 

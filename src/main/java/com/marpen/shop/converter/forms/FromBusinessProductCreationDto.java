@@ -22,7 +22,7 @@ public class FromBusinessProductCreationDto implements Converter<BusinessProduct
         MultipartFile file = businessProductCreationDto.getImage();
         product.setImageLink(file.getOriginalFilename());
         product.setCatverId(catalogVersionService.getCatalogVersionIdByName(businessProductCreationDto.getCatalogVersion()));
-        product.setUserId(businessProductCreationDto.getUserId());
+        product.setUserLogin(businessProductCreationDto.getUserLogin());
         return product;
     }
 }

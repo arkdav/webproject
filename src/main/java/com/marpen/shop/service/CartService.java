@@ -4,13 +4,11 @@ import com.marpen.shop.model.Cart;
 
 public interface CartService {
 
-    Cart getCartByUserId(int userId);
+    Cart getCartByUserLogin(String userLogin);
 
-    void save(Cart cart);
+    void save(String userLogin);
 
-    void save(int userId);
-
-    void removeCart(int userId);
+    void removeCart(String userLogin);
 
     void updateCart(Cart cart);
 }

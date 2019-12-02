@@ -8,7 +8,7 @@ public interface UserFacade {
 
     void save(RegistrationDto registrationDto);
 
-    void update(int userId, UserDataDto userDataDto);
+    void update(String userLogin, UserDataDto userDataDto);
 
     UserDto getUserInformation(String username);
 

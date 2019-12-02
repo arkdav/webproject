@@ -81,8 +81,8 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
-    public List<BusinessProductDto> getProductsListByUserId(int userId) {
-        List<Product> products = productService.getProductsListByUserId(userId);
+    public List<BusinessProductDto> getProductsListByUserLogin(String userLogin) {
+        List<Product> products = productService.getProductsListByUserLogin(userLogin);
         List<BusinessProductDto> list = new ArrayList<>(products.size());
         for (Product product :
                 products) {
@@ -99,12 +99,13 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
-    public void deleteProduct(int product_id) {
-        productService.deleteProduct(product_id);
+    public void deleteProduct(int productId) {
+        productService.deleteProduct(productId);
     }
 
     @Override
-    public void updateProduct(BusinessProductDto businessProductDto) {
+    public void updateProduct(String userLogin, BusinessProductDto businessProductDto) {
+        businessProductDto.setUserLogin(userLogin);
         Product product = fromBusinessProductDto.convert(businessProductDto);
         Price price = fromBusinessProductDtoToPrice.convert(businessProductDto);
         productService.updateProduct(product);
@@ -112,7 +113,8 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
-    public void createProduct(BusinessProductCreationDto businessProductCreationDto) {
+    public void createProduct(String userLogin, BusinessProductCreationDto businessProductCreationDto) {
+        businessProductCreationDto.setUserLogin(userLogin);
         Product product = fromBusinessProductCreationDto.convert(businessProductCreationDto);
         productService.createProduct(product);
         Price price = fromBusinessProductCreationDtoToPrice.convert(businessProductCreationDto);

@@ -24,6 +24,7 @@ public class ToBusinessProductDto implements Converter<Product, BusinessProductD
         businessProductDto.setName(product.getName());
         businessProductDto.setImageLink(product.getImageLink());
         businessProductDto.setDescription(product.getDescription());
+        businessProductDto.setUserLogin(product.getUserLogin());
         businessProductDto.setPrice(Double.toString(priceService.getPriceByProductId(product.getProductId()).getPrice()));
         businessProductDto.setCatalogVersion(catalogVersionService.getCatalogVersionNameById(product.getCatverId()));
         return businessProductDto;

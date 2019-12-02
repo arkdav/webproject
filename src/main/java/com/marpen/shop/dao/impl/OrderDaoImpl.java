@@ -3,30 +3,23 @@ package com.marpen.shop.dao.impl;
 import com.marpen.shop.dao.OrderDao;
 import com.marpen.shop.model.Order;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import java.util.List;
 
 public class OrderDaoImpl extends GenericDaoImpl<Order> implements OrderDao {
 
-    private Session session;
-
-    public OrderDaoImpl(SessionFactory sessionFactory) {
-        if (super.getSessionFactory() == null) {
-            super.setSessionFactory(sessionFactory);
-
-        }
-        this.session = super.getSession();
+    private OrderDaoImpl() {
+        super();
     }
 
     private Session currentSession() {
-        return this.session;
+        return super.getSession();
     }
 
     @Override
-    public List<Order> getOrdersByUserId(int userId) {
-        String sql = "select * from orders where user_id like :user_id order by date desc";
-        List<Order> orders = currentSession().createSQLQuery(sql).addEntity(Order.class).setParameter("user_id", userId).list();
+    public List<Order> getOrdersByUserLogin(String userLogin) {
+        String sql = "select * from orders where user_login like :user_login order by date desc";
+        List<Order> orders = currentSession().createSQLQuery(sql).addEntity(Order.class).setParameter("user_login", userLogin).list();
         return orders;
     }
 }

@@ -8,5 +8,5 @@ public interface GenericDao<T> {
 
     void delete(T domain);
 
-    T get(int id);
+    T get(Object id);
 }

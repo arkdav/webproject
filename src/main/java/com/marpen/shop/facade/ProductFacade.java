@@ -15,14 +15,14 @@ public interface ProductFacade {
 
     List<PageDto> getCatalogPagesList(String searchName, int productsPerPage);
 
-    List<BusinessProductDto> getProductsListByUserId(int userId);
+    List<BusinessProductDto> getProductsListByUserLogin(String userLogin);
 
     BusinessProductDto getBusinessProductDtoById(int productId);
 
-    void deleteProduct(int product_id);
+    void deleteProduct(int productId);
 
-    void updateProduct(BusinessProductDto businessProductDto);
+    void updateProduct(String userLogin, BusinessProductDto businessProductDto);
 
-    void createProduct(BusinessProductCreationDto businessProductCreationDto);
+    void createProduct(String userLogin, BusinessProductCreationDto businessProductCreationDto);
 
 }

@@ -32,19 +32,22 @@ public class Product {
     @Column(name = "catver_id")
     private int catverId;
 
-    @Column(name = "user_id")
-    private int userId;
+    @Column(name = "user_login")
+    private String userLogin;
 
     public Product() {
     }
 
-    public Product(int productId, String name, String description, String imageLink, int catverId, int userId) {
+    public Product(int productId, String name, String description, String imageLink, int catverId,String userLogin
+                   //int userId
+    ) {
         this.productId = productId;
         this.name = name;
         this.description = description;
         this.imageLink = imageLink;
         this.catverId = catverId;
-        this.userId = userId;
+        this.userLogin=userLogin;
+//        this.userId = userId;
     }
 
     public Integer getProductId() {
@@ -96,12 +99,20 @@ public class Product {
         this.catverId = catverId;
     }
 
-
-    public int getUserId() {
-        return userId;
+    public String getUserLogin() {
+        return userLogin;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
+
+
+//    public int getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(int userId) {
+//        this.userId = userId;
+//    }
 }

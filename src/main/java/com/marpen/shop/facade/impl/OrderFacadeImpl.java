@@ -37,8 +37,8 @@ public class OrderFacadeImpl implements OrderFacade {
     }
 
     @Override
-    public void addCartToOrder(int userId) {
-        CartDto cartDto = cartFacade.getCartByUserId(userId);
+    public void addCartToOrder(String userLogin) {
+        CartDto cartDto = cartFacade.getCartByUserLogin(userLogin);
         Order order = fromCartDto.convert(cartDto);
         orderService.save(order);
         List<CartProductDto> cartProductDtos = cartDto.getProducts();
@@ -53,8 +53,8 @@ public class OrderFacadeImpl implements OrderFacade {
     }
 
     @Override
-    public List<OrderDto> getOrdersByUserId(int userId) {
-        List<Order> orders = orderService.getOrdersByUserId(userId);
+    public List<OrderDto> getOrdersByUserLogin(String userLogin) {
+        List<Order> orders = orderService.getOrdersByUserLogin(userLogin);
         List<OrderDto> orderDtos = new ArrayList<>();
         if (!orders.isEmpty()) {
             for (Order order :

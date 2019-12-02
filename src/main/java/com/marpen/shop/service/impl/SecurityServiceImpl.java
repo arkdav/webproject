@@ -29,7 +29,7 @@ public class SecurityServiceImpl implements SecurityService {
     public User findLoggedInUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (authentication instanceof AnonymousAuthenticationToken)
-                        ? null : userService.getUserByUsername(authentication.getName());
+                        ? null : userService.getUserByLogin(authentication.getName());
     }
 
     @Override

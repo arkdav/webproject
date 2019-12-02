@@ -2,7 +2,8 @@ package com.marpen.shop.dto;
 
 public class UserDataDto {
 
-    private Integer userId;
+//    private Integer userId;
+    private String login;
     private String password;
     private String name;
     private String surname;
@@ -58,11 +59,11 @@ public class UserDataDto {
         this.birthdate = birthdate;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String  getLogin() {
+        return login;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setLogin(String login) {
+        this.login = login;
     }
 }

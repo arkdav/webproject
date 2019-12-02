@@ -34,7 +34,7 @@ public class RegistrationValidator implements Validator {
             errors.rejectValue("login", "Size.login");
         }
 
-        if (userService.getUserByUsername(user.getLogin()) != null) {
+        if (userService.getUserByLogin(user.getLogin()) != null) {
             errors.rejectValue("login", "Duplicate.login");
         }
 

@@ -3,25 +3,19 @@ package com.marpen.shop.dao.impl;
 import com.marpen.shop.dao.RoleDao;
 import com.marpen.shop.model.Role;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import java.util.List;
 
 public class RoleDaoImpl extends GenericDaoImpl<Role> implements RoleDao {
 
-    private Session session;
-
-    public RoleDaoImpl(SessionFactory sessionFactory) {
-        if (super.getSessionFactory() == null) {
-            super.setSessionFactory(sessionFactory);
-
-        }
-        this.session = super.getSession();
+    private RoleDaoImpl() {
+        super();
     }
 
     private Session currentSession() {
-        return this.session;
+        return super.getSession();
     }
+
 
     @Override
     @SuppressWarnings("unchecked")

@@ -20,7 +20,7 @@ public class FromRegistrationDto implements Converter<RegistrationDto, User> {
     public User convert(RegistrationDto registrationDto) {
         User user = new User();
         try {
-            user.setUsername(registrationDto.getLogin());
+            user.setLogin(registrationDto.getLogin());
             user.setPassword(bCryptPasswordEncoder.encode(registrationDto.getConfirmPassword()));
             user.setName(registrationDto.getName());
             user.setSurname(registrationDto.getSurname());

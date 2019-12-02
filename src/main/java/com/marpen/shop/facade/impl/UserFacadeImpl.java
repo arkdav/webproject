@@ -32,15 +32,15 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public void update(int userId, UserDataDto userDataDto) {
-        userDataDto.setUserId(userId);
+    public void update(String userLogin, UserDataDto userDataDto) {
+        userDataDto.setLogin(userLogin);
         User user = fromUserDataDto.convert(userDataDto);
         userService.update(user);
     }
 
     @Override
     public UserDto getUserInformation(String username) {
-        User user = userService.getUserByUsername(username);
+        User user = userService.getUserByLogin(username);
         UserDto userDto = null;
         if (user != null) {
             userDto = toUserDto.convert(user);

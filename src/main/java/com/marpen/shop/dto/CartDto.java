@@ -6,7 +6,7 @@ import java.util.List;
 
 public class CartDto {
 
-    private int userId;
+    private String userLogin;
     private int cartId;
     private String date;
     private List<CartProductDto> products;
@@ -15,12 +15,12 @@ public class CartDto {
     public CartDto() {
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUserLogin() {
+        return userLogin;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
 
     public int getCartId() {

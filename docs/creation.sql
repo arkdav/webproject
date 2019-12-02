@@ -14,8 +14,7 @@ INSERT INTO `webdb`.`roles` (`role_id`, `rolename`) VALUES ('2', 'ROLE_ADMIN');
 INSERT INTO `webdb`.`roles` (`role_id`, `rolename`) VALUES ('3', 'ROLE_BUSINESS_USER');
 
 CREATE TABLE `webdb`.`users` (
-  `user_id` INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(225) NOT NULL,
+  `login` VARCHAR(225) NOT NULL,
   `password` VARCHAR(225) NOT NULL,
   `role_id` INT NOT NULL,
   `name` VARCHAR(225) NOT NULL,
@@ -23,16 +22,16 @@ CREATE TABLE `webdb`.`users` (
   `email` VARCHAR(225) NOT NULL,
   `phone` VARCHAR(225) NOT NULL,
   `birthdate` DATE NOT NULL,
-  PRIMARY KEY (`user_id`),
+  PRIMARY KEY (`login`),
   FOREIGN KEY (`role_id`) REFERENCES `webdb`.`roles`(`role_id`) ON UPDATE CASCADE ON DELETE CASCADE )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
-INSERT INTO `webdb`.`users` (`user_id`,`username`,`password`,`role_id`,`name`,`surname`,`email`,`phone`,`birthdate`)
-VALUES ('1','natali', '$2a$11$j4xr0InYy/WVRT3AChOlWOQl6sjJXNRhAyW.irpVqMY4wkqZEQ0Cq','1','Kate','Gorn','gorn@mail.ru','3089078', '2016-05-12');
-INSERT INTO `webdb`.`users` (`user_id`,`username`,`password`,`role_id`,`name`,`surname`,`email`,`phone`,`birthdate`)
-VALUES ('2','andrey', '$2a$11$pAc9QgTxxF8TD8XETP/SSeosaRx9ZGGI/Xdurga.OEeQnkI1L4cLa','3','Andrey','Ivanov','ivanov.a@mail.ru','2879838', '2000-06-23');
+INSERT INTO `webdb`.`users` (`login`,`password`,`role_id`,`name`,`surname`,`email`,`phone`,`birthdate`)
+VALUES ('natali', '$2a$11$j4xr0InYy/WVRT3AChOlWOQl6sjJXNRhAyW.irpVqMY4wkqZEQ0Cq','1','Kate','Gorn','gorn@mail.ru','3089078', '2016-05-12');
+INSERT INTO `webdb`.`users` (`login`,`password`,`role_id`,`name`,`surname`,`email`,`phone`,`birthdate`)
+VALUES ('andrey', '$2a$11$pAc9QgTxxF8TD8XETP/SSeosaRx9ZGGI/Xdurga.OEeQnkI1L4cLa','3','Andrey','Ivanov','ivanov.a@mail.ru','2879838', '2000-06-23');
 
 CREATE TABLE `webdb`.`catalogversion` (
     `catver_id` INT NOT NULL AUTO_INCREMENT,
@@ -51,32 +50,32 @@ CREATE TABLE `webdb`.`products` (
   `description` VARCHAR(225) NOT NULL,
   `imageurl` VARCHAR(225) NOT NULL,
   `catver_id` INT NOT NULL,
-  `user_id` INT NOT NULL,
+  `user_login` VARCHAR(225) NOT NULL,
   PRIMARY KEY (`product_id`),
   FOREIGN KEY (`catver_id`) REFERENCES `webdb`.`catalogversion`(`catver_id`) ON UPDATE CASCADE ON DELETE CASCADE,
-   FOREIGN KEY (`user_id`) REFERENCES `webdb`.`users`(`user_id`) ON UPDATE CASCADE ON DELETE CASCADE)
+   FOREIGN KEY (`user_login`) REFERENCES `webdb`.`users`(`login`) ON UPDATE CASCADE ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('1', 'Album #2', 'infaboutalbum2','album1.jpg','1', '2');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('2', 'Pen #30', 'infaboutpen33','pen30.jpg','1', '2');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('3', 'Album #66', 'infaboutalbum66','album66.jpg','1', '2');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('4', 'Album #67', 'infaboutalbum67','album55.jpg','1', '2');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('5', 'Album #68', 'infaboutalbum68','album66.jpg','1', '2');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('6', 'Album #32', 'infaboutalbum32','album66.jpg','1', '2');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('7', 'Album #71', 'infaboutalbum71','album66.jpg','1', '2');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('8', 'Album #72', 'infaboutalbum72','album66.jpg','1', '2');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('9', 'Album #73', 'infaboutalbum73','album66.jpg','1', '2');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('10', 'Album #74', 'infaboutalbum74','album66.jpg','1', '2');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('11', 'Album #75', 'infaboutalbum75','album66.jpg','1', '2');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('12', 'Album #76', 'infaboutalbum76','album66.jpg','1', '2');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('13', 'Album #77', 'infaboutalbum77','album66.jpg','1', '2');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('14', 'Album #78', 'infaboutalbum78','album66.jpg','1', '2');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('15', 'Album #79', 'infaboutalbum79','album66.jpg','1', '2');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('16', 'Album #80', 'infaboutalbum80','album66.jpg','1', '2');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('17', 'Album #81', 'infaboutalbum81','album66.jpg','1', '2');
-INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_id`) VALUES ('18', 'Album #82', 'infaboutalbum82','album66.jpg','1', '2');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('1', 'Album #2', 'infaboutalbum2','album1.jpg','1', 'andrey');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('2', 'Pen #30', 'infaboutpen33','pen30.jpg','1', 'andrey');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('3', 'Album #66', 'infaboutalbum66','album66.jpg','1', 'andrey');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('4', 'Album #67', 'infaboutalbum67','album55.jpg','1', 'andrey');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('5', 'Album #68', 'infaboutalbum68','album66.jpg','1', 'andrey');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('6', 'Album #32', 'infaboutalbum32','album66.jpg','1', 'andrey');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('7', 'Album #71', 'infaboutalbum71','album66.jpg','1', 'andrey');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('8', 'Album #72', 'infaboutalbum72','album66.jpg','1', 'andrey');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('9', 'Album #73', 'infaboutalbum73','album66.jpg','1', 'andrey');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('10', 'Album #74', 'infaboutalbum74','album66.jpg','1', 'andrey');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('11', 'Album #75', 'infaboutalbum75','album66.jpg','1', 'andrey');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('12', 'Album #76', 'infaboutalbum76','album66.jpg','1', 'andrey');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('13', 'Album #77', 'infaboutalbum77','album66.jpg','1', 'andrey');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('14', 'Album #78', 'infaboutalbum78','album66.jpg','1', 'andrey');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('15', 'Album #79', 'infaboutalbum79','album66.jpg','1', 'andrey');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('16', 'Album #80', 'infaboutalbum80','album66.jpg','1', 'andrey');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('17', 'Album #81', 'infaboutalbum81','album66.jpg','1', 'andrey');
+INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('18', 'Album #82', 'infaboutalbum82','album66.jpg','1', 'andrey');
 
 CREATE TABLE `webdb`.`price` (
   `product_id` INT NOT NULL,
@@ -108,11 +107,11 @@ INSERT INTO `webdb`.`price` (`product_id`, `price`) VALUES ('18', '33.1');
 
 CREATE TABLE `webdb`.`cart` (
   `cart_id` INT NOT NULL AUTO_INCREMENT,
-  `user_id` INT NOT NULL,
+  `user_login`  VARCHAR(225) NOT NULL,
   `date` DATE NOT NULL,
   `totalprice` DOUBLE NOT NULL,
   PRIMARY KEY (`cart_id`),
-  FOREIGN KEY (`user_id`) REFERENCES `webdb`.`users`(`user_id`) ON UPDATE CASCADE ON DELETE CASCADE )
+  FOREIGN KEY (`user_login`) REFERENCES `webdb`.`users`(`login`) ON UPDATE CASCADE ON DELETE CASCADE )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
@@ -132,11 +131,11 @@ COLLATE = utf8_unicode_ci;
 
 CREATE TABLE `webdb`.`orders` (
   `order_id` INT NOT NULL AUTO_INCREMENT,
-  `user_id` INT NOT NULL,
+  `user_login`  VARCHAR(225) NOT NULL,
   `date` DATE NOT NULL,
   `totalprice` DOUBLE NOT NULL,
   PRIMARY KEY (`order_id`),
-  FOREIGN KEY (`user_id`) REFERENCES `webdb`.`users`(`user_id`) ON UPDATE CASCADE ON DELETE CASCADE )
+  FOREIGN KEY (`user_login`) REFERENCES `webdb`.`users`(`login`) ON UPDATE CASCADE ON DELETE CASCADE )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;

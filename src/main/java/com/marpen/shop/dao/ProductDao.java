@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ProductDao extends GenericDao<Product> {
 
-    List<Product> getProductsListByUserId(int userId);
+    List<Product> getProductsListByUserLogin(String userLogin);
 
     List<Product> getOnlineProductsListByPage(int pageId, int productsPerPage);
 

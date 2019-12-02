@@ -24,7 +24,7 @@ public class ToCartDto implements Converter<Cart, CartDto> {
     public CartDto convert(Cart cart) {
         CartDto cartDto = new CartDto();
         cartDto.setCartId(cart.getCartId());
-        cartDto.setUserId(cart.getUserId());
+        cartDto.setUserLogin(cart.getUserLogin());
         cartDto.setDate(cart.getDate());
         cartDto.setCartPrice(cart.getTotalPrice());
         List<CartEntry> cartEntries = cartEntryService.getCartEntriesByCartId(cart.getCartId());

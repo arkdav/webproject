@@ -17,28 +17,23 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart getCartByUserId(int userId) {
-        return cartDao.get(userId);
+    public Cart getCartByUserLogin(String userLogin) {
+        return cartDao.getCartByUserLogin(userLogin);
     }
 
     @Override
-    public void save(Cart cart) {
-        cartDao.save(cart);
-    }
-
-    @Override
-    public void save(int userId) {
+    public void save(String userLogin) {
         Cart cart = new Cart();
         Date dateNow = new Date();
         cart.setDate(dateNow);
-        cart.setUserId(userId);
+        cart.setUserLogin(userLogin);
         cart.setTotalPrice(0.00);
         cartDao.save(cart);
     }
 
     @Override
-    public void removeCart(int userId) {
-        Cart cart = cartDao.get(userId);
+    public void removeCart(String userLogin) {
+        Cart cart = cartDao.getCartByUserLogin(userLogin);
         cartDao.delete(cart);
     }
 

@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 public class OrderDto {
-    private int userId;
+    private String userLogin;
     private int orderId;
     private String date;
     private List<OrderProductDto> products;
@@ -14,12 +14,12 @@ public class OrderDto {
     public OrderDto() {
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUserLogin() {
+        return userLogin;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
 
     public int getOrderId() {

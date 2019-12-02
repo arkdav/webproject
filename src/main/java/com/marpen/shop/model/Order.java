@@ -16,8 +16,8 @@ public class Order {
     @Column(name = "order_id")
     private int orderId;
 
-    @Column(name = "user_id")
-    private int userId;
+    @Column(name="user_login")
+    private String userLogin;
 
     @Column(name = "date")
     private Date date;
@@ -36,12 +36,12 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUserLogin() {
+        return userLogin;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserLogin(String login) {
+        this.userLogin = login;
     }
 
     public Date getDate() {

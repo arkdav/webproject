@@ -4,7 +4,6 @@ import com.marpen.shop.dto.UserDataDto;
 import com.marpen.shop.dto.UserDto;
 import com.marpen.shop.facade.UserFacade;
 import com.marpen.shop.validator.UserDataValidator;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,18 +38,13 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "userdata";
         }
-        userFacade.update(getUserId(), userDataDto);
+        userFacade.update(getUserLogin(), userDataDto);
         return "redirect:/userdata";
     }
 
     @RequestMapping(value = "/admindata", method = RequestMethod.GET)
     public String getAdminPage() {
         return "admindata";
-    }
-
-    private int getUserId() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return userFacade.getUserInformation(auth.getName()).getUserId();
     }
 
     private String getUserLogin() {

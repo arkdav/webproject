@@ -5,11 +5,9 @@ import com.marpen.shop.dto.BusinessProductDto;
 import com.marpen.shop.dto.PageDto;
 import com.marpen.shop.dto.ProductDto;
 import com.marpen.shop.facade.ProductFacade;
-import com.marpen.shop.facade.UserFacade;
 import com.marpen.shop.validator.BusinessProductValidator;
 import com.marpen.shop.validator.ProductCreationValidator;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,17 +31,14 @@ public class ProductController {
     private ProductFacade productFacade;
     private BusinessProductValidator businessProductValidator;
     private ProductCreationValidator productCreationValidator;
-    private UserFacade userFacade;
 
     public ProductController(ProductFacade productFacade,
                              BusinessProductValidator businessProductValidator,
-                             ProductCreationValidator productCreationValidator,
-                             UserFacade userFacade) {
+                             ProductCreationValidator productCreationValidator) {
 
         this.productFacade = productFacade;
         this.businessProductValidator = businessProductValidator;
         this.productCreationValidator = productCreationValidator;
-        this.userFacade = userFacade;
     }
 
     private static final int PRODUCTS_PER_PAGE = 6;
@@ -53,9 +48,8 @@ public class ProductController {
         if (pageid != 1) {
             pageid = (pageid - 1) * PRODUCTS_PER_PAGE + 1;
         }
-        String searchName = null;
-        model.addAttribute("productsList", this.productFacade.getCatalogList(searchName, pageid, PRODUCTS_PER_PAGE));
-        model.addAttribute("pagesList", this.productFacade.getCatalogPagesList(searchName, PRODUCTS_PER_PAGE));
+        model.addAttribute("productsList", this.productFacade.getCatalogList(null, pageid, PRODUCTS_PER_PAGE));
+        model.addAttribute("pagesList", this.productFacade.getCatalogPagesList(null, PRODUCTS_PER_PAGE));
         return "catalog";
     }
 
@@ -92,7 +86,7 @@ public class ProductController {
 
     @RequestMapping(value = {"/businessdata"}, method = RequestMethod.GET)
     public String getBusinessPage(Model model) {
-        model.addAttribute("businessProductsList", this.productFacade.getProductsListByUserId(getUserId()));
+        model.addAttribute("businessProductsList", this.productFacade.getProductsListByUserLogin(getUserLogin()));
         return "businessdata";
     }
 
@@ -117,8 +111,7 @@ public class ProductController {
         if (bindingResult.hasErrors()) {
             return "productupdate";
         }
-        businessProductDto.setUserId(getUserId());
-        productFacade.updateProduct(businessProductDto);
+        productFacade.updateProduct(getUserLogin(),businessProductDto);
         return "redirect:/businessdata";
     }
 
@@ -140,17 +133,15 @@ public class ProductController {
         try {
             String filename = System.getenv("CATALINA_HOME") + "\\webapps\\images\\" + file.getOriginalFilename();
             file.transferTo(new File(filename));
-            businessProductCreationDto.setUserId(getUserId());
-            productFacade.createProduct(businessProductCreationDto);
+            productFacade.createProduct(getUserLogin(), businessProductCreationDto);
         } catch (IOException e) {
             return "productcreation";
         }
         return "redirect:/businessdata";
     }
 
-    private int getUserId() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return userFacade.getUserInformation(auth.getName()).getUserId();
+    private String getUserLogin() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
 }

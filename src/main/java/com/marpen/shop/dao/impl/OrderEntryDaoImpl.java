@@ -4,25 +4,19 @@ package com.marpen.shop.dao.impl;
 import com.marpen.shop.dao.OrderEntryDao;
 import com.marpen.shop.model.OrderEntry;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import java.util.List;
 
 public class OrderEntryDaoImpl extends GenericDaoImpl<OrderEntry> implements OrderEntryDao {
 
-    private Session session;
-
-    public OrderEntryDaoImpl(SessionFactory sessionFactory) {
-        if (super.getSessionFactory() == null) {
-            super.setSessionFactory(sessionFactory);
-
-        }
-        this.session = super.getSession();
+    private OrderEntryDaoImpl() {
+        super();
     }
 
     private Session currentSession() {
-        return this.session;
+        return super.getSession();
     }
+
 
     @Override
     public List<OrderEntry> getOrderEntriesByOrderId(int orderId) {

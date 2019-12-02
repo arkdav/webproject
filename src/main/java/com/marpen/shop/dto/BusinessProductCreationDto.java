@@ -9,7 +9,7 @@ public class BusinessProductCreationDto {
     private String price;
     private String catalogVersion;
     private MultipartFile image;
-    private int userId;
+    private String userLogin;
 
     public BusinessProductCreationDto() {
     }
@@ -50,11 +50,11 @@ public class BusinessProductCreationDto {
         this.image = image;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUserLogin() {
+        return userLogin;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
 }

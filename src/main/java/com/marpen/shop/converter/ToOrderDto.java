@@ -24,7 +24,7 @@ public class ToOrderDto implements Converter<Order, OrderDto> {
     public OrderDto convert(Order order) {
         OrderDto orderDto = new OrderDto();
         orderDto.setOrderId(order.getOrderId());
-        orderDto.setUserId(order.getUserId());
+        orderDto.setUserLogin(order.getUserLogin());
         orderDto.setDate(order.getDate());
         orderDto.setOrderPrice(order.getTotalprice());
         List<OrderEntry> orderEntries = orderEntryService.getOrderEntriesByOrderId(order.getOrderId());

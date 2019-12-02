@@ -15,7 +15,7 @@ public interface ProductService {
 
     Product getProductById(int productId);
 
-    List<Product> getProductsListByUserId(int userId);
+    List<Product> getProductsListByUserLogin(String userLogin);
 
     List<Product> getOnlineProductsListByPage(int pageid, int productsPerPage);
 

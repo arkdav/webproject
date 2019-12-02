@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface OrderDao extends GenericDao<Order>{
 
-    List<Order> getOrdersByUserId(int userId);
+    List<Order> getOrdersByUserLogin(String userLogin);
 }

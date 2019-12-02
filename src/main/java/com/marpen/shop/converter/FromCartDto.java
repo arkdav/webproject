@@ -12,7 +12,7 @@ public class FromCartDto implements Converter<CartDto, Order> {
     public Order convert(CartDto cartDto) {
         Date dateNow = new Date();
         Order order = new Order();
-        order.setUserId(cartDto.getUserId());
+        order.setUserLogin(cartDto.getUserLogin());
         order.setDate(dateNow);
         order.setTotalprice(cartDto.getCartPrice());
         return order;

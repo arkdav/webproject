@@ -40,8 +40,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsListByUserId(int userId) {
-        return this.productDao.getProductsListByUserId(userId);
+    public List<Product> getProductsListByUserLogin(String userLogin) {
+        return this.productDao.getProductsListByUserLogin(userLogin);
     }
 
     @Override
