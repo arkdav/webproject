@@ -2,10 +2,13 @@ package com.marpen.shop.controller;
 
 import com.marpen.shop.dto.BusinessProductCreationDto;
 import com.marpen.shop.dto.BusinessProductDto;
+import com.marpen.shop.dto.PageDto;
+import com.marpen.shop.dto.ProductDto;
 import com.marpen.shop.facade.ProductFacade;
 import com.marpen.shop.facade.UserFacade;
 import com.marpen.shop.validator.BusinessProductValidator;
 import com.marpen.shop.validator.ProductCreationValidator;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,10 +19,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 
 @Controller
@@ -41,21 +46,37 @@ public class ProductController {
         this.userFacade = userFacade;
     }
 
+    private static final int PRODUCTS_PER_PAGE = 6;
     @RequestMapping(value = "/catalog", method = RequestMethod.GET)
     public String getProductsList(@RequestParam(value = "pageid", required = false, defaultValue = "1") Integer pageid,
-                                  @RequestParam(value = "searchString", required = false) String searchName,
                                   Model model) {
-        int productsPerPage = 6;
         if (pageid != 1) {
-            pageid = (pageid - 1) * productsPerPage + 1;
+            pageid = (pageid - 1) * PRODUCTS_PER_PAGE + 1;
         }
-        if (searchName != null) {
-            model.addAttribute("search", searchName);
-        }
-        model.addAttribute("productsList", this.productFacade.getCatalogList(searchName, pageid, productsPerPage));
-        model.addAttribute("pagesList", this.productFacade.getCatalogPagesList(searchName, productsPerPage));
+        String searchName = null;
+        model.addAttribute("productsList", this.productFacade.getCatalogList(searchName, pageid, PRODUCTS_PER_PAGE));
+        model.addAttribute("pagesList", this.productFacade.getCatalogPagesList(searchName, PRODUCTS_PER_PAGE));
         return "catalog";
     }
+
+    @RequestMapping(value = "/catalog", method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<ProductDto> getProductsList(@RequestParam(value = "searchString", required = false) String searchName,
+                                            @RequestParam(value = "pageid", required = false, defaultValue = "1") Integer pageid) {
+        if (pageid != 1) {
+            pageid = (pageid - 1) * PRODUCTS_PER_PAGE + 1;
+        }
+        return this.productFacade.getCatalogList(searchName, pageid, PRODUCTS_PER_PAGE);
+    }
+
+    @RequestMapping(value = "/pages", method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<PageDto> getProductsPages(@RequestParam(value = "searchString", required = false) String searchName) {
+        return this.productFacade.getCatalogPagesList(searchName, PRODUCTS_PER_PAGE);
+    }
+
 
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String getCatalog() {
