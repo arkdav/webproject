@@ -63,8 +63,24 @@
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <input id="search-button" class="btn btn-outline-success"
                                    onclick="getData('${pageContext.request.contextPath}/catalog', '${pageContext.request.contextPath}')"
-                                value="<tag:message code="product.search" />"/>
+                                   value="<tag:message code="product.search" />"/>
                         </form>
+                        <div class="btn-group">
+                            <button class="btn btn-outline-success dropdown-toggle" type="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <tag:message code="product.amountperpage" />
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item"
+                                   onclick="getData('${pageContext.request.contextPath}/catalog?perpage=6', '${pageContext.request.contextPath}')"
+                                >6</a>
+                                <a class="dropdown-item"
+                                   onclick="getData('${pageContext.request.contextPath}/catalog?perpage=12', '${pageContext.request.contextPath}')"
+                                >12</a>
+                                <a class="dropdown-item" onclick="getData('${pageContext.request.contextPath}/catalog?perpage=18', '${pageContext.request.contextPath}')"
+                                >18</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

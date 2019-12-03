@@ -41,15 +41,16 @@ public class ProductController {
         this.productCreationValidator = productCreationValidator;
     }
 
-    private static final int PRODUCTS_PER_PAGE = 6;
+
     @RequestMapping(value = "/catalog", method = RequestMethod.GET)
     public String getProductsList(@RequestParam(value = "pageid", required = false, defaultValue = "1") Integer pageid,
                                   Model model) {
+        int productsPerPage = 6;
         if (pageid != 1) {
-            pageid = (pageid - 1) * PRODUCTS_PER_PAGE + 1;
+            pageid = (pageid - 1) * productsPerPage + 1;
         }
-        model.addAttribute("productsList", this.productFacade.getCatalogList(null, pageid, PRODUCTS_PER_PAGE));
-        model.addAttribute("pagesList", this.productFacade.getCatalogPagesList(null, PRODUCTS_PER_PAGE));
+        model.addAttribute("productsList", this.productFacade.getCatalogList(null, pageid, productsPerPage));
+        model.addAttribute("pagesList", this.productFacade.getCatalogPagesList(null, productsPerPage));
         return "catalog";
     }
 
@@ -57,20 +58,21 @@ public class ProductController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<ProductDto> getProductsList(@RequestParam(value = "searchString", required = false) String searchName,
-                                            @RequestParam(value = "pageid", required = false, defaultValue = "1") Integer pageid) {
-        if (pageid != 1) {
-            pageid = (pageid - 1) * PRODUCTS_PER_PAGE + 1;
+                                            @RequestParam(value = "pageid", required = false, defaultValue = "1") Integer pageId,
+                                            @RequestParam(value="perpage", required=false, defaultValue="6") Integer productsPerPage) {
+        if (pageId != 1) {
+            pageId = (pageId - 1) * productsPerPage + 1;
         }
-        return this.productFacade.getCatalogList(searchName, pageid, PRODUCTS_PER_PAGE);
+        return this.productFacade.getCatalogList(searchName, pageId, productsPerPage);
     }
 
     @RequestMapping(value = "/pages", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<PageDto> getProductsPages(@RequestParam(value = "searchString", required = false) String searchName) {
-        return this.productFacade.getCatalogPagesList(searchName, PRODUCTS_PER_PAGE);
+    public List<PageDto> getProductsPages(@RequestParam(value = "searchString", required = false) String searchName,
+                                          @RequestParam(value="perpage", required=false, defaultValue="6") Integer productsPerPage) {
+        return this.productFacade.getCatalogPagesList(searchName, productsPerPage);
     }
-
 
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String getCatalog() {

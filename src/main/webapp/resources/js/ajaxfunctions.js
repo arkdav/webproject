@@ -1,4 +1,6 @@
 function getData(url, contextPath) {
+    let productsPerPage = url.match(new RegExp("perpage" + '=([^&=]+)'));
+    let perPage = productsPerPage==null ? "" : productsPerPage[1];
     var datapost = $('#searchform').serialize();
     $.ajax({
         type:"POST",
@@ -55,7 +57,7 @@ function getData(url, contextPath) {
                 type:"POST",
                 method: "post",
                 async: false,
-                url: contextPath+"/pages",
+                url: contextPath+"/pages?perpage="+perPage,
                 data: datapost,
                 dataType: "json",
                 success: function(data) {
@@ -70,7 +72,7 @@ function getData(url, contextPath) {
                         let aPagination = document.createElement('a');
                         aPagination.className="page-link";
                         aPagination.onclick=function(){
-                            getData(contextPath+"/catalog?pageid="+data[j].pageId, contextPath);
+                            getData(contextPath+"/catalog?pageid="+data[j].pageId+"&perpage="+perPage, contextPath);
                         }
                         aPagination.textContent=data[j].pageId;
                         liPagination.appendChild(aPagination);
@@ -84,3 +86,4 @@ function getData(url, contextPath) {
         }
     });
 }
+
