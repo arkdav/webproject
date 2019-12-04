@@ -2,6 +2,7 @@ package com.marpen.shop.validator;
 
 import com.marpen.shop.dto.RegistrationDto;
 import com.marpen.shop.service.UserService;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -34,9 +35,11 @@ public class RegistrationValidator implements Validator {
             errors.rejectValue("login", "Size.login");
         }
 
-        if (userService.getUserByLogin(user.getLogin()) != null) {
-            errors.rejectValue("login", "Duplicate.login");
-        }
+        try{
+            if(userService.getUserByLogin(user.getLogin()) != null){
+                errors.rejectValue("login", "Duplicate.login");
+            }
+        } catch (ObjectNotFoundException ignored){ }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Required");
         if (user.getPassword().length() < 6 || user.getPassword().length() > 32) {
