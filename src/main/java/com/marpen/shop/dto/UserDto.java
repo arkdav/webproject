@@ -15,9 +15,7 @@ public class UserDto {
     public UserDto(){
     }
 
-    public UserDto(//int userId,
-                   String login, String name, String surname, String email, String phone, String birthdate) {
-        //this.userId = userId;
+    public UserDto(String login, String name, String surname, String email, String phone, String birthdate) {
         this.login = login;
         this.name = name;
         this.surname = surname;
@@ -25,14 +23,6 @@ public class UserDto {
         this.phone = phone;
         this.birthdate = birthdate;
     }
-
-//    public int getUserId() {
-//        return userId;
-//    }
-//
-//    public void setUserId(int userId) {
-//        this.userId = userId;
-//    }
 
     public String getLogin() {
         return login;

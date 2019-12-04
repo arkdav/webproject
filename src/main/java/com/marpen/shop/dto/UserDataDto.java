@@ -1,8 +1,7 @@
 package com.marpen.shop.dto;
 
 public class UserDataDto {
-
-//    private Integer userId;
+    
     private String login;
     private String password;
     private String name;
