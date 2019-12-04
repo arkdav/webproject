@@ -63,8 +63,8 @@
                         <p><tag:message code="basket.totalprice"/> ${basketList.cartPrice}$</p>
                     </div>
                     <div class="right-content-button">
-                        <form method="post" action="${pageContext.request.contextPath}/order">
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <form method="get" action="${pageContext.request.contextPath}/order">
+<%--                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
                             <button type="submit"
                                     class="btn btn-outline-success my-2 my-sm-0"><tag:message
                                     code="basket.checkout"/></button>

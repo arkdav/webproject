@@ -54,6 +54,12 @@ public class CartOrderController {
         return "redirect:/basket";
     }
 
+    @RequestMapping(value = "/order", method = RequestMethod.GET)
+    public String getOrder(Model model) {
+        model.addAttribute("orderList",cartFacade.getCartByUserLogin(getUserLogin()));
+        return "orderconfirmation";
+    }
+
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String order() {
         orderFacade.addCartToOrder(getUserLogin());
