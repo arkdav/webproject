@@ -1,6 +1,7 @@
 package com.marpen.shop.model;
 
 import org.hibernate.annotations.Proxy;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,11 +39,15 @@ public class User {
     @Column(name = "birthdate")
     private Date birthDate;
 
+    @Column(name = "status", columnDefinition = "bit")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private Boolean status;
+
     public User() {
     }
 
     public User(String login, String password, int roleId, String name, String surname,
-                String email, String phone, Date birthDate) {
+                String email, String phone, Date birthDate, Boolean status) {
         this.login = login;
         this.password = password;
         this.roleId = roleId;
@@ -51,6 +56,7 @@ public class User {
         this.email = email;
         this.phone = phone;
         this.birthDate = birthDate;
+        this.status=status;
     }
 
     public String getLogin() {
@@ -117,4 +123,11 @@ public class User {
         this.birthDate = birthDate;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 }

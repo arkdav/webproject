@@ -47,6 +47,11 @@ public class UserFacadeImpl implements UserFacade {
         userService.update(user);
     }
 
+    @Override
+    public void changeUserStatus(String userLogin) {
+        User user=userService.getUserByLogin(userLogin);
+        userService.changeUserStatus(user);
+    }
 
     @Override
     public UserDto getUserInformation(String username) {

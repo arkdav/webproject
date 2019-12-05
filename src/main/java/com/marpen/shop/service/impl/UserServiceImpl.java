@@ -22,12 +22,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveCustomer(User user) {
         user.setRoleId(roleDao.getRoleIdByRole("ROLE_CUSTOMER"));
+        user.setStatus(false);
         userDao.save(user);
     }
 
     @Override
     public void saveBusinessUser(User user) {
         user.setRoleId(roleDao.getRoleIdByRole("ROLE_BUSINESS_USER"));
+        user.setStatus(false);
         userDao.save(user);
     }
 
@@ -44,6 +46,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(User user){
         userDao.delete(user);
+    }
+
+    @Override
+    public void changeUserStatus(User user) {
+        boolean status = user.getStatus();
+        if(!status){
+            user.setStatus(true);
+        } else {
+            user.setStatus(false);
+        }
+        userDao.update(user);
     }
 
     @Override

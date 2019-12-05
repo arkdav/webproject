@@ -8,17 +8,19 @@ public class UserDto {
     private String email;
     private String phone;
     private String birthdate;
+    private String status;
 
     public UserDto(){
     }
 
-    public UserDto(String login, String name, String surname, String email, String phone, String birthdate) {
+    public UserDto(String login, String name, String surname, String email, String phone, String birthdate, String status) {
         this.login = login;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.phone = phone;
         this.birthdate = birthdate;
+        this.status=status;
     }
 
     public String getLogin() {
@@ -67,5 +69,13 @@ public class UserDto {
 
     public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -22,18 +22,19 @@ CREATE TABLE `webdb`.`users` (
   `email` VARCHAR(225) NOT NULL,
   `phone` VARCHAR(225) NOT NULL,
   `birthdate` DATE NOT NULL,
+  `status` TINYINT(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`login`),
   FOREIGN KEY (`role_id`) REFERENCES `webdb`.`roles`(`role_id`) ON UPDATE CASCADE ON DELETE CASCADE )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
-INSERT INTO `webdb`.`users` (`login`,`password`,`role_id`,`name`,`surname`,`email`,`phone`,`birthdate`)
-VALUES ('natali', '$2a$11$j4xr0InYy/WVRT3AChOlWOQl6sjJXNRhAyW.irpVqMY4wkqZEQ0Cq','1','Kate','Gorn','gorn@mail.ru','3089078', '2016-05-12');
-INSERT INTO `webdb`.`users` (`login`,`password`,`role_id`,`name`,`surname`,`email`,`phone`,`birthdate`)
-VALUES ('andrey', '$2a$11$pAc9QgTxxF8TD8XETP/SSeosaRx9ZGGI/Xdurga.OEeQnkI1L4cLa','3','Andrey','Ivanov','ivanov.a@mail.ru','2879838', '2000-06-23');
-INSERT INTO `webdb`.`users` (`login`,`password`,`role_id`,`name`,`surname`,`email`,`phone`,`birthdate`)
-VALUES ('aadmin', '$2a$11$3zXtCcXetBpTE0NAK0O55eWDfdlp3uYTNq5U5z2TPWKivhLthyw0S','2','Petr','petrov','petrov@mail.ru','2385624', '1992-09-19');
+INSERT INTO `webdb`.`users` (`login`,`password`,`role_id`,`name`,`surname`,`email`,`phone`,`birthdate`, `status`)
+VALUES ('natali', '$2a$11$j4xr0InYy/WVRT3AChOlWOQl6sjJXNRhAyW.irpVqMY4wkqZEQ0Cq','1','Kate','Gorn','gorn@mail.ru','3089078', '2016-05-12', '1');
+INSERT INTO `webdb`.`users` (`login`,`password`,`role_id`,`name`,`surname`,`email`,`phone`,`birthdate`, `status`)
+VALUES ('andrey', '$2a$11$pAc9QgTxxF8TD8XETP/SSeosaRx9ZGGI/Xdurga.OEeQnkI1L4cLa','3','Andrey','Ivanov','ivanov.a@mail.ru','2879838', '2000-06-23', '1');
+INSERT INTO `webdb`.`users` (`login`,`password`,`role_id`,`name`,`surname`,`email`,`phone`,`birthdate`, `status`)
+VALUES ('aadmin', '$2a$11$3zXtCcXetBpTE0NAK0O55eWDfdlp3uYTNq5U5z2TPWKivhLthyw0S','2','Petr','petrov','petrov@mail.ru','2385624', '1992-09-19', '1');
 
 CREATE TABLE `webdb`.`catalogversion` (
     `catver_id` INT NOT NULL AUTO_INCREMENT,

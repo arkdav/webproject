@@ -17,6 +17,13 @@ public class ToUserDto implements Converter<User, UserDto> {
         userDto.setEmail(user.getEmail());
         userDto.setPhone(user.getPhone());
         userDto.setBirthdate(new SimpleDateFormat("dd.MM.yyyy").format(user.getBirthDate()));
+        String status;
+        if(user.getStatus()){
+            status="active";
+        } else {
+            status="inactive";
+        }
+        userDto.setStatus(status);
         return userDto;
     }
 }

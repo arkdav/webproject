@@ -14,8 +14,9 @@ public interface UserFacade {
 
     void update(String userLogin, UserDataDto userDataDto);
 
+    void changeUserStatus(String userLogin);
+
     UserDto getUserInformation(String username);
 
     List<UserDto> getUserListByRole(String rolename);
-
 }

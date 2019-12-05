@@ -16,6 +16,8 @@ public interface UserService {
 
     void delete(User user);
 
+    void changeUserStatus(User user);
+
     List<User> getUserListByRole(String rolename);
 
 }

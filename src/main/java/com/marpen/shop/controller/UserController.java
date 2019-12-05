@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/adminusers", method = RequestMethod.GET)
-    public String getAdminUsersPage(@RequestParam("u") String role,
+    public String getAdminUsersPage(@RequestParam(name = "u", required = false) String role,
                                     Model model) {
         List<UserDto> users=new ArrayList<>();
         if(role.equals("customer")){
@@ -57,13 +57,15 @@ public class UserController {
             users= this.userFacade.getUserListByRole("ROLE_BUSINESS_USER");
         }
         model.addAttribute("userList", users);
+        model.addAttribute("role", role);
         return "adminusers";
     }
 
     @RequestMapping(value = "/adminusers/update", method = RequestMethod.GET)
-    public String updateUserStatus(@RequestParam("userId") Integer userId) {
-
-        return "redirect:/adminusers";
+    public String updateUserStatus(@RequestParam("user") String userLogin,
+                                   @RequestParam("u") String role) {
+        userFacade.changeUserStatus(userLogin);
+        return "redirect:/adminusers?u="+role;
     }
 
     @RequestMapping(value = "/adminusers/create", method = RequestMethod.GET)
@@ -75,7 +77,7 @@ public class UserController {
     @RequestMapping(value = "/adminusers/create", method = RequestMethod.POST)
     public String createBusinessUser(@ModelAttribute("businessUserCreationForm")RegistrationDto registrationDto) {
         userFacade.saveBusinessUser(registrationDto);
-        return "adminusers";
+        return "redirect:/adminusers?u=business";
     }
 
     private String getUserLogin() {

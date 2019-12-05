@@ -27,10 +27,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.get(username);
-        Set<GrantedAuthority> roles = new HashSet<>();
-        roles.add(new SimpleGrantedAuthority(roleDao.get(user.getRoleId()).getRolename()));
-        UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), roles);
+        UserDetails userDetails = null;
+        if(userDao.get(username).getStatus()) {
+            User user = userDao.get(username);
+            Set<GrantedAuthority> roles = new HashSet<>();
+            roles.add(new SimpleGrantedAuthority(roleDao.get(user.getRoleId()).getRolename()));
+            userDetails = new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), roles);
+        }
         return userDetails;
     }
 }
