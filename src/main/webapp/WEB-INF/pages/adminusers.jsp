@@ -24,18 +24,18 @@
                 <c:if test="${!empty userList}">
                     <c:forEach items="${userList}" var="user">
                         <div class="business-product col-3">
-                            <p>Login ${user.login}</p>
-                            <p>Name ${user.name}</p>
-                            <p>Surname ${user.surname}</p>
-                            <p>Phone ${user.phone}</p>
-                            <p>Email ${user.email}</p>
-                            <p>Status ${user.status}</p>
+                            <p><tag:message code="adminusers.login"/> ${user.login}</p>
+                            <p><tag:message code="adminusers.name"/> ${user.name}</p>
+                            <p><tag:message code="adminusers.surname"/> ${user.surname}</p>
+                            <p><tag:message code="adminusers.phone"/> ${user.phone}</p>
+                            <p><tag:message code="adminusers.email"/> ${user.email}</p>
+                            <p><tag:message code="adminusers.status"/> ${user.status}</p>
                             <form class="form-inline my-2 my-lg-0" method="get"
                                   action="${pageContext.request.contextPath}/adminusers/update">
                                 <input type="hidden" name="user" value="${user.login}">
                                 <input type="hidden" name="u" value="${role}">
                                 <button type="submit" class="btn btn-lg btn-primary btn-block">
-                                    поменять
+                                    <tag:message code="adminusers.update"/>
                                 </button>
                             </form>
                         </div>

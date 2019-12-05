@@ -24,18 +24,22 @@
                 <c:if test="${!empty businessOrdersList}">
                     <c:forEach items="${businessOrdersList}" var="orderEntry">
                         <div>
-                            <p>Название товара: ${orderEntry.productDto.name}</p>
-                            <p>Запись к заказу: ${orderEntry.orderNote}</p>
-                            <p>Дата заказа: ${orderEntry.date}</p>
-                            <p>Количество: ${orderEntry.amount}</p>
-                            <p>Стоимость: ${orderEntry.price}</p>
-                            <p>Логин заказчика: ${orderEntry.userDto.login}</p>
-                            <p>Email заказчика: ${orderEntry.userDto.email}</p>
-                            <p>Телефон заказчика: ${orderEntry.userDto.phone}</p>
+                            <p><tag:message code="businessorders.productid"/> ${orderEntry.productDto.productId}</p>
+                            <p><a href="${pageContext.request.contextPath}/productdata/${orderEntry.productDto.productId}">
+                                    <tag:message code="businessorders.productname"/> ${orderEntry.productDto.name}
+                            </a></p>
+                            <p><tag:message code="businessorders.ordernote"/> ${orderEntry.orderNote}</p>
+                            <p><tag:message code="businessorders.date"/> ${orderEntry.date}</p>
+                            <p><tag:message code="businessorders.amount"/> ${orderEntry.amount}</p>
+                            <p><tag:message code="businessorders.price"/> ${orderEntry.price}</p>
+                            <p><tag:message code="businessorders.login"/> ${orderEntry.userDto.login}</p>
+                            <p><tag:message code="businessorders.email"/> ${orderEntry.userDto.email}</p>
+                            <p><tag:message code="businessorders.phone"/> ${orderEntry.userDto.phone}</p>
+                            <p><tag:message code="businessorders.status"/> </p>
                             <form class="form-inline my-2 my-lg-0" method="get"
                                   action="${pageContext.request.contextPath}/businessorders/update?entryId=${orderEntry.orderEntryId}">
                                 <button type="submit" class="btn btn-lg btn-primary btn-block">
-                                    поменять
+                                    <tag:message code="businessorders.update"/>
                                 </button>
                             </form>
                         </div>
