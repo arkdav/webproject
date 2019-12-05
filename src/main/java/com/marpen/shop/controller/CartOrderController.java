@@ -89,7 +89,7 @@ public class CartOrderController {
         return "businessorders";
     }
 
-    @RequestMapping(value = "/businessordersupdate", method = RequestMethod.GET)
+    @RequestMapping(value = "/businessorders/update", method = RequestMethod.GET)
     public String updateOrderEntryStatus(@RequestParam("entryId") Integer orderEntryId) {
 
         return "redirect:/businessorders";

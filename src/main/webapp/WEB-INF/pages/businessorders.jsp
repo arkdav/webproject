@@ -33,8 +33,7 @@
                             <p>Email заказчика: ${orderEntry.userDto.email}</p>
                             <p>Телефон заказчика: ${orderEntry.userDto.phone}</p>
                             <form class="form-inline my-2 my-lg-0" method="get"
-                                  action="${pageContext.request.contextPath}/businessordersupdate?entryId=${orderEntry.orderEntryId}">
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                  action="${pageContext.request.contextPath}/businessorders/update?entryId=${orderEntry.orderEntryId}">
                                 <button type="submit" class="btn btn-lg btn-primary btn-block">
                                     поменять
                                 </button>

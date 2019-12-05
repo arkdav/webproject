@@ -60,19 +60,19 @@ public class UserController {
         return "adminusers";
     }
 
-    @RequestMapping(value = "/adminusersupdate", method = RequestMethod.GET)
+    @RequestMapping(value = "/adminusers/update", method = RequestMethod.GET)
     public String updateUserStatus(@RequestParam("userId") Integer userId) {
 
         return "redirect:/adminusers";
     }
 
-    @RequestMapping(value = "/businessusercreation", method = RequestMethod.GET)
+    @RequestMapping(value = "/adminusers/create", method = RequestMethod.GET)
     public String getCreateBusinessUserPage(Model model) {
         model.addAttribute("businessUserCreationForm", new RegistrationDto());
         return "businessusercreation";
     }
 
-    @RequestMapping(value = "/businessusercreation", method = RequestMethod.POST)
+    @RequestMapping(value = "/adminusers/create", method = RequestMethod.POST)
     public String createBusinessUser(@ModelAttribute("businessUserCreationForm")RegistrationDto registrationDto) {
         userFacade.saveBusinessUser(registrationDto);
         return "adminusers";

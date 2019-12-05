@@ -33,12 +33,12 @@
                             <p><tag:message code="businessdata.description"/> ${businessProduct.description}</p>
                             <p><tag:message code="businessdata.catalogversion"/> ${businessProduct.catalogVersion}</p>
                             <form class="form-inline my-2 my-lg-0" method="post"
-                                  action="${pageContext.request.contextPath}/business/delete?productId=${businessProduct.productId}">
+                                  action="${pageContext.request.contextPath}/businessdata/delete?productId=${businessProduct.productId}">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                 <button type="submit" class="btn btn-lg btn-primary btn-block"><tag:message
                                         code="businessdata.delete"/></button>
                             </form>
-                            <a href="${pageContext.request.contextPath}/business/update?productId=${businessProduct.productId}">
+                            <a href="${pageContext.request.contextPath}/businessdata/update?productId=${businessProduct.productId}">
                                 <tag:message code="businessdata.change"/>
                             </a>
                         </div>

@@ -43,7 +43,7 @@
                         <a class="dropdown-item" href="${pageContext.request.contextPath}/businessdata">
                             <tag:message code="header.businessdata.catalog"/>
                         </a>
-                        <a class="dropdown-item" href="${pageContext.request.contextPath}/business/create">
+                        <a class="dropdown-item" href="${pageContext.request.contextPath}/businessdata/create">
                             <tag:message code="header.businessdata.create"/>
                         </a>
                         <a class="dropdown-item" href="${pageContext.request.contextPath}/businessorders">
@@ -57,7 +57,7 @@
                             <a class="dropdown-item" href="${pageContext.request.contextPath}/adminusers?u=business">
                                 <tag:message code="header.admin.businessusers"/>
                             </a>
-                            <a class="dropdown-item" href="${pageContext.request.contextPath}/businessusercreation">
+                            <a class="dropdown-item" href="${pageContext.request.contextPath}/adminusers/create">
                                 <tag:message code="header.admin.create"/>
                             </a>
                 </sec:authorize>

@@ -30,7 +30,7 @@
                             <p>Phone ${user.phone}</p>
                             <p>Email ${user.email}</p>
                             <form class="form-inline my-2 my-lg-0" method="get"
-                                  action="${pageContext.request.contextPath}/adminusersupdate?userId=${user.login}">
+                                  action="${pageContext.request.contextPath}/adminusers/update?userId=${user.login}">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                 <button type="submit" class="btn btn-lg btn-primary btn-block">
                                     поменять

@@ -92,13 +92,13 @@ public class ProductController {
         return "businessdata";
     }
 
-    @RequestMapping(value = "/business/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/businessdata/delete", method = RequestMethod.POST)
     public String deleteProduct(@RequestParam(value = "productId") int productId) {
         productFacade.deleteProduct(productId);
         return "redirect:/businessdata";
     }
 
-    @RequestMapping(value = "/business/update", method = RequestMethod.GET)
+    @RequestMapping(value = "/businessdata/update", method = RequestMethod.GET)
     public String createProduct(@RequestParam(value = "productId") int productId,
                                 Model model) {
         model.addAttribute("businessProduct", this.productFacade.getBusinessProductDtoById(productId));
@@ -106,7 +106,7 @@ public class ProductController {
         return "productupdate";
     }
 
-    @RequestMapping(value = "/business/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/businessdata/update", method = RequestMethod.POST)
     public String updateProduct(@ModelAttribute("businessDataForm") BusinessProductDto businessProductDto,
                                 BindingResult bindingResult) {
         businessProductValidator.validate(businessProductDto, bindingResult);
@@ -117,7 +117,7 @@ public class ProductController {
         return "redirect:/businessdata";
     }
 
-    @RequestMapping(value = "/business/create", method = RequestMethod.GET)
+    @RequestMapping(value = "/businessdata/create", method = RequestMethod.GET)
     public String createProduct(Model model) {
         model.addAttribute("creationBusinessDataForm", new BusinessProductCreationDto());
         return "productcreation";
