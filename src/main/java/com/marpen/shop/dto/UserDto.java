@@ -1,8 +1,5 @@
 package com.marpen.shop.dto;
 
-import java.text.DateFormat;
-import java.util.Date;
-
 public class UserDto {
 
     private String login;

@@ -10,6 +10,9 @@ import com.marpen.shop.facade.UserFacade;
 import com.marpen.shop.model.User;
 import com.marpen.shop.service.UserService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserFacadeImpl implements UserFacade {
 
     private UserService userService;
@@ -26,9 +29,15 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public void save(RegistrationDto registrationDto) {
+    public void saveCustomer(RegistrationDto registrationDto) {
         User user = fromRegistrationDto.convert(registrationDto);
-        userService.save(user);
+        userService.saveCustomer(user);
+    }
+
+    @Override
+    public void saveBusinessUser(RegistrationDto registrationDto) {
+        User user = fromRegistrationDto.convert(registrationDto);
+        userService.saveBusinessUser(user);
     }
 
     @Override
@@ -37,6 +46,7 @@ public class UserFacadeImpl implements UserFacade {
         User user = fromUserDataDto.convert(userDataDto);
         userService.update(user);
     }
+
 
     @Override
     public UserDto getUserInformation(String username) {
@@ -47,4 +57,17 @@ public class UserFacadeImpl implements UserFacade {
         }
         return userDto;
     }
+
+    @Override
+    public List<UserDto> getUserListByRole(String rolename){
+        List<User> users =userService.getUserListByRole(rolename);
+        List<UserDto> userDtos = new ArrayList<>();
+        for (User user:
+             users) {
+           UserDto userDto=toUserDto.convert(user);
+           userDtos.add(userDto);
+        }
+        return userDtos;
+    }
+
 }

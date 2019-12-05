@@ -39,7 +39,7 @@ public class AuthenticationController {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
-        userFacade.save(registrationDto);
+        userFacade.saveCustomer(registrationDto);
         securityFacade.autologin(registrationDto.getLogin(), registrationDto.getPassword());
         return "redirect:/catalog";
     }

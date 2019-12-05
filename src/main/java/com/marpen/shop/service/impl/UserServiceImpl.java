@@ -6,6 +6,8 @@ import com.marpen.shop.model.User;
 import com.marpen.shop.service.UserService;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional
 public class UserServiceImpl implements UserService {
 
@@ -18,8 +20,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(User user) {
+    public void saveCustomer(User user) {
         user.setRoleId(roleDao.getRoleIdByRole("ROLE_CUSTOMER"));
+        userDao.save(user);
+    }
+
+    @Override
+    public void saveBusinessUser(User user) {
+        user.setRoleId(roleDao.getRoleIdByRole("ROLE_BUSINESS_USER"));
         userDao.save(user);
     }
 
@@ -36,6 +44,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(User user){
         userDao.delete(user);
+    }
+
+    @Override
+    public List<User> getUserListByRole(String rolename){
+        int roleId=roleDao.getRoleIdByRole(rolename);
+        return userDao.getUserList(roleId);
     }
 
 }

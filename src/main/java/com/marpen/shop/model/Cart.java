@@ -1,5 +1,7 @@
 package com.marpen.shop.model;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import java.util.Date;
 
 @Entity
 @Table(name="cart")
+@Proxy(lazy = false)
 public class Cart {
 
     @Id

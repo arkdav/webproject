@@ -1,5 +1,7 @@
 package com.marpen.shop.model;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import java.util.Date;
 
 @Entity
 @Table(name="orders")
+@Proxy(lazy = false)
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,6 +27,9 @@ public class Order {
 
     @Column(name = "totalprice")
     private Double totalprice;
+
+    @Column(name="ordernote")
+    private String orderNote;
 
     public Order() {
     }
@@ -58,5 +64,13 @@ public class Order {
 
     public void setTotalprice(Double totalprice) {
         this.totalprice = totalprice;
+    }
+
+    public String getOrderNote() {
+        return orderNote;
+    }
+
+    public void setOrderNote(String orderNote) {
+        this.orderNote = orderNote;
     }
 }

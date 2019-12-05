@@ -9,4 +9,6 @@ public interface OrderEntryService {
     List<OrderEntry> getOrderEntriesByOrderId(int orderId);
 
     void save(OrderEntry orderEntry);
+
+    List<OrderEntry> getOrderEntries();
 }

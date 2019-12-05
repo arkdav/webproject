@@ -104,9 +104,11 @@
         <constructor-arg name="orderService" ref="orderService"/>
         <constructor-arg name="orderEntryService" ref="orderEntryService"/>
         <constructor-arg name="cartFacade" ref="cartFacade"/>
+        <constructor-arg name="productFacade" ref="productFacade"/>
         <constructor-arg name="toOrderDto" ref="toOrderDto"/>
         <constructor-arg name="fromCartDto" ref="fromCartDto"/>
         <constructor-arg name="fromCartProductDto" ref="fromCartProductDto"/>
+        <constructor-arg name="toBusinessOrderDto" ref="toBusinessOrderDto"/>
     </bean>
 
     <bean id="toOrderDto" class="com.marpen.shop.converter.ToOrderDto">
@@ -120,6 +122,14 @@
 
     <bean id="fromCartDto" class="com.marpen.shop.converter.FromCartDto"> </bean>
     <bean id="fromCartProductDto" class="com.marpen.shop.converter.FromCartProductDto"> </bean>
+    <bean id="toBusinessOrderDto" class="com.marpen.shop.converter.ToBusinessOrderDto">
+        <constructor-arg name="orderService" ref="orderService"/>
+        <constructor-arg name="productService" ref="productService"/>
+        <constructor-arg name="priceService" ref="priceService"/>
+        <constructor-arg name="userService" ref="userService"/>
+        <constructor-arg name="toProductDto" ref="toProductDto"/>
+        <constructor-arg name="toUserDto" ref="toUserDto"/>
+    </bean>
 
     <!-- CartOrderController bean -->
     <bean id="cartOrderController" class="com.marpen.shop.controller.CartOrderController">
@@ -143,6 +153,7 @@
     </bean>
     <bean id="toUserDto" class="com.marpen.shop.converter.ToUserDto">
     </bean>
+
 
     <!--     UserController bean -->
     <bean id="userController" class="com.marpen.shop.controller.UserController">

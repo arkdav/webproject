@@ -32,6 +32,8 @@ INSERT INTO `webdb`.`users` (`login`,`password`,`role_id`,`name`,`surname`,`emai
 VALUES ('natali', '$2a$11$j4xr0InYy/WVRT3AChOlWOQl6sjJXNRhAyW.irpVqMY4wkqZEQ0Cq','1','Kate','Gorn','gorn@mail.ru','3089078', '2016-05-12');
 INSERT INTO `webdb`.`users` (`login`,`password`,`role_id`,`name`,`surname`,`email`,`phone`,`birthdate`)
 VALUES ('andrey', '$2a$11$pAc9QgTxxF8TD8XETP/SSeosaRx9ZGGI/Xdurga.OEeQnkI1L4cLa','3','Andrey','Ivanov','ivanov.a@mail.ru','2879838', '2000-06-23');
+INSERT INTO `webdb`.`users` (`login`,`password`,`role_id`,`name`,`surname`,`email`,`phone`,`birthdate`)
+VALUES ('aadmin', '$2a$11$3zXtCcXetBpTE0NAK0O55eWDfdlp3uYTNq5U5z2TPWKivhLthyw0S','2','Petr','petrov','petrov@mail.ru','2385624', '1992-09-19');
 
 CREATE TABLE `webdb`.`catalogversion` (
     `catver_id` INT NOT NULL AUTO_INCREMENT,
@@ -134,6 +136,7 @@ CREATE TABLE `webdb`.`orders` (
   `user_login`  VARCHAR(225) NOT NULL,
   `date` DATE NOT NULL,
   `totalprice` DOUBLE NOT NULL,
+  `ordernote` VARCHAR(225) NOT NULL,
   PRIMARY KEY (`order_id`),
   FOREIGN KEY (`user_login`) REFERENCES `webdb`.`users`(`login`) ON UPDATE CASCADE ON DELETE CASCADE )
 ENGINE = InnoDB

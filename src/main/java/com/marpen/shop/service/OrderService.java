@@ -9,4 +9,6 @@ public interface OrderService {
     List<Order> getOrdersByUserLogin(String userLogin);
 
     void save(Order order);
+
+    Order getOrder(int orderId);
 }

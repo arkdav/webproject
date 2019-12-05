@@ -4,12 +4,18 @@ import com.marpen.shop.dto.RegistrationDto;
 import com.marpen.shop.dto.UserDataDto;
 import com.marpen.shop.dto.UserDto;
 
+import java.util.List;
+
 public interface UserFacade {
 
-    void save(RegistrationDto registrationDto);
+    void saveCustomer(RegistrationDto registrationDto);
+
+    void saveBusinessUser(RegistrationDto registrationDto);
 
     void update(String userLogin, UserDataDto userDataDto);
 
     UserDto getUserInformation(String username);
+
+    List<UserDto> getUserListByRole(String rolename);
 
 }

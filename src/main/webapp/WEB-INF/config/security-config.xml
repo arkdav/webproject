@@ -9,13 +9,19 @@
 
     <http auto-config="true">
         <intercept-url pattern="/" access="permitAll()"/>
-        <intercept-url pattern="/userdata" access="hasAnyRole('ROLE_CUSTOMER','ROLE_BUSINESS_USER')"/>
+        <intercept-url pattern="/userdata" access="hasAnyRole('ROLE_CUSTOMER','ROLE_BUSINESS_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/basket" access="hasRole('ROLE_CUSTOMER')"/>
         <intercept-url pattern="/catalog" access="permitAll()"/>
+        <intercept-url pattern="/registration" access="!isAuthenticated()"/>
         <intercept-url pattern="/addtobasket" access="hasRole('ROLE_CUSTOMER')"/>
         <intercept-url pattern="/userorders" access="hasRole('ROLE_CUSTOMER')"/>
-        <intercept-url pattern="/admindata" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/order" access="hasRole('ROLE_CUSTOMER')"/>
+        <intercept-url pattern="/adminusers" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/adminusersupdate" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/businessusercreation" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/businessdata" access="hasRole('ROLE_BUSINESS_USER')"/>
+        <intercept-url pattern="/businessorders" access="hasRole('ROLE_BUSINESS_USER')"/>
+        <intercept-url pattern="/businessordersupdate" access="hasRole('ROLE_BUSINESS_USER')"/>
         <intercept-url pattern="/business/*" access="hasRole('ROLE_BUSINESS_USER')"/>
         <form-login login-page="/login" default-target-url="/userdata"
                         authentication-failure-url="/login?error"

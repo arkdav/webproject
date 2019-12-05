@@ -29,6 +29,7 @@
                             <div><tag:message code="order.amount"/> ${orderEntry.amount}</div>
                             <div><tag:message code="order.productprice"/> ${orderEntry.productDto.price}$</div>
                         </c:forEach>
+                        <div><tag:message code="order.note"/> ${order.orderNote}</div>
                         <div><tag:message code="order.totalprice"/> ${order.orderPrice}$</div>
                     </div>
                 </c:forEach>

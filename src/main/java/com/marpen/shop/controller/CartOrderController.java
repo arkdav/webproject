@@ -1,14 +1,22 @@
 package com.marpen.shop.controller;
 
+import com.marpen.shop.dto.BusinessOrderDto;
+import com.marpen.shop.dto.BusinessProductDto;
 import com.marpen.shop.dto.CartDto;
+import com.marpen.shop.dto.OrderNoteDto;
 import com.marpen.shop.facade.CartFacade;
 import com.marpen.shop.facade.OrderFacade;
+import com.marpen.shop.facade.ProductFacade;
+import com.marpen.shop.model.Product;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class CartOrderController {
@@ -57,12 +65,13 @@ public class CartOrderController {
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public String getOrder(Model model) {
         model.addAttribute("orderList",cartFacade.getCartByUserLogin(getUserLogin()));
+        model.addAttribute("order", new OrderNoteDto());
         return "orderconfirmation";
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
-    public String order() {
-        orderFacade.addCartToOrder(getUserLogin());
+    public String order(@ModelAttribute("order") OrderNoteDto orderNoteDto) {
+        orderFacade.addCartToOrder(getUserLogin(), orderNoteDto.getText());
         cartFacade.removeCart(getUserLogin());
         return "redirect:/userorders";
     }
@@ -71,6 +80,19 @@ public class CartOrderController {
     public String order(Model model) {
         model.addAttribute("orders", orderFacade.getOrdersByUserLogin(getUserLogin()));
         return "userorders";
+    }
+
+    @RequestMapping(value = "/businessorders", method = RequestMethod.GET)
+    public String getBusinessOrders(Model model) {
+        List<BusinessOrderDto> orderEntries = orderFacade.getBusinessOrders(getUserLogin());
+        model.addAttribute("businessOrdersList", orderEntries);
+        return "businessorders";
+    }
+
+    @RequestMapping(value = "/businessordersupdate", method = RequestMethod.GET)
+    public String updateOrderEntryStatus(@RequestParam("entryId") Integer orderEntryId) {
+
+        return "redirect:/businessorders";
     }
 
     private String getUserLogin() {

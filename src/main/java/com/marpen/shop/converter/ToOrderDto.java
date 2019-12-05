@@ -27,6 +27,7 @@ public class ToOrderDto implements Converter<Order, OrderDto> {
         orderDto.setUserLogin(order.getUserLogin());
         orderDto.setDate(order.getDate());
         orderDto.setOrderPrice(order.getTotalprice());
+        orderDto.setOrderNote(order.getOrderNote());
         List<OrderEntry> orderEntries = orderEntryService.getOrderEntriesByOrderId(order.getOrderId());
         List<OrderProductDto> products = new ArrayList<>();
         if (!orderEntries.isEmpty()) {

@@ -19,43 +19,50 @@
 <%@include file="header.jsp" %>
 <main>
     <div class="main-block">
-        <c:forEach items="${orderList.products}" var="product">
-            <div class="cart-product">
-                <div class="row">
-                    <div class="cart-product-img col-1">
-                        <img src="<c:url value='/images/${product.productDto.imageLink}'/>" alt="">
-                    </div>
-                    <div class="col-4">
-                        <div class="cart-product-name">
-                            <h5>${product.productDto.name}</h5>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="left-content col-9">
+                    <c:forEach items="${orderList.products}" var="product">
+                        <div class="cart-product">
+                            <div class="row">
+                                <div class="cart-product-img col-1">
+                                    <img src="<c:url value='/images/${product.productDto.imageLink}'/>" alt="">
+                                </div>
+                                <div class="col-4">
+                                    <div class="cart-product-name">
+                                        <h5>${product.productDto.name}</h5>
+                                    </div>
+                                    <div><tag:message code="basket.productprice"/> ${product.productDto.price}$</div>
+                                </div>
+                                <div>
+                                    <p> ${product.amount}</p>
+                                </div>
+                            </div>
                         </div>
-                        <div><tag:message code="basket.productprice"/> ${product.productDto.price}$</div>
-                    </div>
-                    <div>
-                        <p> ${product.amount}</p>
+                    </c:forEach>
+                    <form:form modelAttribute="order" method="post" action="${pageContext.request.contextPath}/order">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <div class="form-group">
+                            <form:label path="text"><tag:message code="order.checkout"/></form:label>
+                            <form:input type="text" maxlength="220" path="text"/>
+                        </div>
+                        <br>
+                        <p><tag:message code="basket.totalprice"/> ${orderList.cartPrice}$</p>
+                        <form:button class="btn btn-outline-success my-2 my-sm-0" type="submit"><tag:message
+                                code="basket.checkout"/></form:button>
+                    </form:form>
+                </div>
+                <div class="right-content col-3">
+                    <div class="right-content-button">
+                        <form method="get" action="${pageContext.request.contextPath}/basket">
+                            <button type="submit"
+                                    class="btn btn-outline-success my-2 my-sm-0"><tag:message
+                                    code="basket.cancel"/>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
-        </c:forEach>
-    </div>
-    <div>
-        <div>
-            <p><tag:message code="basket.totalprice"/> ${orderList.cartPrice}$</p>
-        </div>
-        <div>
-            <form method="post" action="${pageContext.request.contextPath}/order">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <button type="submit"
-                        class="btn btn-outline-success my-2 my-sm-0"><tag:message
-                        code="basket.checkout"/>
-                </button>
-            </form>
-            <form method="get" action="${pageContext.request.contextPath}/basket">
-                <button type="submit"
-                        class="btn btn-outline-success my-2 my-sm-0"><tag:message
-                        code="basket.cancel"/>
-                </button>
-            </form>
         </div>
     </div>
 </main>

@@ -26,4 +26,9 @@ public class OrderEntryServiceImpl implements OrderEntryService {
     public void save(OrderEntry orderEntry) {
         orderEntryDao.save(orderEntry);
     }
+
+    @Override
+    public List<OrderEntry> getOrderEntries() {
+        return orderEntryDao.getOrderEntries();
+    }
 }
