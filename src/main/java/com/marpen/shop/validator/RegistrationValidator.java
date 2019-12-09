@@ -34,11 +34,9 @@ public class RegistrationValidator implements Validator {
             errors.rejectValue("login", "Size.login");
         }
 
-        try{
-            if(userService.getUserByLogin(user.getLogin()) != null){
-                errors.rejectValue("login", "Duplicate.login");
-            }
-        } catch (ObjectNotFoundException ignored){ }
+        if(userService.getUserByUsername(user.getLogin()) != null){
+            errors.rejectValue("login", "Duplicate.login");
+        }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Required");
         if (user.getPassword().length() < 6 || user.getPassword().length() > 32) {
