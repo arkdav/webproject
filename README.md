@@ -28,3 +28,17 @@ To run the project at your computer you should:
 
 You can log in as usual user (login - natali, password - natali) or as a business user (login - andrey, password - andrey).
 
+#Used technologies
+Java Core
+Java EE
+Java Core
+Maven
+MySQL
+Spring Framework / Security / MVC
+JDBС
+Hibernate
+JUnit / Mockito
+HTML / CSS / Bootstrap
+JavaScript / Ajax
+Git
+Tomcat

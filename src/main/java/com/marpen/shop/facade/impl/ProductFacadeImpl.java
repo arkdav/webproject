@@ -93,6 +93,17 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
+    public List<Integer> getProductIdsListByUserLogin(String userLogin) {
+        List<Product> products = productService.getProductsListByUserLogin(userLogin);
+        List<Integer> ids = new ArrayList<>(products.size());
+        for (Product product :
+                products) {
+            ids.add(product.getProductId());
+        }
+        return ids;
+    }
+
+    @Override
     public BusinessProductDto getBusinessProductDtoById(int productId) {
         Product product = productService.getProductById(productId);
         return toBusinessProductDto.convert(product);

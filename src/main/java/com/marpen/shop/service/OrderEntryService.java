@@ -10,5 +10,7 @@ public interface OrderEntryService {
 
     void save(OrderEntry orderEntry);
 
+    void save(int orderId, int productId, int amount);
+
     List<OrderEntry> getOrderEntries();
 }

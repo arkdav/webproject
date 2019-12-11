@@ -4,5 +4,5 @@ import com.marpen.shop.model.CatalogVersion;
 
 public interface CatalogVersionDao extends GenericDao<CatalogVersion> {
 
-    int getCatalogVersionIdByName(String name);
+    CatalogVersion getCatalogVersionByName(String name);
 }

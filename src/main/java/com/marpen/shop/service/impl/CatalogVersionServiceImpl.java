@@ -1,6 +1,7 @@
 package com.marpen.shop.service.impl;
 
 import com.marpen.shop.dao.CatalogVersionDao;
+import com.marpen.shop.model.CatalogVersion;
 import com.marpen.shop.service.CatalogVersionService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +16,8 @@ public class CatalogVersionServiceImpl implements CatalogVersionService {
 
     @Override
     public int getCatalogVersionIdByName(String name) {
-        return catalogVersionDao.getCatalogVersionIdByName(name);
+        CatalogVersion catalogVersion=catalogVersionDao.getCatalogVersionByName(name);
+        return catalogVersion==null ? 0 : catalogVersion.getCatverId();
     }
 
     @Override

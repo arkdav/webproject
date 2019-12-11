@@ -1,14 +1,14 @@
 /*SET GLOBAL time_zone="+3:00";
 DROP SCHEMA `webdb`;*/
-CREATE SCHEMA `webdb` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+CREATE SCHEMA `webdb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE `webdb`.`roles` (
   `role_id` INT NOT NULL,
   `rolename` VARCHAR(225) NOT NULL,
    PRIMARY KEY (`role_id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_unicode_ci;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 INSERT INTO `webdb`.`roles` (`role_id`, `rolename`) VALUES ('1', 'ROLE_CUSTOMER');
 INSERT INTO `webdb`.`roles` (`role_id`, `rolename`) VALUES ('2', 'ROLE_ADMIN');
 INSERT INTO `webdb`.`roles` (`role_id`, `rolename`) VALUES ('3', 'ROLE_BUSINESS_USER');
@@ -26,8 +26,8 @@ CREATE TABLE `webdb`.`users` (
   PRIMARY KEY (`login`),
   FOREIGN KEY (`role_id`) REFERENCES `webdb`.`roles`(`role_id`) ON UPDATE CASCADE ON DELETE CASCADE )
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_unicode_ci;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 INSERT INTO `webdb`.`users` (`login`,`password`,`role_id`,`name`,`surname`,`email`,`phone`,`birthdate`, `status`)
 VALUES ('natali', '$2a$11$j4xr0InYy/WVRT3AChOlWOQl6sjJXNRhAyW.irpVqMY4wkqZEQ0Cq','1','Kate','Gorn','gorn@mail.ru','3089078', '2016-05-12', '1');
@@ -40,9 +40,9 @@ CREATE TABLE `webdb`.`catalogversion` (
     `catver_id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(225) NOT NULL,
     PRIMARY KEY (`catver_id`))
-    ENGINE = InnoDB
-    DEFAULT CHARACTER SET = utf8
-    COLLATE = utf8_unicode_ci;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 INSERT INTO `webdb`.`catalogversion` (`catver_id`, `name`) VALUES ('1', 'online');
 INSERT INTO `webdb`.`catalogversion` (`catver_id`, `name`) VALUES ('2', 'offline');
@@ -56,10 +56,10 @@ CREATE TABLE `webdb`.`products` (
   `user_login` VARCHAR(225) NOT NULL,
   PRIMARY KEY (`product_id`),
   FOREIGN KEY (`catver_id`) REFERENCES `webdb`.`catalogversion`(`catver_id`) ON UPDATE CASCADE ON DELETE CASCADE,
-   FOREIGN KEY (`user_login`) REFERENCES `webdb`.`users`(`login`) ON UPDATE CASCADE ON DELETE CASCADE)
+  FOREIGN KEY (`user_login`) REFERENCES `webdb`.`users`(`login`) ON UPDATE CASCADE ON DELETE CASCADE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_unicode_ci;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('1', 'Album #2', 'infaboutalbum2','album1.jpg','1', 'andrey');
 INSERT INTO `webdb`.`products` (`product_id`,`name`, `description`,`imageurl`,`catver_id`, `user_login`) VALUES ('2', 'Pen #30', 'infaboutpen33','pen30.jpg','1', 'andrey');
@@ -86,8 +86,8 @@ CREATE TABLE `webdb`.`price` (
   PRIMARY KEY (`product_id`),
   FOREIGN KEY (`product_id`) REFERENCES `webdb`.`products`(`product_id`) ON UPDATE CASCADE ON DELETE CASCADE )
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_unicode_ci;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 INSERT INTO `webdb`.`price` (`product_id`, `price`) VALUES ('1', '20');
 INSERT INTO `webdb`.`price` (`product_id`, `price`) VALUES ('2', '99');
 INSERT INTO `webdb`.`price` (`product_id`, `price`) VALUES ('3', '33.1');
@@ -116,8 +116,8 @@ CREATE TABLE `webdb`.`cart` (
   PRIMARY KEY (`cart_id`),
   FOREIGN KEY (`user_login`) REFERENCES `webdb`.`users`(`login`) ON UPDATE CASCADE ON DELETE CASCADE )
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_unicode_ci;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE `webdb`.`cartentry` (
   `cartentry_id` INT NOT NULL AUTO_INCREMENT,
@@ -128,21 +128,45 @@ CREATE TABLE `webdb`.`cartentry` (
   FOREIGN KEY (`cart_id`) REFERENCES `webdb`.`cart`(`cart_id`) ON UPDATE CASCADE ON DELETE CASCADE ,
   FOREIGN KEY (`product_id`) REFERENCES `webdb`.`products`(`product_id`) ON UPDATE CASCADE ON DELETE CASCADE )
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_unicode_ci;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
+CREATE TABLE `webdb`.`orderstatus` (
+  `status_id` INT NOT NULL AUTO_INCREMENT,
+  `statusname`  VARCHAR(225) NOT NULL,
+  PRIMARY KEY (`status_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE `webdb`.`orders` (
-  `order_id` INT NOT NULL AUTO_INCREMENT,
+INSERT INTO `webdb`.`orderstatus` (`status_id`, `statusname`) VALUES ('1', 'processing');
+INSERT INTO `webdb`.`orderstatus` (`status_id`, `statusname`) VALUES ('2', 'collected');
+
+CREATE TABLE `webdb`.`orderbundle` (
+  `orderbundle_id` INT NOT NULL AUTO_INCREMENT,
   `user_login`  VARCHAR(225) NOT NULL,
   `date` DATE NOT NULL,
   `totalprice` DOUBLE NOT NULL,
   `ordernote` VARCHAR(225) NOT NULL,
-  PRIMARY KEY (`order_id`),
+  PRIMARY KEY (`orderbundle_id`),
   FOREIGN KEY (`user_login`) REFERENCES `webdb`.`users`(`login`) ON UPDATE CASCADE ON DELETE CASCADE )
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_unicode_ci;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
+
+CREATE TABLE `webdb`.`orders` (
+  `order_id` INT NOT NULL AUTO_INCREMENT,
+  `price` DOUBLE NOT NULL,
+  `status_id`  INT NOT NULL DEFAULT '1',
+  `orderbundle_id` INT NOT NULL,
+  `owner_login` VARCHAR(225) NOT NULL,
+  PRIMARY KEY (`order_id`),
+  FOREIGN KEY (`orderbundle_id`) REFERENCES `webdb`.`orderbundle`(`orderbundle_id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (`status_id`) REFERENCES `webdb`.`orderstatus`(`status_id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (`owner_login`) REFERENCES `webdb`.`users`(`login`) ON UPDATE CASCADE ON DELETE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE `webdb`.`orderentry` (
   `orderentry_id` INT NOT NULL AUTO_INCREMENT,
@@ -153,5 +177,5 @@ CREATE TABLE `webdb`.`orderentry` (
   FOREIGN KEY (`order_id`) REFERENCES `webdb`.`orders`(`order_id`) ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (`product_id`) REFERENCES `webdb`.`products`(`product_id`) ON UPDATE CASCADE ON DELETE CASCADE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_unicode_ci;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;

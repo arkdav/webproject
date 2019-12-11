@@ -20,24 +20,37 @@
 <main>
     <div class="main-block">
         <div class="container">
-            <div class="row">
+            <div class="business-orders">
                 <c:if test="${!empty businessOrdersList}">
-                    <c:forEach items="${businessOrdersList}" var="orderEntry">
-                        <div>
-                            <p><tag:message code="businessorders.productid"/> ${orderEntry.productDto.productId}</p>
-                            <p><a href="${pageContext.request.contextPath}/productdata/${orderEntry.productDto.productId}">
-                                    <tag:message code="businessorders.productname"/> ${orderEntry.productDto.name}
-                            </a></p>
-                            <p><tag:message code="businessorders.ordernote"/> ${orderEntry.orderNote}</p>
-                            <p><tag:message code="businessorders.date"/> ${orderEntry.date}</p>
-                            <p><tag:message code="businessorders.amount"/> ${orderEntry.amount}</p>
-                            <p><tag:message code="businessorders.price"/> ${orderEntry.price}</p>
-                            <p><tag:message code="businessorders.login"/> ${orderEntry.userDto.login}</p>
-                            <p><tag:message code="businessorders.email"/> ${orderEntry.userDto.email}</p>
-                            <p><tag:message code="businessorders.phone"/> ${orderEntry.userDto.phone}</p>
-                            <p><tag:message code="businessorders.status"/> </p>
+                    <c:forEach items="${businessOrdersList}" var="order">
+                        <div class="business-order-${order.orderStatus} col-5">
+                            <div class="order-info">
+                                <p><tag:message code="businessorders.orderid"/>${order.orderId}.
+                                    <tag:message code="businessorders.ordernote"/> ${order.orderNote}.
+                                    <tag:message code="businessorders.date"/> ${order.date}</p>
+                                <p><tag:message code="businessorders.customer"/> ${order.userDto.login},
+                                        ${order.userDto.email}, ${order.userDto.phone}</p>
+                            </div>
+                            <div class="order-entry col-9">
+                                <c:forEach items="${order.businessOrderProductDto}" var="orderEntry">
+                                    <p>
+                                        <tag:message
+                                                code="businessorders.product"/>
+                                        <a href="${pageContext.request.contextPath}/productdata/${orderEntry.productDto.productId}">
+                                            ${orderEntry.productDto.name}.
+                                        </a>
+                                        <tag:message code="businessorders.amount"/> ${orderEntry.amount}.
+                                        <tag:message code="businessorders.productprice"/> ${orderEntry.price}$
+                                    </p>
+                                </c:forEach>
+                            </div>
+                            <div class="order-total">
+                                <p><tag:message code="businessorders.totalprice"/> ${order.price}$</p>
+                                <p><tag:message code="businessorders.status"/> ${order.orderStatus}</p>
+                            </div>
                             <form class="form-inline my-2 my-lg-0" method="get"
-                                  action="${pageContext.request.contextPath}/businessorders/update?entryId=${orderEntry.orderEntryId}">
+                                  action="${pageContext.request.contextPath}/businessorders/update">
+                                <input type="hidden" name="orderId" value="${order.orderId}">
                                 <button type="submit" class="btn btn-lg btn-primary btn-block">
                                     <tag:message code="businessorders.update"/>
                                 </button>

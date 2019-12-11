@@ -1,53 +1,63 @@
 package com.marpen.shop.converter;
 
 import com.marpen.shop.dto.BusinessOrderDto;
+import com.marpen.shop.dto.BusinessOrderProductDto;
 import com.marpen.shop.model.Order;
+import com.marpen.shop.model.OrderBundle;
 import com.marpen.shop.model.OrderEntry;
-import com.marpen.shop.model.Product;
 import com.marpen.shop.model.User;
-import com.marpen.shop.service.OrderService;
-import com.marpen.shop.service.PriceService;
-import com.marpen.shop.service.ProductService;
+import com.marpen.shop.service.OrderBundleService;
+import com.marpen.shop.service.OrderEntryService;
+import com.marpen.shop.service.OrderStatusService;
 import com.marpen.shop.service.UserService;
 import org.springframework.core.convert.converter.Converter;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ToBusinessOrderDto implements Converter<OrderEntry, BusinessOrderDto> {
+public class ToBusinessOrderDto implements Converter<Order, BusinessOrderDto> {
 
-    private OrderService orderService;
-    private ProductService productService;
-    private PriceService priceService;
+    private OrderEntryService orderEntryService;
+    private OrderBundleService orderBundleService;
+    private OrderStatusService orderStatusService;
     private UserService userService;
-    private ToProductDto toProductDto;
     private ToUserDto toUserDto;
+    private ToBusinessOrderProductDto toBusinessOrderProductDto;
 
-    public ToBusinessOrderDto(OrderService orderService, ProductService productService, PriceService priceService,
-                              UserService userService, ToProductDto toProductDto, ToUserDto toUserDto) {
-        this.orderService = orderService;
-        this.productService=productService;
-        this.priceService=priceService;
+    public ToBusinessOrderDto(OrderEntryService orderEntryService,
+                              OrderBundleService orderBundleService,
+                              OrderStatusService orderStatusService,
+                              UserService userService,
+                              ToUserDto toUserDto,
+                              ToBusinessOrderProductDto toBusinessOrderProductDto) {
+        this.orderEntryService=orderEntryService;
+        this.orderBundleService=orderBundleService;
+        this.orderStatusService=orderStatusService;
         this.userService=userService;
-        this.toProductDto = toProductDto;
         this.toUserDto=toUserDto;
+        this.toBusinessOrderProductDto=toBusinessOrderProductDto;
     }
 
     @Override
-    public BusinessOrderDto convert(OrderEntry orderEntry) {
+    public BusinessOrderDto convert(Order order) {
         BusinessOrderDto businessOrderDto=new BusinessOrderDto();
-        Order order=orderService.getOrder( orderEntry.getOrderId());
-        businessOrderDto.setAmount(orderEntry.getAmount());
-        Date orderDate = order.getDate();
-        businessOrderDto.setDate(new SimpleDateFormat("dd.MM.yyyy").format(orderDate));
-        businessOrderDto.setOrderEntryId(orderEntry.getOrderEntryId());
-        businessOrderDto.setOrderNote(order.getOrderNote());
-        Product product=productService.getProductById(orderEntry.getProductId());
-        businessOrderDto.setProductDto(toProductDto.convert(product));
-        User user =userService.getUserByLogin(order.getUserLogin());
+        businessOrderDto.setOrderBundleId(order.getOrderBundleId());
+        businessOrderDto.setOrderId(order.getOrderId());
+        OrderBundle orderBundle = orderBundleService.getOrderBundleById(order.getOrderBundleId());
+        User user = userService.getUserByLogin(orderBundle.getUserLogin());
         businessOrderDto.setUserDto(toUserDto.convert(user));
-        double price = priceService.getPriceByProductId(product.getProductId()).getPrice();
-        businessOrderDto.setPrice(price*orderEntry.getAmount());
+        businessOrderDto.setOrderNote(orderBundle.getOrderNote());
+        businessOrderDto.setDate(orderBundle.getDate());
+        String orderName=orderStatusService.getOrderStatusNameById(order.getStatusId());
+        businessOrderDto.setOrderStatus(orderName);
+        businessOrderDto.setPrice(order.getPrice());
+        List<BusinessOrderProductDto> businessOrderProductDtos = new ArrayList<>();
+        List <OrderEntry> orderEntries=orderEntryService.getOrderEntriesByOrderId(order.getOrderId());
+        for (OrderEntry orderEntry:
+                orderEntries) {
+            businessOrderProductDtos.add(toBusinessOrderProductDto.convert(orderEntry));
+        }
+        businessOrderDto.setBusinessOrderProductDto(businessOrderProductDtos);
         return businessOrderDto;
     }
 }

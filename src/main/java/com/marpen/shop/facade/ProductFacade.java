@@ -17,6 +17,8 @@ public interface ProductFacade {
 
     List<BusinessProductDto> getProductsListByUserLogin(String userLogin);
 
+    List<Integer> getProductIdsListByUserLogin(String userLogin);
+
     BusinessProductDto getBusinessProductDtoById(int productId);
 
     void deleteProduct(int productId);

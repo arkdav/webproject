@@ -17,9 +17,16 @@ public class OrderDaoImpl extends GenericDaoImpl<Order> implements OrderDao {
     }
 
     @Override
-    public List<Order> getOrdersByUserLogin(String userLogin) {
-        String sql = "select * from orders where user_login like :user_login order by date desc";
-        List<Order> orders = currentSession().createSQLQuery(sql).addEntity(Order.class).setParameter("user_login", userLogin).list();
+    public List<Order> getOrdersByOrderBundleId(int orderBundleId) {
+        String sql = "select * from orders where orderbundle_id like :orderbundle_id";
+        List<Order> orders = currentSession().createSQLQuery(sql).addEntity(Order.class).setParameter("orderbundle_id", orderBundleId).list();
+        return orders;
+    }
+
+    @Override
+    public List<Order> getOrdersByOwnerLogin(String ownerLogin) {
+        String sql = "select * from orders where owner_login like :owner_login";
+        List<Order> orders = currentSession().createSQLQuery(sql).addEntity(Order.class).setParameter("owner_login", ownerLogin).list();
         return orders;
     }
 }

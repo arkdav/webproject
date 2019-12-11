@@ -1,13 +1,10 @@
 package com.marpen.shop.controller;
 
 import com.marpen.shop.dto.BusinessOrderDto;
-import com.marpen.shop.dto.BusinessProductDto;
 import com.marpen.shop.dto.CartDto;
 import com.marpen.shop.dto.OrderNoteDto;
 import com.marpen.shop.facade.CartFacade;
 import com.marpen.shop.facade.OrderFacade;
-import com.marpen.shop.facade.ProductFacade;
-import com.marpen.shop.model.Product;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,27 +26,27 @@ public class CartOrderController {
         this.orderFacade = orderFacade;
     }
 
-    @RequestMapping(value = "/addtobasket", method = RequestMethod.POST)
+    @RequestMapping(value = "/addtocart", method = RequestMethod.POST)
     public String addToCart(@RequestParam(value = "product_id") int productId) {
         CartDto cartDto = cartFacade.getCartByUserLogin(getUserLogin());
         cartFacade.addProductToCart(getUserLogin(), productId);
-        return "redirect:/basket";
+        return "redirect:/cart";
     }
 
-    @RequestMapping(value = "/basket", method = RequestMethod.POST)
+    @RequestMapping(value = "/cart", method = RequestMethod.POST)
     public String removeFromCart(@RequestParam(value = "product_id") int productId) {
         cartFacade.removeProductFromCart(getUserLogin(), productId);
-        return "redirect:/basket";
+        return "redirect:/cart";
     }
 
-    @RequestMapping(value = "/basket", method = RequestMethod.GET)
+    @RequestMapping(value = "/cart", method = RequestMethod.GET)
     public String giveCart(Model model) {
         CartDto cartDto = cartFacade.getCartByUserLogin(getUserLogin());
-        model.addAttribute("basketList", cartDto);
-        return "basket";
+        model.addAttribute("cartList", cartDto);
+        return "cart";
     }
 
-    @RequestMapping(value = "/basketamount", method = RequestMethod.GET)
+    @RequestMapping(value = "/cartamount", method = RequestMethod.GET)
     public String newAmountInCart(@RequestParam(value = "product_id") int productId,
                                   @RequestParam(value = "productAmount", required = false, defaultValue = "1")
                                           String productAmountString) {
@@ -59,12 +56,12 @@ public class CartOrderController {
         } else if (productAmount > 0) {
             cartFacade.updateProductInCart(getUserLogin(), productId, productAmount);
         }
-        return "redirect:/basket";
+        return "redirect:/cart";
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public String getOrder(Model model) {
-        model.addAttribute("orderList",cartFacade.getCartByUserLogin(getUserLogin()));
+        model.addAttribute("orderList", cartFacade.getCartByUserLogin(getUserLogin()));
         model.addAttribute("order", new OrderNoteDto());
         return "orderconfirmation";
     }
@@ -72,7 +69,6 @@ public class CartOrderController {
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String order(@ModelAttribute("order") OrderNoteDto orderNoteDto) {
         orderFacade.addCartToOrder(getUserLogin(), orderNoteDto.getText());
-        cartFacade.removeCart(getUserLogin());
         return "redirect:/userorders";
     }
 
@@ -90,8 +86,8 @@ public class CartOrderController {
     }
 
     @RequestMapping(value = "/businessorders/update", method = RequestMethod.GET)
-    public String updateOrderEntryStatus(@RequestParam("entryId") Integer orderEntryId) {
-
+    public String updateOrderEntryStatus(@RequestParam("orderId") Integer orderId) {
+        orderFacade.changeOrderStatus(orderId);
         return "redirect:/businessorders";
     }
 

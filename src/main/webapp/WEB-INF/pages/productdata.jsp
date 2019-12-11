@@ -29,10 +29,10 @@
         <p><img src="<c:url value='/images/${productinf.imageLink}'/>"></p>
         <sec:authorize access="hasRole('ROLE_CUSTOMER')">
             <form class="form-inline my-2 my-lg-0" method="post"
-                  action="${pageContext.request.contextPath}/addtobasket?product_id=${productinf.productId}">
+                  action="${pageContext.request.contextPath}/addtocart?product_id=${productinf.productId}">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <button type="submit" class="btn btn-outline-success my-2 my-sm-0"><tag:message
-                        code="product.addToBasket"/></button>
+                        code="product.addToCart"/></button>
             </form>
         </sec:authorize>
     </div>

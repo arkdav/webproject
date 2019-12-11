@@ -37,12 +37,14 @@
                 <value>com.marpen.shop.model.CartEntry</value>
                 <value>com.marpen.shop.model.Order</value>
                 <value>com.marpen.shop.model.OrderEntry</value>
+                <value>com.marpen.shop.model.OrderStatus</value>
+                <value>com.marpen.shop.model.OrderBundle</value>
             </list>
         </property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
-                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+<!--                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>-->
                 <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
                 <prop key="hibernate.default_schema">webdb</prop>
                 <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>

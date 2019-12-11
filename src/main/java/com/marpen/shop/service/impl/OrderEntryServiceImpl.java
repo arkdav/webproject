@@ -28,6 +28,15 @@ public class OrderEntryServiceImpl implements OrderEntryService {
     }
 
     @Override
+    public void save(int orderId, int productId, int amount){
+        OrderEntry orderEntry=new OrderEntry();
+        orderEntry.setOrderId(orderId);
+        orderEntry.setProductId(productId);
+        orderEntry.setAmount(amount);
+        orderEntryDao.save(orderEntry);
+    }
+
+    @Override
     public List<OrderEntry> getOrderEntries() {
         return orderEntryDao.getOrderEntries();
     }

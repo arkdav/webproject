@@ -20,8 +20,8 @@
                 </li>
                 <sec:authorize access="hasRole('ROLE_CUSTOMER')">
                 <li class="nav-item ">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/basket"><tag:message
-                            code="header.basket"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/cart"><tag:message
+                            code="header.cart"/></a>
                 </li>
                 </sec:authorize>
                 <sec:authorize access="hasAnyRole('ROLE_CUSTOMER', 'ROLE_BUSINESS_USER', 'ROLE_ADMIN')">

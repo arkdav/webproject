@@ -32,6 +32,11 @@
     <bean id="cartEntryService" class="com.marpen.shop.service.impl.CartEntryServiceImpl">
         <constructor-arg name="cartEntryDao" ref="cartEntryDao"/>
     </bean>
+    <!-- OrderBundleDao and OrderBundleService beans -->
+    <bean id="orderBundleDao" class="com.marpen.shop.dao.impl.OrderBundleDaoImpl" parent="genericDao" />
+    <bean id="orderBundleService" class="com.marpen.shop.service.impl.OrderBundleServiceImpl">
+        <constructor-arg name="orderBundleDao" ref="orderBundleDao"/>
+    </bean>
     <!-- OrderDao and OrderService beans -->
     <bean id="orderDao" class="com.marpen.shop.dao.impl.OrderDaoImpl" parent="genericDao" />
     <bean id="orderService" class="com.marpen.shop.service.impl.OrderServiceImpl">
@@ -42,7 +47,11 @@
     <bean id="orderEntryService" class="com.marpen.shop.service.impl.OrderEntryServiceImpl">
         <constructor-arg name="orderEntryDao" ref="orderEntryDao"/>
     </bean>
-
+    <!-- OrderStatusDao and OrderStatusService beans -->
+    <bean id="orderStatusDao" class="com.marpen.shop.dao.impl.OrderStatusDaoImpl" parent="genericDao" />
+    <bean id="orderStatusService" class="com.marpen.shop.service.impl.OrderStatusServiceImpl">
+        <constructor-arg name="orderStatusDao" ref="orderStatusDao"/>
+    </bean>
     <!-- ProductController and ProductFacadeImpl beans -->
     <bean id="productController" class="com.marpen.shop.controller.ProductController">
         <constructor-arg name="productFacade" ref="productFacade"/>
@@ -99,20 +108,21 @@
         <constructor-arg name="priceService" ref="priceService"/>
     </bean>
 
-    <!-- OrderFacade bean -->
     <bean id="orderFacade" class="com.marpen.shop.facade.impl.OrderFacadeImpl">
+        <constructor-arg name="orderBundleService" ref="orderBundleService"/>
         <constructor-arg name="orderService" ref="orderService"/>
         <constructor-arg name="orderEntryService" ref="orderEntryService"/>
+        <constructor-arg name="productService" ref="productService"/>
         <constructor-arg name="cartFacade" ref="cartFacade"/>
-        <constructor-arg name="productFacade" ref="productFacade"/>
         <constructor-arg name="toOrderDto" ref="toOrderDto"/>
         <constructor-arg name="fromCartDto" ref="fromCartDto"/>
-        <constructor-arg name="fromCartProductDto" ref="fromCartProductDto"/>
         <constructor-arg name="toBusinessOrderDto" ref="toBusinessOrderDto"/>
     </bean>
 
     <bean id="toOrderDto" class="com.marpen.shop.converter.ToOrderDto">
         <constructor-arg name="orderEntryService" ref="orderEntryService"/>
+        <constructor-arg name="orderService" ref="orderService"/>
+        <constructor-arg name="orderStatusService" ref="orderStatusService"/>
         <constructor-arg name="toOrderProductDto" ref="toOrderProductDto"/>
     </bean>
     <bean id="toOrderProductDto" class="com.marpen.shop.converter.ToOrderProductDto">
@@ -123,13 +133,19 @@
     <bean id="fromCartDto" class="com.marpen.shop.converter.FromCartDto"> </bean>
     <bean id="fromCartProductDto" class="com.marpen.shop.converter.FromCartProductDto"> </bean>
     <bean id="toBusinessOrderDto" class="com.marpen.shop.converter.ToBusinessOrderDto">
-        <constructor-arg name="orderService" ref="orderService"/>
+        <constructor-arg name="orderEntryService" ref="orderEntryService"/>
+        <constructor-arg name="orderBundleService" ref="orderBundleService"/>
+        <constructor-arg name="orderStatusService" ref="orderStatusService"/>
+        <constructor-arg name="userService" ref="userService"/>
+        <constructor-arg name="toUserDto" ref="toUserDto"/>
+        <constructor-arg name="toBusinessOrderProductDto" ref="toBusinessOrderProductDto"/>
+    </bean>
+    <bean id="toBusinessOrderProductDto" class="com.marpen.shop.converter.ToBusinessOrderProductDto">
         <constructor-arg name="productService" ref="productService"/>
         <constructor-arg name="priceService" ref="priceService"/>
-        <constructor-arg name="userService" ref="userService"/>
         <constructor-arg name="toProductDto" ref="toProductDto"/>
-        <constructor-arg name="toUserDto" ref="toUserDto"/>
     </bean>
+
 
     <!-- CartOrderController bean -->
     <bean id="cartOrderController" class="com.marpen.shop.controller.CartOrderController">

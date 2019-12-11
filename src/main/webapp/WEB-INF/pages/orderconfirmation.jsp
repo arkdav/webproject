@@ -32,7 +32,7 @@
                                     <div class="cart-product-name">
                                         <h5>${product.productDto.name}</h5>
                                     </div>
-                                    <div><tag:message code="basket.productprice"/> ${product.productDto.price}$</div>
+                                    <div><tag:message code="cart.productprice"/> ${product.productDto.price}$</div>
                                 </div>
                                 <div>
                                     <p> ${product.amount}</p>
@@ -47,17 +47,17 @@
                             <form:input type="text" maxlength="220" path="text"/>
                         </div>
                         <br>
-                        <p><tag:message code="basket.totalprice"/> ${orderList.cartPrice}$</p>
+                        <p><tag:message code="cart.totalprice"/> ${orderList.cartPrice}$</p>
                         <form:button class="btn btn-outline-success my-2 my-sm-0" type="submit"><tag:message
-                                code="basket.checkout"/></form:button>
+                                code="cart.checkout"/></form:button>
                     </form:form>
                 </div>
                 <div class="right-content col-3">
                     <div class="right-content-button">
-                        <form method="get" action="${pageContext.request.contextPath}/basket">
+                        <form method="get" action="${pageContext.request.contextPath}/cart">
                             <button type="submit"
                                     class="btn btn-outline-success my-2 my-sm-0"><tag:message
-                                    code="basket.cancel"/>
+                                    code="cart.cancel"/>
                             </button>
                         </form>
                     </div>

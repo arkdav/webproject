@@ -18,19 +18,20 @@
 </head>
 <body>
 <div class="container">
+    <div class="loginform">
     <form method="POST" action="${pageContext.request.contextPath}/login" class="form-signin" style="width: 40%">
         <h2 class="form-heading"><tag:message code="header.login"/></h2>
         <div class="form-group ${error != null ? 'has-error' : ''}">
             <input type="text" name="username" class="form-control" placeholder="<tag:message code="login.username"/>"/>
             <input type="password" name="password" class="form-control" placeholder="<tag:message code="login.password"/>"/>
-            <span>${error}</span>
+            <c:if test="${!empty error}">
+            <span> <tag:message code="login.error"/> </span>
+            </c:if>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <button class="btn btn-lg btn-primary btn-block" type="submit"><tag:message code="header.login"/></button>
         </div>
     </form>
-</div>
-<div>
-    <a href="${pageContext.request.contextPath}/catalog"><tag:message code="login.tocatalog"/></a>
+    </div>
 </div>
 </body>
 </html>

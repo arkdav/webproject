@@ -6,9 +6,15 @@ import java.util.List;
 
 public interface OrderService {
 
-    List<Order> getOrdersByUserLogin(String userLogin);
+    List<Order> getOrdersByOrderBundleId(int orderBundleId);
 
-    void save(Order order);
+    int save(Order order);
+
+    int save(int orderBundleId, String ownerLogin, double totalPrice);
+
+    List<Order> getOrdersByOwnerLogin(String ownerLogin);
 
     Order getOrder(int orderId);
+
+    void changeOrderStatus(Order order);
 }

@@ -8,7 +8,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Basket</title>
+    <title>Cart</title>
     <script src="${pageContext.request.contextPath}/resources/js/http_code.jquery.com_jquery-3.3.1.slim.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/http_cdnjs.cloudflare.com_ajax_libs_popper.js_1.14.7_umd_popper.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/http_stackpath.bootstrapcdn.com_bootstrap_4.3.1_js_bootstrap.js"></script>
@@ -22,9 +22,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="left-content col-9">
-                    <c:if test="${!empty basketList}">
-                    <c:if test="${!empty basketList.products}">
-                    <c:forEach items="${basketList.products}" var="product">
+                    <c:if test="${!empty cartList}">
+                    <c:if test="${!empty cartList.products}">
+                    <c:forEach items="${cartList.products}" var="product">
                         <div class="cart-product">
                             <div class="row">
                                 <div class="cart-product-img col-1">
@@ -34,13 +34,13 @@
                                     <div class="cart-product-name"><a
                                             href="${pageContext.request.contextPath}/productdata/${product.productDto.productId}">
                                         <h5>${product.productDto.name}</h5></a></div>
-                                    <div><tag:message code="basket.productprice"/> ${product.productDto.price}$
+                                    <div><tag:message code="cart.productprice"/> ${product.productDto.price}$
                                     </div>
                                 </div>
                                 <div class="col-3 cart-product-amount">
                                     <form class="" method="get"
-                                          action="${pageContext.request.contextPath}/basketamount">
-                                        <label for="productAmount"><tag:message code="basket.amount"/></label>
+                                          action="${pageContext.request.contextPath}/cartamount">
+                                        <label for="productAmount"><tag:message code="cart.amount"/></label>
                                         <input type="hidden" name="product_id" value="${product.productDto.productId}">
                                         <input type="text" id="productAmount" name="productAmount"
                                                placeholder="${product.amount}" min="0" max="10"/>
@@ -48,10 +48,10 @@
                                 </div>
                                 <div class="col-3">
                                     <form class="form-inline my-2 my-lg-0" method="post"
-                                          action="${pageContext.request.contextPath}/basket?product_id=${product.productDto.productId}">
+                                          action="${pageContext.request.contextPath}/cart?product_id=${product.productDto.productId}">
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                         <button type="submit" class="btn btn-outline-success my-2 my-sm-0">
-                                            <tag:message code="product.removeFromBasket"/></button>
+                                            <tag:message code="product.removeFromCart"/></button>
                                     </form>
                                 </div>
                             </div>
@@ -60,18 +60,18 @@
                 </div>
                 <div class="right-content col-3">
                     <div class="right-content-text">
-                        <p><tag:message code="basket.totalprice"/> ${basketList.cartPrice}$</p>
+                        <p><tag:message code="cart.totalprice"/> ${cartList.cartPrice}$</p>
                     </div>
                     <div class="right-content-button">
                         <form method="get" action="${pageContext.request.contextPath}/order">
                             <button type="submit"
                                     class="btn btn-outline-success my-2 my-sm-0"><tag:message
-                                    code="basket.checkout"/></button>
+                                    code="cart.checkout"/></button>
                         </form>
                     </div>
                     </c:if>
                     <div class="right-content-text">
-                        <p><tag:message code="basket.date"/> ${basketList.date}</p>
+                        <p><tag:message code="cart.date"/> ${cartList.date}</p>
                     </div>
                 </div>
                 </c:if>

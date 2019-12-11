@@ -17,17 +17,45 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getOrdersByUserLogin(String login) {
-        return orderDao.getOrdersByUserLogin(login);
+    public List<Order> getOrdersByOrderBundleId(int orderBundleId) {
+        return orderDao.getOrdersByOrderBundleId(orderBundleId);
     }
 
     @Override
-    public void save(Order order) {
+    public int save(Order order) {
         orderDao.save(order);
+        return order.getOrderId();
+    }
+
+    @Override
+    public int save(int orderBundleId, String ownerLogin, double totalPrice){
+        Order order = new Order();
+        order.setOrderBundleId(orderBundleId);
+        order.setOwnerLogin(ownerLogin);
+        order.setPrice(totalPrice);
+        order.setStatusId(1);
+        orderDao.save(order);
+        return order.getOrderId();
     }
 
     @Override
     public Order getOrder(int orderId) {
         return orderDao.get(orderId);
     }
+
+    @Override
+    public void changeOrderStatus(Order order) {
+        if(order.getStatusId()==1){
+            order.setStatusId(2);
+        } else {
+            order.setStatusId(1);
+        }
+        orderDao.update(order);
+    }
+
+    @Override
+    public List<Order> getOrdersByOwnerLogin(String ownerLogin){
+        return orderDao.getOrdersByOwnerLogin(ownerLogin);
+    }
+
 }

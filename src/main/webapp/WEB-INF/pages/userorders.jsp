@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="tag" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="tag" uri="http://www.springframework.org/tags" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,23 +19,28 @@
 <%@include file="header.jsp" %>
 <main>
     <div class="main-block">
-        <div class="row">
-        <c:if test="${!empty orders}">
-                <c:forEach items="${orders}" var="order">
-                    <div class="product col-3">
-                        <div><tag:message code="order.date"/> ${order.date}</div>
-                        <c:forEach items="${order.products}" var="orderEntry">
-                            <div><a href="/productdata/${orderEntry.productDto.productId}"><tag:message code="order.product"/> ${orderEntry.productDto.name}<a/></div>
-                            <div><tag:message code="order.amount"/> ${orderEntry.amount}</div>
-                            <div><tag:message code="order.productprice"/> ${orderEntry.productDto.price}$</div>
-                        </c:forEach>
-                        <div><tag:message code="order.note"/> ${order.orderNote}</div>
-                        <div><tag:message code="order.totalprice"/> ${order.orderPrice}$</div>
-                    </div>
-                </c:forEach>
-        </c:if>
+        <div class="container">
+            <div class="userorders">
+                <c:if test="${!empty orders}">
+                    <c:forEach items="${orders}" var="order">
+                        <div class="user-order">
+                            <div><tag:message code="order.date"/> ${order.date}</div>
+                            <c:forEach items="${order.products}" var="orderEntry">
+                                <div><tag:message code="order.product"/><a
+                                        href="${pageContext.request.contextPath}/productdata/${orderEntry.productDto.productId}"> ${orderEntry.productDto.name}<a/>
+                                x ${orderEntry.amount}
+                                </div>
+                            <div><tag:message code="order.status"/> ${orderEntry.status}</div>
+                            </c:forEach>
+                            <c:if test="${!empty order.orderNote}">
+                            <div><tag:message code="order.note"/> ${order.orderNote}</div>
+                            </c:if>
+                            <div><tag:message code="order.totalprice"/> ${order.orderPrice}$</div>
+                        </div>
+                    </c:forEach>
+                </c:if>
+            </div>
         </div>
-    </div>
 </main>
 <%@include file="footer.jsp" %>
 </body>

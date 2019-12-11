@@ -16,41 +16,48 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 </head>
 <body>
-<div class="product col-4">
-<form:form method="POST" modelAttribute="creationBusinessDataForm" class="form-signin"
-           enctype="multipart/form-data"  commandName="creationBusinessDataForm"
-           action="${pageContext.request.contextPath}/business/create?${_csrf.parameterName}=${_csrf.token}">
-    <div class="form-group">
-        <tag:message code="businessdata.name"/>
-        <form:input type="text" path="name" class="form-control"/>
-        <form:errors path="name"/>
+<%@include file="header.jsp" %>
+<main>
+    <div class="container">
+        <div class="product-create-form">
+            <form:form method="POST" modelAttribute="creationBusinessDataForm" class="form-signin"
+                       enctype="multipart/form-data" commandName="creationBusinessDataForm"
+                       action="${pageContext.request.contextPath}/business/create?${_csrf.parameterName}=${_csrf.token}">
+                <h2 class="form-signin-heading"><tag:message code="product.creation"/></h2>
+                <div class="form-group">
+                    <tag:message code="businessdata.name"/>
+                    <form:input type="text" path="name" class="form-control"/>
+                    <form:errors path="name"/>
+                </div>
+                <div class="form-group">
+                    <form:label path="price"><tag:message code="businessdata.price"/></form:label>
+                    <form:input type="text" path="price" class="form-control"/>
+                    <form:errors path="price"/>
+                </div>
+                <div class="form-group">
+                    <form:label path="description"><tag:message code="businessdata.description"/></form:label>
+                    <form:input type="text" path="description" class="form-control"/>
+                    <form:errors path="description"/>
+                </div>
+                <div class="form-group">
+                    <form:label path="image"><tag:message code="businessdata.image"/></form:label>
+                    <form:input type="file" path="image" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <tag:message code="businessdata.catalogversion"/>
+                    <form:select size="1" name="catalogVersion" path="catalogVersion" class="form-control">
+                        <form:option value="online">Online</form:option>
+                        <form:option value="offline">Offline</form:option>
+                    </form:select>
+                </div>
+                <form:button class="btn btn-lg btn-primary btn-block" type="submit"><tag:message
+                        code="businessdata.create"/></form:button>
+            </form:form>
+        </div>
+        <a href="${pageContext.request.contextPath}/businessdata"><tag:message
+                code="business.tobusinessdata"/></a>
     </div>
-    <div class="form-group">
-        <form:label path="price"><tag:message code="businessdata.price"/></form:label>
-        <form:input type="text" path="price" class="form-control"/>
-        <form:errors path="price"/>
-    </div>
-    <div class="form-group">
-        <form:label path="description"><tag:message code="businessdata.description"/></form:label>
-        <form:input type="text" path="description" class="form-control"/>
-        <form:errors path="description"/>
-    </div>
-    <div class="form-group">
-        <form:label path="image"><tag:message code="businessdata.image"/></form:label>
-        <form:input type="file" path="image" class="form-control"/>
-    </div>
-    <div class="form-group">
-        <tag:message code="businessdata.catalogversion"/>
-        <form:select size="1" name="catalogVersion" path="catalogVersion" class="form-control">
-            <form:option value="online">Online</form:option>
-            <form:option value="offline">Offline</form:option>
-        </form:select>
-    </div>
-    <form:button class="btn btn-lg btn-primary btn-block" type="submit"><tag:message
-            code="businessdata.create"/></form:button>
-</form:form>
-</div>
-<a href="${pageContext.request.contextPath}/businessdata"><tag:message
-        code="business.tobusinessdata"/></a>
+</main>
+<%@include file="footer.jsp" %>
 </body>
 </html>

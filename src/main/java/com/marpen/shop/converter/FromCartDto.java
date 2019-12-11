@@ -1,20 +1,20 @@
 package com.marpen.shop.converter;
 
 import com.marpen.shop.dto.CartDto;
-import com.marpen.shop.model.Order;
+import com.marpen.shop.model.OrderBundle;
 import org.springframework.core.convert.converter.Converter;
 
 import java.util.Date;
 
-public class FromCartDto implements Converter<CartDto, Order> {
+public class FromCartDto implements Converter<CartDto, OrderBundle> {
 
     @Override
-    public Order convert(CartDto cartDto) {
+    public OrderBundle convert(CartDto cartDto) {
         Date dateNow = new Date();
-        Order order = new Order();
-        order.setUserLogin(cartDto.getUserLogin());
-        order.setDate(dateNow);
-        order.setTotalprice(cartDto.getCartPrice());
-        return order;
+        OrderBundle orderBundle = new OrderBundle();
+        orderBundle.setUserLogin(cartDto.getUserLogin());
+        orderBundle.setDate(dateNow);
+        orderBundle.setTotalPrice(cartDto.getCartPrice());
+        return orderBundle;
     }
 }

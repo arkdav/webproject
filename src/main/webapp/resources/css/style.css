@@ -103,3 +103,57 @@ div{
 .catalog-pages {
     align-content: center;
 }
+.loginform {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.business-orders{
+
+}
+
+.business-order-processing{
+    border: #062c33 solid 2px;
+    padding: 15px;
+    margin-bottom: 10px;
+    float:left;
+}
+.business-order-collected{
+    border: #062c33 solid 2px;
+    padding: 15px;
+    margin-bottom: 10px;
+    float:right;
+}
+.order-info{
+
+}
+.order-entry{
+    margin-left: 50px;
+}
+.order-total{
+    text-align: right;
+}
+
+.form-control{
+    margin-bottom: 10px;
+}
+
+.user-order{
+    border: #1d2124 solid 1px;
+    padding: 10px;
+    margin: 10px;
+}
+.form-group span{
+    color: red;
+}
+
+.product-create-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.buser-create-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
 
 @Entity
 @Table(name="orders")
@@ -19,20 +18,21 @@ public class Order {
     @Column(name = "order_id")
     private int orderId;
 
-    @Column(name="user_login")
-    private String userLogin;
+    @Column(name="price")
+    private double price;
 
-    @Column(name = "date")
-    private Date date;
+    @Column(name="status_id")
+    private int statusId;
 
-    @Column(name = "totalprice")
-    private Double totalprice;
+    @Column(name="orderbundle_id")
+    private int orderBundleId;
 
-    @Column(name="ordernote")
-    private String orderNote;
+    @Column(name = "owner_login")
+    private String ownerLogin;
 
     public Order() {
     }
+
 
     public int getOrderId() {
         return orderId;
@@ -42,35 +42,35 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public String getUserLogin() {
-        return userLogin;
+    public double getPrice() {
+        return price;
     }
 
-    public void setUserLogin(String login) {
-        this.userLogin = login;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public Date getDate() {
-        return date;
+    public int getStatusId() {
+        return statusId;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
     }
 
-    public Double getTotalprice() {
-        return totalprice;
+    public int getOrderBundleId() {
+        return orderBundleId;
     }
 
-    public void setTotalprice(Double totalprice) {
-        this.totalprice = totalprice;
+    public void setOrderBundleId(int orderBundleId) {
+        this.orderBundleId = orderBundleId;
     }
 
-    public String getOrderNote() {
-        return orderNote;
+    public String getOwnerLogin() {
+        return ownerLogin;
     }
 
-    public void setOrderNote(String orderNote) {
-        this.orderNote = orderNote;
+    public void setOwnerLogin(String ownerLogin) {
+        this.ownerLogin = ownerLogin;
     }
 }
