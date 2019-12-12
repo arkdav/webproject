@@ -16,43 +16,49 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 </head>
 <body>
-    <div class="product col-4">
-        <h><tag:message code="businessdata.id"/>${businessProduct.productId}</h>
-        <form:form method="POST" modelAttribute="businessDataForm" class="form-signin"
-                   action="${pageContext.request.contextPath}/business/update">
-            <div class="form-group">
-                <form:label path="name"><tag:message code="businessdata.name"/></form:label>
-                <form:input type="text" path="name" class="form-control"
-                            placeholder="${businessProduct.name}"/>
-                <form:errors path="name"/>
-            </div>
-            <div class="form-group">
-                <form:label path="price"><tag:message code="businessdata.price"/></form:label>
-                <form:input type="text" path="price" class="form-control"
-                            placeholder="${businessProduct.price}$"/>
-                <form:errors path="price"/>
-            </div>
-            <div class="form-group">
-                <form:label path="description"><tag:message code="businessdata.description"/></form:label>
-                <form:input type="text" path="description" class="form-control"
-                            placeholder="${businessProduct.description}"/>
-                <form:errors path="description"/>
-            </div>
-            <div class="form-group">
-                <form:label path="catalogVersion"><tag:message
-                        code="businessdata.catalogversion"/>${businessProduct.catalogVersion}</form:label>
-                <form:select size="1" name="catalogVersion" path="catalogVersion" class="form-control">
-                    <form:option value="online">Online</form:option>
-                    <form:option value="offline">Offline</form:option>
-                </form:select>
-            </div>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <form:input type="hidden" path="productId" name="productId" value="${businessProduct.productId}"/>
-            <form:button class="btn btn-lg btn-primary btn-block" type="submit"><tag:message
-                    code="businessdata.change"/></form:button>
-        </form:form>
+<%@include file="header.jsp" %>
+<main>
+    <div class="container">
+        <div class="product-update-form">
+            <h><tag:message code="businessdata.id"/>${businessProduct.productId}</h>
+            <form:form method="POST" modelAttribute="businessDataForm" class="form-signin"
+                       action="${pageContext.request.contextPath}/business/update">
+                <div class="form-group">
+                    <form:label path="name"><tag:message code="businessdata.name"/></form:label>
+                    <form:input type="text" path="name" class="form-control"
+                                placeholder="${businessProduct.name}"/>
+                    <form:errors path="name"/>
+                </div>
+                <div class="form-group">
+                    <form:label path="price"><tag:message code="businessdata.price"/></form:label>
+                    <form:input type="text" path="price" class="form-control"
+                                placeholder="${businessProduct.price}$"/>
+                    <form:errors path="price"/>
+                </div>
+                <div class="form-group">
+                    <form:label path="description"><tag:message code="businessdata.description"/></form:label>
+                    <form:input type="text" path="description" class="form-control"
+                                placeholder="${businessProduct.description}"/>
+                    <form:errors path="description"/>
+                </div>
+                <div class="form-group">
+                    <form:label path="catalogVersion"><tag:message
+                            code="businessdata.catalogversion"/>${businessProduct.catalogVersion}</form:label>
+                    <form:select size="1" name="catalogVersion" path="catalogVersion" class="form-control">
+                        <form:option value="online">Online</form:option>
+                        <form:option value="offline">Offline</form:option>
+                    </form:select>
+                </div>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <form:input type="hidden" path="productId" name="productId" value="${businessProduct.productId}"/>
+                <form:button class="btn btn-lg btn-primary btn-block" type="submit"><tag:message
+                        code="businessdata.change"/></form:button>
+            </form:form>
+            <a href="${pageContext.request.contextPath}/businessdata"><tag:message
+                    code="business.tobusinessdata"/></a>
+        </div>
     </div>
-    <a href="${pageContext.request.contextPath}/businessdata"><tag:message
-            code="business.tobusinessdata"/></a>
+</main>
+<%@include file="footer.jsp" %>
 </body>
 </html>

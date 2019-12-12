@@ -157,3 +157,8 @@ div{
     align-items: center;
     justify-content: center;
 }
+.product-update-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
