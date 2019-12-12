@@ -4,6 +4,7 @@ import com.marpen.shop.dto.RegistrationDto;
 import com.marpen.shop.dto.UserDataDto;
 import com.marpen.shop.dto.UserDto;
 import com.marpen.shop.facade.UserFacade;
+import com.marpen.shop.validator.RegistrationValidator;
 import com.marpen.shop.validator.UserDataValidator;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -22,10 +23,13 @@ public class UserController {
 
     private UserFacade userFacade;
     private UserDataValidator userDataValidator;
+    private RegistrationValidator registrationValidator;
 
-    public UserController(UserFacade userFacade, UserDataValidator userDataValidator) {
+    public UserController(UserFacade userFacade, UserDataValidator userDataValidator,
+                          RegistrationValidator registrationValidator) {
         this.userFacade = userFacade;
         this.userDataValidator = userDataValidator;
+        this.registrationValidator=registrationValidator;
     }
 
     @RequestMapping(value = "/userdata", method = RequestMethod.GET)
@@ -75,7 +79,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/adminusers/create", method = RequestMethod.POST)
-    public String createBusinessUser(@ModelAttribute("businessUserCreationForm")RegistrationDto registrationDto) {
+    public String createBusinessUser(@ModelAttribute("businessUserCreationForm")RegistrationDto registrationDto,
+                                    BindingResult bindingResult){
+        registrationValidator.validate(registrationDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "businessusercreation";
+        }
         userFacade.saveBusinessUser(registrationDto);
         return "redirect:/adminusers?u=business";
     }

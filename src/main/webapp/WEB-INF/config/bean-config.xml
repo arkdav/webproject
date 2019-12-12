@@ -175,6 +175,7 @@
     <bean id="userController" class="com.marpen.shop.controller.UserController">
         <constructor-arg name="userFacade" ref="userFacade"/>
         <constructor-arg name="userDataValidator" ref="userDataValidator" />
+        <constructor-arg name="registrationValidator" ref="registrationValidator" />
     </bean>
     <bean id="userDataValidator" class="com.marpen.shop.validator.UserDataValidator" />
 
