@@ -8,11 +8,11 @@ public interface ProductDao extends GenericDao<Product> {
 
     List<Product> getProductsListByUserLogin(String userLogin);
 
-    List<Product> getOnlineProductsListByPage(int pageId, int productsPerPage);
+    List<Product> getProductsListByPageAndCatVerId(int pageId, int productsPerPage, int catVerId);
 
-    List<Product> getOnlineProductsListByName(String name, int pageId, int productsPerPage);
+    List<Product> getProductsListByNameAndCatVerId(String name, int pageId, int productsPerPage, int catVerId);
 
-    int getOnlineAmountOfProducts();
+    int getAmountOfProductsByCatVerId(int catVerId);
 
-    int getOnlineAmountOfProductsByName(String name);
+    int getAmountOfProductsByNameAndCatVerId(String name, int catVerId);
 }

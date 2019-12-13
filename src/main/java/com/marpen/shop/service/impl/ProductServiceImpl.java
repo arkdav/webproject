@@ -1,5 +1,6 @@
 package com.marpen.shop.service.impl;
 
+import com.marpen.shop.dao.CatalogVersionDao;
 import com.marpen.shop.dao.ProductDao;
 import com.marpen.shop.model.Product;
 import com.marpen.shop.service.ProductService;
@@ -11,9 +12,11 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private ProductDao productDao;
+    private CatalogVersionDao catalogVersionDao;
 
-    public ProductServiceImpl(ProductDao productDao) {
+    public ProductServiceImpl(ProductDao productDao, CatalogVersionDao catalogVersionDao) {
         this.productDao = productDao;
+        this.catalogVersionDao = catalogVersionDao;
     }
 
     @Override
@@ -46,22 +49,26 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getOnlineProductsListByPage(int pageId, int productsPerPage) {
-        return this.productDao.getOnlineProductsListByPage(pageId, productsPerPage);
+        int catVerId = catalogVersionDao.getCatalogVersionByName("online").getCatverId();
+        return this.productDao.getProductsListByPageAndCatVerId(pageId, productsPerPage, catVerId);
     }
 
     @Override
     public List<Product> getOnlineProductsListByName(String name, int pageId, int productsPerPage) {
-        return productDao.getOnlineProductsListByName(name, pageId, productsPerPage);
+        int catVerId = catalogVersionDao.getCatalogVersionByName("online").getCatverId();
+        return productDao.getProductsListByNameAndCatVerId(name, pageId, productsPerPage, catVerId);
     }
 
     @Override
     public int getOnlineAmountOfProducts() {
-        return productDao.getOnlineAmountOfProducts();
+        int catVerId = catalogVersionDao.getCatalogVersionByName("online").getCatverId();
+        return productDao.getAmountOfProductsByCatVerId(catVerId);
     }
 
     @Override
     public int getOnlineAmountOfProductsByName(String name) {
-        return productDao.getOnlineAmountOfProductsByName(name);
+        int catVerId = catalogVersionDao.getCatalogVersionByName("online").getCatverId();
+        return productDao.getAmountOfProductsByNameAndCatVerId(name, catVerId);
     }
 
 }

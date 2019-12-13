@@ -34,6 +34,14 @@ public class OrderBundle {
     public OrderBundle() {
     }
 
+    public OrderBundle(int orderBundleId, String userLogin, Date date, Double totalPrice, String orderNote) {
+        this.orderBundleId=orderBundleId;
+        this.userLogin = userLogin;
+        this.date = date;
+        this.totalPrice = totalPrice;
+        this.orderNote = orderNote;
+    }
+
     public int getOrderBundleId() {
         return orderBundleId;
     }

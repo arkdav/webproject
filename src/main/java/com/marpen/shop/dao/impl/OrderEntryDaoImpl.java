@@ -26,13 +26,6 @@ public class OrderEntryDaoImpl extends GenericDaoImpl<OrderEntry> implements Ord
     }
 
     @Override
-    public OrderEntry getOrderEntryByProductId(int orderId, int productId) {
-        String sql = "select * from orderentry where order_id like :order_id and product_id like :product_id";
-        List<OrderEntry> orderEntries = currentSession().createSQLQuery(sql).addEntity(OrderEntry.class).setParameter("order_id", orderId).setParameter("product_id", productId).list();
-        return orderEntries.isEmpty() ? null : orderEntries.get(0);
-    }
-
-    @Override
     public List<OrderEntry> getOrderEntries() {
         String sql = "select * from orderentry";
         List<OrderEntry> orderEntries = currentSession().createSQLQuery(sql).addEntity(OrderEntry.class).list();

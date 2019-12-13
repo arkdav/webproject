@@ -26,32 +26,34 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Product> getOnlineProductsListByPage(int pageId, int productsPerPage) {
-        String sql = "select * from products where catver_id=1 limit " + (pageId - 1) + "," + productsPerPage;
-        List<Product> products = currentSession().createSQLQuery(sql).addEntity(Product.class).list();
+    public List<Product> getProductsListByPageAndCatVerId(int pageId, int productsPerPage, int catVerId) {
+        String sql = "select * from products where catver_id like :catver_id limit " + (pageId - 1) + "," + productsPerPage;
+        List<Product> products = currentSession().createSQLQuery(sql).addEntity(Product.class).setParameter("catver_id", catVerId).list();
         return products;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Product> getOnlineProductsListByName(String name, int pageId, int productsPerPage) {
+    public List<Product> getProductsListByNameAndCatVerId(String name, int pageId, int productsPerPage, int catVerId) {
         String nameForSql = "%" + name + "%";
-        String sql = "select * from products where name like :name and catver_id=1 limit " + (pageId - 1) + "," + productsPerPage;
-        List<Product> products = currentSession().createSQLQuery(sql).addEntity(Product.class).setParameter("name", nameForSql).list();
+        String sql = "select * from products where name like :name and catver_id like :catver_id limit " + (pageId - 1) + "," + productsPerPage;
+        List<Product> products = currentSession().createSQLQuery(sql).addEntity(Product.class).setParameter("name", nameForSql).setParameter("catver_id", catVerId).list();
         return products;
     }
 
     @Override
-    public int getOnlineAmountOfProducts() {
-        String sql = "select product_id from products where catver_id=1";
-        return currentSession().createSQLQuery(sql).list().size();
+    public int getAmountOfProductsByCatVerId(int catVerId) {
+        String sql = "select * from products where catver_id like :catver_id";
+        List<Product> products = currentSession().createSQLQuery(sql).addEntity(Product.class).setParameter("catver_id", catVerId).list();
+        return products.size();
     }
 
     @Override
-    public int getOnlineAmountOfProductsByName(String name) {
+    public int getAmountOfProductsByNameAndCatVerId(String name, int catVerId) {
         String nameForSql = "%" + name + "%";
-        String sql = "select product_id from products where name like :name and catver_id=1";
-        return currentSession().createSQLQuery(sql).setParameter("name", nameForSql).list().size();
+        String sql = "select * from products where name like :name and catver_id like :catver_id";
+        List<Product> products = currentSession().createSQLQuery(sql).addEntity(Product.class).setParameter("name", nameForSql).setParameter("catver_id", catVerId).list();
+        return products.size();
     }
 }
 

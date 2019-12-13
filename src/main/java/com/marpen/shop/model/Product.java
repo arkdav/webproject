@@ -38,16 +38,13 @@ public class Product {
     public Product() {
     }
 
-    public Product(int productId, String name, String description, String imageLink, int catverId,String userLogin
-                   //int userId
-    ) {
-        this.productId = productId;
+    public Product(int productId, String name, String description, String imageLink, int catverId, String userLogin) {
+        this.productId=productId;
         this.name = name;
         this.description = description;
         this.imageLink = imageLink;
         this.catverId = catverId;
-        this.userLogin=userLogin;
-//        this.userId = userId;
+        this.userLogin = userLogin;
     }
 
     public Integer getProductId() {

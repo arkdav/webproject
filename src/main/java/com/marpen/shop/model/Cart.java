@@ -32,6 +32,13 @@ public class Cart {
     public Cart() {
     }
 
+    public Cart(int cartId, String userLogin, Date date, Double totalPrice) {
+        this.cartId=cartId;
+        this.userLogin = userLogin;
+        this.date = date;
+        this.totalPrice = totalPrice;
+    }
+
     public int getCartId() {
         return cartId;
     }

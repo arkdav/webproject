@@ -23,7 +23,7 @@ public class CatalogVersion {
         this.name = name;
     }
 
-    public Integer getCatverId() {
+    public int getCatverId() {
         return catverId;
     }
 

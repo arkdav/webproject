@@ -31,6 +31,13 @@ public class CartEntry {
     public CartEntry() {
     }
 
+    public CartEntry(int cartEntryId, int cartId, int productId, int amount) {
+        this.cartEntryId=cartEntryId;
+        this.cartId = cartId;
+        this.productId = productId;
+        this.amount = amount;
+    }
+
     public int getCartEntryId() {
         return cartEntryId;
     }

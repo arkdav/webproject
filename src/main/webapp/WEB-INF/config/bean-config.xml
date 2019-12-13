@@ -7,14 +7,15 @@
     <bean abstract="true" id="genericDao" class="com.marpen.shop.dao.impl.GenericDaoImpl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+    <!-- CatalogVersionDao and CatalogVersionService beans -->
+    <bean id="catalogVersionDao" class="com.marpen.shop.dao.impl.CatalogVersionDaoImpl" parent="genericDao" />
+    <bean id="catalogVersionService" class="com.marpen.shop.service.impl.CatalogVersionServiceImpl">
+        <constructor-arg name="catalogVersionDao" ref="catalogVersionDao"/>
+    </bean>
     <!-- ProductDao and ProductService beans -->
     <bean id="productDao" class="com.marpen.shop.dao.impl.ProductDaoImpl" parent="genericDao" />
     <bean id="productService" class="com.marpen.shop.service.impl.ProductServiceImpl">
         <constructor-arg name="productDao" ref="productDao"/>
-    </bean>
-    <!-- CatalogVersionDao and CatalogVersionService beans -->
-    <bean id="catalogVersionDao" class="com.marpen.shop.dao.impl.CatalogVersionDaoImpl" parent="genericDao" />
-    <bean id="catalogVersionService" class="com.marpen.shop.service.impl.CatalogVersionServiceImpl">
         <constructor-arg name="catalogVersionDao" ref="catalogVersionDao"/>
     </bean>
     <!-- PriceDao and PriceService beans -->

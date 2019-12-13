@@ -33,6 +33,14 @@ public class Order {
     public Order() {
     }
 
+    public Order(int orderId, double price, int statusId, int orderBundleId, String ownerLogin) {
+        this.orderId=orderId;
+        this.price = price;
+        this.statusId = statusId;
+        this.orderBundleId = orderBundleId;
+        this.ownerLogin = ownerLogin;
+    }
+
 
     public int getOrderId() {
         return orderId;

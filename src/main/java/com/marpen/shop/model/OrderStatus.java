@@ -24,6 +24,11 @@ public class OrderStatus {
     public OrderStatus() {
     }
 
+    public OrderStatus(int statusId, String statusName) {
+        this.statusId=statusId;
+        this.statusName = statusName;
+    }
+
     public int getStatusId() {
         return statusId;
     }
