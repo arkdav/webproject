@@ -15,13 +15,13 @@
     <bean id="handlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
 
     <mvc:resources mapping="/resources/**" location="/resources/"/>
-    <mvc:resources mapping="/images/**" location="file:///${images.home}"/>
+    <mvc:resources mapping="/images/**" location="/resources/images/"/>
     <mvc:default-servlet-handler/>
     <mvc:annotation-driven/>
 
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/*"/>
+            <mvc:mapping path="/**"/>
             <ref bean="localeChangeInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

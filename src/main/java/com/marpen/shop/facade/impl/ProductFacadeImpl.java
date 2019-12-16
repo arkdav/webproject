@@ -16,6 +16,8 @@ import com.marpen.shop.model.Product;
 import com.marpen.shop.service.PriceService;
 import com.marpen.shop.service.ProductService;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -111,6 +113,10 @@ public class ProductFacadeImpl implements ProductFacade {
 
     @Override
     public void deleteProduct(int productId) {
+        File file = new File(System.getenv("CATALINA_HOME") +
+                "\\webapps\\webproject\\resources\\images\\" +
+                productService.getProductById(productId).getImageLink());
+        file.delete();
         productService.deleteProduct(productId);
     }
 

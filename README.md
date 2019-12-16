@@ -20,13 +20,14 @@ To run the project at your computer you should:
 2. Install maven.
 3. Open command line at directory where file pom.xml is.
 4. Write "mvn clean install".
-5. Copy the folder "images" to 'catalina_home'/webapps/.
-6. Set properties in src/main/resources/application.properties (images.home is directory where you put in 5th).
-7. Run docs/creation.sql in your MySQL Workbench to create test database.
-8. Unpack .war (done in 4th) to run at your local Tomcat server.
-9. Write address "http://localhost:8080/webproject_war/".
+5. Run docs/creation.sql in your MySQL Workbench to create test database.
+6. Unpack .war (done in 4th) to run at your local Tomcat server.
+7. Write address "http://localhost:8080/webproject/".
 
-You can log in as usual user (login - natali, password - natali) or as a business user (login - andrey, password - andrey).
+You can log in as 
+- usual user (login - natali, password - natali) 
+- business user (login - andrey, password - andrey)
+- administrator (login - aadmin, password - aadmin).
 
 #Used technologies
 Java Core
