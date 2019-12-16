@@ -133,6 +133,7 @@ public class ProductController {
         }
         MultipartFile file = businessProductCreationDto.getImage();
         try {
+            //String filename = System.getenv("CATALINA_HOME") + "\\webapps\\images\\" + file.getOriginalFilename();
             String filename = System.getenv("CATALINA_HOME") + "\\webapps\\webproject\\resources\\images\\" + file.getOriginalFilename();
             file.transferTo(new File(filename));
              } catch (IOException e) {
