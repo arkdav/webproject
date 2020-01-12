@@ -49,15 +49,4 @@ public class OrderServiceImplTest {
         Order actual = orderService.getOrder(3);
         assertEquals(order3, actual);
     }
-
-    @Test
-    public void getOrdersByOwnerLogin() {
-        List<Order> orderEntryList=new ArrayList<>();
-        orderEntryList.add(order1);
-        orderEntryList.add(order2);
-        orderEntryList.add(order3);
-        Mockito.when(orderDao.getOrdersByOwnerLogin("marina")).thenReturn(orderEntryList);
-        List<Order> actual = orderService.getOrdersByOwnerLogin("marina");
-        assertEquals(orderEntryList, actual);
-    }
 }

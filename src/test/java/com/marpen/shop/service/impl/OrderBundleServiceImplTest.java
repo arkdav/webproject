@@ -1,9 +1,7 @@
 package com.marpen.shop.service.impl;
 
-import com.marpen.shop.dao.OrderEntryDao;
 import com.marpen.shop.dao.impl.OrderBundleDaoImpl;
 import com.marpen.shop.model.OrderBundle;
-import com.marpen.shop.model.OrderEntry;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,11 +10,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OrderBundleServiceImplTest {
@@ -28,21 +29,28 @@ public class OrderBundleServiceImplTest {
     private OrderBundleServiceImpl orderBundleService;
 
     private OrderBundle orderBundle1, orderBundle2;
+    private static final Date ORDER_DATE = new GregorianCalendar(2003, Calendar.SEPTEMBER, 25).getTime();
+    private static final String USER_LOGIN = "marina";
+    private static final Double TOTAL_PRICE = 20.0;
+    private static final String ORDER_NOTE = "note";
+    private static final int PAGE = 1;
+    private static final int PER_PAGE = 3;
 
     @Before
     public void setUp() {
-        Date orderDate= new Date();
-        orderBundle1 = new OrderBundle(1,"marina", orderDate, 20.0,"note");
-        orderBundle2 = new OrderBundle(2,"marina", orderDate, 20.0,"note");
+        orderBundle1 = new OrderBundle(1,USER_LOGIN, ORDER_DATE, TOTAL_PRICE,ORDER_NOTE);
+        orderBundle2 = new OrderBundle(2,USER_LOGIN, ORDER_DATE, TOTAL_PRICE,ORDER_NOTE);
     }
 
     @Test
-    public void getOrderBundlesByUserLogin() {
+    public void getOrderBundlesByUserLoginAndDate() {
         List<OrderBundle> orderBundleList=new ArrayList<>();
         orderBundleList.add(orderBundle1);
         orderBundleList.add(orderBundle2);
-        Mockito.when(orderBundleDao.getOrderBundlesByUserLogin("marina")).thenReturn(orderBundleList);
-        List<OrderBundle> actual = orderBundleService.getOrderBundlesByUserLogin("marina");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateFormat = formatter.format(ORDER_DATE);
+        Mockito.when(orderBundleDao.getOrderBundlesByUserLoginAndDate(dateFormat, dateFormat, USER_LOGIN, PAGE, PER_PAGE)).thenReturn(orderBundleList);
+        List<OrderBundle> actual = orderBundleService.getOrderBundlesByUserLoginAndDate(ORDER_DATE, ORDER_DATE, USER_LOGIN, PAGE, PER_PAGE);
         assertEquals(orderBundleList, actual);
     }
 
@@ -52,4 +60,5 @@ public class OrderBundleServiceImplTest {
         OrderBundle actual = orderBundleService.getOrderBundleById(2);
         assertEquals(orderBundle2, actual);
     }
+
 }

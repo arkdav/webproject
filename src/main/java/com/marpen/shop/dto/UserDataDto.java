@@ -4,10 +4,12 @@ public class UserDataDto {
 
     private String login;
     private String password;
+    private String confirmPassword;
     private String name;
     private String surname;
     private String email;
     private String phone;
+    private String address;
     private String birthdate;
 
     public String getPassword() {
@@ -58,11 +60,27 @@ public class UserDataDto {
         this.birthdate = birthdate;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String  getLogin() {
         return login;
     }
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -51,42 +51,82 @@ public class UserController {
         return "redirect:/userdata";
     }
 
-    @RequestMapping(value = "/adminusers", method = RequestMethod.GET)
-    public String getAdminUsersPage(@RequestParam(name = "u", required = false) String role,
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String getAdminUsersPage(@RequestParam(name = "role", required = false, defaultValue = "") String role,
+                                    @RequestParam(name = "status", required = false, defaultValue = "") String status,
+                                    @RequestParam(name = "page", required = false, defaultValue = "1") Integer pageId,
+                                    @RequestParam(name="perpage", required = false, defaultValue = "7") Integer usersPerPage,
                                     Model model) {
-        List<UserDto> users=new ArrayList<>();
-        if(role.equals("customer")){
-            users= this.userFacade.getUserListByRole("ROLE_CUSTOMER");
-        } else if (role.equals("business")){
-            users= this.userFacade.getUserListByRole("ROLE_BUSINESS_USER");
-        }
+        model.addAttribute("page", pageId);
+        model.addAttribute("status", status);
+        pageId = (pageId != 1) ? (pageId - 1) * usersPerPage + 1 : pageId;
+        List<UserDto> users = this.userFacade.getUserListByRoleAndStatus(role, status, pageId, usersPerPage);
         model.addAttribute("userList", users);
         model.addAttribute("role", role);
-        return "adminusers";
+        model.addAttribute("pagesList", this.userFacade.getUserPagesList(role, status, usersPerPage));
+        return "admindata";
     }
 
-    @RequestMapping(value = "/adminusers/update", method = RequestMethod.GET)
-    public String updateUserStatus(@RequestParam("user") String userLogin,
-                                   @RequestParam("u") String role) {
-        userFacade.changeUserStatus(userLogin);
-        return "redirect:/adminusers?u="+role;
+    @RequestMapping(value = "/admin/update", method = RequestMethod.GET)
+    public String updateUser(@ModelAttribute("user") String login,
+                             Model model) {
+        model.addAttribute("user", userFacade.getUserInformation(login));
+        model.addAttribute("userDataForm", new UserDataDto());
+        return "userupdate";
     }
 
-    @RequestMapping(value = "/adminusers/create", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/update", method = RequestMethod.POST)
+    public String updateUser(@ModelAttribute("userDataForm") UserDataDto userDataDto,
+                             BindingResult bindingResult) {
+        userDataValidator.validate(userDataDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+           return "userupdate";
+        }
+        userFacade.update(userDataDto.getLogin(), userDataDto);
+        return "redirect:/admin";
+    }
+
+    @RequestMapping(value = "/admin/delete", method = RequestMethod.GET)
+    @ResponseBody
+    public String deleteUser(@RequestParam("stringArray") String usersLogins) {
+        String [] logins = usersLogins.split(",");
+        return userFacade.deleteUsers(logins) ? "true" : "";
+    }
+
+
+    @RequestMapping(value = "/admin/changestatus", method = RequestMethod.GET)
+    @ResponseBody
+    public String changeUserStatus(@RequestParam("stringArray") String usersLogins) {
+        String [] logins = usersLogins.split(",");
+        return userFacade.changeUsersStatus(logins) ? "true" : "";
+    }
+
+    @RequestMapping(value = "/admin/create", method = RequestMethod.GET)
     public String getCreateBusinessUserPage(Model model) {
-        model.addAttribute("businessUserCreationForm", new RegistrationDto());
-        return "businessusercreation";
+        model.addAttribute("userCreationForm", new RegistrationDto());
+        return "usercreation";
     }
 
-    @RequestMapping(value = "/adminusers/create", method = RequestMethod.POST)
-    public String createBusinessUser(@ModelAttribute("businessUserCreationForm")RegistrationDto registrationDto,
+    @RequestMapping(value = "/admin/create", method = RequestMethod.POST)
+    public String createBusinessUser(@ModelAttribute("userCreationForm")RegistrationDto registrationDto,
                                     BindingResult bindingResult){
         registrationValidator.validate(registrationDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            return "businessusercreation";
+            return "usercreation";
         }
-        userFacade.saveBusinessUser(registrationDto);
-        return "redirect:/adminusers?u=business";
+        userFacade.saveNewUser(registrationDto);
+        return "redirect:/admin";
+    }
+
+    @RequestMapping(value = "/isuser", method = RequestMethod.GET)
+    public String roleUserReturnPage() {
+        if(userFacade.userHasAdminRole(getUserLogin())) {
+            return "redirect:/admin";
+        } else if (userFacade.userHasBusinessRole(getUserLogin())){
+            return "redirect:/businessdata";
+        } else {
+            return "redirect:/catalog";
+        }
     }
 
     private String getUserLogin() {

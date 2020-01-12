@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name="cartentry")
@@ -70,5 +71,30 @@ public class CartEntry {
         this.amount = amount;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CartEntry cartEntry = (CartEntry) o;
+        return cartEntryId == cartEntry.cartEntryId &&
+                cartId == cartEntry.cartId &&
+                productId == cartEntry.productId &&
+                amount == cartEntry.amount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cartEntryId, cartId, productId, amount);
+    }
+
+    @Override
+    public String toString() {
+        return "CartEntry{" +
+                "cartEntryId=" + cartEntryId +
+                ", cartId=" + cartId +
+                ", productId=" + productId +
+                ", amount=" + amount +
+                '}';
+    }
 }
 

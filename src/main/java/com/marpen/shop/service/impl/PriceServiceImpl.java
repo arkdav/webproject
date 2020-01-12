@@ -16,7 +16,7 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public Price getPriceByProductId(int productId){
-        return this.priceDao.getPriceByProductId(productId);
+        return this.priceDao.get(productId);
     }
 
     @Override

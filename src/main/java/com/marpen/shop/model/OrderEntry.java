@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name="orderentry")
@@ -69,4 +70,29 @@ public class OrderEntry {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderEntry that = (OrderEntry) o;
+        return orderEntryId == that.orderEntryId &&
+                orderId == that.orderId &&
+                productId == that.productId &&
+                amount == that.amount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderEntryId, orderId, productId, amount);
+    }
+
+    @Override
+    public String toString() {
+        return "OrderEntry{" +
+                "orderEntryId=" + orderEntryId +
+                ", orderId=" + orderId +
+                ", productId=" + productId +
+                ", amount=" + amount +
+                '}';
+    }
 }

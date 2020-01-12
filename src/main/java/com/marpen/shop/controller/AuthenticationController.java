@@ -28,18 +28,18 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
-        model.addAttribute("userForm", new RegistrationDto());
+        model.addAttribute("registrationForm", new RegistrationDto());
         return "registration";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") RegistrationDto registrationDto,
+    public String registration(@ModelAttribute("registrationForm") RegistrationDto registrationDto,
                                BindingResult bindingResult) {
         registrationValidator.validate(registrationDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return "registration";
         }
-        userFacade.saveCustomer(registrationDto);
+        userFacade.saveNewUser(registrationDto);
         securityFacade.autologin(registrationDto.getLogin(), registrationDto.getPassword());
         return "redirect:/catalog";
     }

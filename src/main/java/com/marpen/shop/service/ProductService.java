@@ -13,16 +13,15 @@ public interface ProductService {
 
     void deleteProduct(int productId);
 
+    void changeVersionProduct(int productId);
+
     Product getProductById(int productId);
 
-    List<Product> getProductsListByUserLogin(String userLogin);
+    List<Product> getProductsList(String catVer, String searchName, int pageId, int productsPerPage, String userLogin);
 
-    List<Product> getOnlineProductsListByPage(int pageid, int productsPerPage);
+    List<Product> getOnlineProductsList(String sortBy, String sortType, String searchName, int pageId, int productsPerPage);
 
-    List<Product> getOnlineProductsListByName(String name, int pageid, int productsPerPage);
+    int getOnlineAmountOfProducts(String searchName);
 
-    int getOnlineAmountOfProducts();
-
-    int getOnlineAmountOfProductsByName(String name);
-
+    int getBusinessAmountOfProductsByUserLoginAndSearchNameAndCatVerId(String catVer, String searchName, String userLogin);
 }

@@ -1,7 +1,9 @@
 package com.marpen.shop.service.impl;
 
 import com.marpen.shop.dao.OrderDao;
+import com.marpen.shop.dao.OrderStatusDao;
 import com.marpen.shop.model.Order;
+import com.marpen.shop.model.OrderStatus;
 import com.marpen.shop.service.OrderService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,9 +13,11 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private OrderDao orderDao;
+    private OrderStatusDao orderStatusDao;
 
-    public OrderServiceImpl(OrderDao orderDao){
+    public OrderServiceImpl(OrderDao orderDao, OrderStatusDao orderStatusDao){
         this.orderDao=orderDao;
+        this.orderStatusDao=orderStatusDao;
     }
 
     @Override
@@ -45,17 +49,34 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void changeOrderStatus(Order order) {
-        if(order.getStatusId()==1){
-            order.setStatusId(2);
-        } else {
-            order.setStatusId(1);
+        String statusName=orderStatusDao.get(order.getStatusId()).getStatusName();
+        if (statusName.equals("processing")){
+            order.setStatusId(orderStatusDao.getOrderStatusByName("collected").getStatusId());
+            orderDao.update(order);
         }
-        orderDao.update(order);
     }
 
     @Override
-    public List<Order> getOrdersByOwnerLogin(String ownerLogin){
-        return orderDao.getOrdersByOwnerLogin(ownerLogin);
+    public List<Order> getOrders(String status, String ownerLogin, int pageId, int ordersPerPage){
+        List <Order> orders;
+        if(status.isEmpty()){
+            orders = orderDao.getOrdersByOwnerLogin(ownerLogin, pageId, ordersPerPage);
+        } else {
+            int orderStatusId = orderStatusDao.getOrderStatusByName(status).getStatusId();
+            orders=orderDao.getOrdersByOwnerLoginAndStatusId(orderStatusId, ownerLogin, pageId, ordersPerPage);
+        }
+       return orders;
     }
 
+    @Override
+    public int getBusinessOrdersAmount(String userLogin, String status){
+        List<Order> orders;
+        if(status.isEmpty()){
+             orders = orderDao.getAllOrdersByOwnerLogin(userLogin);
+        } else {
+            int orderStatusId = orderStatusDao.getOrderStatusByName(status).getStatusId();
+            orders = orderDao.getAllOrdersByOwnerLoginAndStatusId(orderStatusId, userLogin);
+        }
+        return orders!=null ? orders.size() : 0;
+    }
 }

@@ -27,6 +27,7 @@ public class FromRegistrationDto implements Converter<RegistrationDto, User> {
             user.setEmail(registrationDto.getEmail());
             user.setPhone(registrationDto.getPhone());
             user.setBirthDate(new SimpleDateFormat("dd.MM.yyyy").parse(registrationDto.getBirthdate()));
+            user.setAddress(registrationDto.getAddress());
         } catch (ParseException e) {
             e.printStackTrace();
         }

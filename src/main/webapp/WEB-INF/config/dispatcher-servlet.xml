@@ -16,7 +16,6 @@
 
     <mvc:resources mapping="/resources/**" location="/resources/"/>
     <mvc:resources mapping="/images/**" location="/resources/images/"/>
-<!--    <mvc:resources mapping="/images/**" location="file:///${images.home}"/>-->
     <mvc:default-servlet-handler/>
     <mvc:annotation-driven/>
 

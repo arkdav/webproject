@@ -1,5 +1,7 @@
 package com.marpen.shop.dao;
 
+import java.util.List;
+
 public interface GenericDao<T> {
 
     void save(T domain);
@@ -9,4 +11,6 @@ public interface GenericDao<T> {
     void delete(T domain);
 
     T get(Object id);
+
+    List<T> getAll();
 }

@@ -1,10 +1,10 @@
 package com.marpen.shop.controller;
 
-import com.marpen.shop.dto.BusinessOrderDto;
 import com.marpen.shop.dto.CartDto;
 import com.marpen.shop.dto.OrderNoteDto;
 import com.marpen.shop.facade.CartFacade;
 import com.marpen.shop.facade.OrderFacade;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,11 +28,17 @@ public class CartOrderController {
         this.orderFacade = orderFacade;
     }
 
-    @RequestMapping(value = "/addtocart", method = RequestMethod.POST)
-    public String addToCart(@RequestParam(value = "product_id") int productId) {
-        CartDto cartDto = cartFacade.getCartByUserLogin(getUserLogin());
-        cartFacade.addProductToCart(getUserLogin(), productId);
-        return "redirect:/cart";
+    @RequestMapping(value = "/addtocart", method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<String> addToCart(@RequestParam(value = "product_id") int productId,
+                                  @RequestParam(value = "amount", required = false, defaultValue = "1") int amount) {
+        cartFacade.getCartByUserLogin(getUserLogin());
+        cartFacade.addProductToCart(getUserLogin(), productId, amount);
+        List<String> priceAndAmount = new ArrayList<>();
+        priceAndAmount.add(cartFacade.getCartByUserLogin(getUserLogin()).getCartPrice().toString());
+        priceAndAmount.add(Integer.toString(cartFacade.getCartProductsAmount(getUserLogin())));
+        return (cartFacade.productIsInUserCart(getUserLogin(), productId)) ? priceAndAmount : null;
     }
 
     @RequestMapping(value = "/cart", method = RequestMethod.POST)
@@ -50,7 +58,7 @@ public class CartOrderController {
     public String newAmountInCart(@RequestParam(value = "product_id") int productId,
                                   @RequestParam(value = "productAmount", required = false, defaultValue = "1")
                                           String productAmountString) {
-        Integer productAmount = Integer.valueOf(productAmountString.trim());
+        int productAmount = Integer.parseInt(productAmountString.trim());
         if (productAmount == 0) {
             cartFacade.removeProductFromCart(getUserLogin(), productId);
         } else if (productAmount > 0) {
@@ -73,15 +81,32 @@ public class CartOrderController {
     }
 
     @RequestMapping(value = "/userorders", method = RequestMethod.GET)
-    public String order(Model model) {
-        model.addAttribute("orders", orderFacade.getOrdersByUserLogin(getUserLogin()));
+    public String order(@RequestParam(name = "dateFrom", required = false, defaultValue = "") String dateFrom,
+                        @RequestParam(name = "dateTo", required = false, defaultValue = "") String dateTo,
+                        @RequestParam(name = "page", required = false, defaultValue = "1") Integer pageId,
+                        @RequestParam(value = "perpage", required = false, defaultValue = "6") Integer ordersPerPage,
+                        Model model) {
+        System.out.println(dateFrom);
+        System.out.println(dateTo);
+        model.addAttribute("dateFrom", dateFrom);
+        model.addAttribute("dateTo", dateTo);
+        model.addAttribute("page", pageId);
+        pageId = (pageId != 1) ? (pageId - 1) * ordersPerPage + 1 : pageId;
+        model.addAttribute("orders", orderFacade.getOrdersByUserLoginAndDate(dateFrom, dateTo, getUserLogin(), pageId, ordersPerPage));
+        model.addAttribute("pagesList", orderFacade.getOrdersPagesList(dateFrom, dateTo, getUserLogin(), ordersPerPage));
         return "userorders";
     }
 
     @RequestMapping(value = "/businessorders", method = RequestMethod.GET)
-    public String getBusinessOrders(Model model) {
-        List<BusinessOrderDto> orderEntries = orderFacade.getBusinessOrders(getUserLogin());
-        model.addAttribute("businessOrdersList", orderEntries);
+    public String getBusinessOrders(@RequestParam(name = "sort", required = false, defaultValue = "") String status,
+                                    @RequestParam(name = "page", required = false, defaultValue = "1") Integer pageId,
+                                    @RequestParam(value = "perpage", required = false, defaultValue = "10") Integer ordersPerPage,
+                                    Model model) {
+        model.addAttribute("page", pageId);
+        pageId = (pageId != 1) ? (pageId - 1) * ordersPerPage + 1 : pageId;
+        model.addAttribute("sort", status);
+        model.addAttribute("businessOrdersList", orderFacade.getBusinessOrders(status, getUserLogin(), pageId, ordersPerPage));
+        model.addAttribute("pagesList", orderFacade.getBusinessPagesList(status, getUserLogin(), ordersPerPage));
         return "businessorders";
     }
 

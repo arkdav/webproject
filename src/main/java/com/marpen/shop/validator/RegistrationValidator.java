@@ -31,15 +31,19 @@ public class RegistrationValidator implements Validator {
         RegistrationDto user = (RegistrationDto) o;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "Required");
-        if (user.getLogin().length() < 6 || user.getLogin().length() > 32) {
+        if (user.getLogin().length() < 6 || user.getLogin().length() > 16) {
             errors.rejectValue("login", "Size.login");
         }
-
         try{
             if(userService.getUserByLogin(user.getLogin()) != null){
                 errors.rejectValue("login", "Duplicate.login");
             }
         } catch (ObjectNotFoundException ignored){ }
+
+        Pattern patternForUsername = Pattern.compile("^[a-z0-9_-]{6,16}$");
+        if (!patternForUsername.matcher(user.getLogin()).find()) {
+            errors.rejectValue("login", "Format.login");
+        }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Required");
         if (user.getPassword().length() < 6 || user.getPassword().length() > 32) {
@@ -53,6 +57,9 @@ public class RegistrationValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "birthdate", "Required");
         try {
             Date date1 = new SimpleDateFormat("dd.MM.yyyy").parse(user.getBirthdate());
+            if(date1.compareTo(new Date())>=0){
+                errors.rejectValue("birthdate", "MoreThanNow.birthdate");
+            }
         } catch (ParseException e) {
             errors.rejectValue("birthdate", "Format.birthdate");
         }
@@ -64,6 +71,15 @@ public class RegistrationValidator implements Validator {
         if (user.getSurname().length() < 2 || user.getSurname().length() > 32) {
             errors.rejectValue("surname", "Size.surname");
         }
+
+        Pattern patternForName = Pattern.compile("^[A-Za-zА-Яа-я]{2,32}$");
+        if (!patternForName.matcher(user.getName()).find()) {
+            errors.rejectValue("name", "Format.name");
+        }
+        if (!patternForName.matcher(user.getSurname()).find()) {
+            errors.rejectValue("surname", "Format.surname");
+        }
+
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "Required");
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "phone", "Required");
@@ -73,6 +89,10 @@ public class RegistrationValidator implements Validator {
             errors.rejectValue("phone", "Format.phone");
         }
 
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address", "Required");
+        if(!user.getAddress().isEmpty() && (user.getAddress().length()<2 || user.getAddress().length()>32)) {
+            errors.rejectValue("address", "Format.address");
+        }
     }
 
 }

@@ -7,7 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -39,6 +41,9 @@ public class User {
     @Column(name = "birthdate")
     private Date birthDate;
 
+    @Column(name = "address")
+    private String address;
+
     @Column(name = "status", columnDefinition = "bit")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean status;
@@ -47,7 +52,7 @@ public class User {
     }
 
     public User(String login, String password, int roleId, String name, String surname,
-                String email, String phone, Date birthDate, Boolean status) {
+                String email, String phone, Date birthDate, String address, Boolean status) {
         this.login = login;
         this.password = password;
         this.roleId = roleId;
@@ -56,6 +61,7 @@ public class User {
         this.email = email;
         this.phone = phone;
         this.birthDate = birthDate;
+        this.address=address;
         this.status=status;
     }
 
@@ -123,11 +129,58 @@ public class User {
         this.birthDate = birthDate;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public Boolean getStatus() {
         return status;
     }
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return roleId == user.roleId &&
+                Objects.equals(login, user.login) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(surname, user.surname) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(phone, user.phone) &&
+                Objects.equals(formatter.format(birthDate),formatter.format(user.birthDate)) &&
+                Objects.equals(address, user.address) &&
+                Objects.equals(status, user.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(login, password, roleId, name, surname, email, phone, birthDate, address, status);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", roleId=" + roleId +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", birthDate=" + birthDate +
+                ", address='" + address + '\'' +
+                ", status=" + status +
+                '}';
     }
 }

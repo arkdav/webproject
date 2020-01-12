@@ -1,5 +1,6 @@
 package com.marpen.shop.facade.impl;
 
+import com.marpen.shop.converter.ToPageDto;
 import com.marpen.shop.converter.ToProductDto;
 import com.marpen.shop.converter.forms.FromBusinessProductCreationDto;
 import com.marpen.shop.converter.forms.FromBusinessProductCreationDtoToPrice;
@@ -27,14 +28,15 @@ public class ProductFacadeImpl implements ProductFacade {
     private PriceService priceService;
     private ToProductDto toProductDto;
     private ToBusinessProductDto toBusinessProductDto;
+    private ToPageDto toPageDto;
     private FromBusinessProductDto fromBusinessProductDto;
     private FromBusinessProductDtoToPrice fromBusinessProductDtoToPrice;
     private FromBusinessProductCreationDto fromBusinessProductCreationDto;
     private FromBusinessProductCreationDtoToPrice fromBusinessProductCreationDtoToPrice;
 
     public ProductFacadeImpl(ProductService productService, PriceService priceService,
-                             ToProductDto toProductDto,
-                             ToBusinessProductDto toBusinessProductDto, FromBusinessProductDto fromBusinessProductDto,
+                             ToProductDto toProductDto, ToBusinessProductDto toBusinessProductDto,
+                             ToPageDto toPageDto, FromBusinessProductDto fromBusinessProductDto,
                              FromBusinessProductDtoToPrice fromBusinessProductDtoToPrice,
                              FromBusinessProductCreationDto fromBusinessProductCreationDto,
                              FromBusinessProductCreationDtoToPrice fromBusinessProductCreationDtoToPrice) {
@@ -42,6 +44,7 @@ public class ProductFacadeImpl implements ProductFacade {
         this.priceService = priceService;
         this.toProductDto = toProductDto;
         this.toBusinessProductDto = toBusinessProductDto;
+        this.toPageDto=toPageDto;
         this.fromBusinessProductDto = fromBusinessProductDto;
         this.fromBusinessProductDtoToPrice = fromBusinessProductDtoToPrice;
         this.fromBusinessProductCreationDto = fromBusinessProductCreationDto;
@@ -49,13 +52,24 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
-    public List<ProductDto> getCatalogList(String searchName, int pageId, int productsPerPage) {
+    public List<ProductDto> getCatalogList(String searchName, int pageId, int productsPerPage, String sort) {
         List<Product> products;
-        if (searchName == null) {
-            products = this.productService.getOnlineProductsListByPage(pageId, productsPerPage);
-        } else {
-            products = this.productService.getOnlineProductsListByName(searchName, pageId, productsPerPage);
+        String sortBy="name", sortType="asc";
+        switch (sort) {
+            case "alpza":
+                    sortBy = "name";
+                    sortType="desc";
+                    break;
+            case "priceaz":
+                    sortBy = "price";
+                    sortType="asc";
+                    break;
+            case "priceza":
+                    sortBy = "price";
+                    sortType="desc";
+                    break;
         }
+        products = this.productService.getOnlineProductsList(sortBy, sortType, searchName, pageId, productsPerPage);
         List<ProductDto> list = new ArrayList<>(products.size());
         for (Product product :
                 products) {
@@ -73,18 +87,14 @@ public class ProductFacadeImpl implements ProductFacade {
 
     @Override
     public List<PageDto> getCatalogPagesList(String searchName, int productsPerPage) {
-        int amountOfProducts;
-        if (searchName == null) {
-            amountOfProducts = this.productService.getOnlineAmountOfProducts();
-        } else {
-            amountOfProducts = this.productService.getOnlineAmountOfProductsByName(searchName);
-        }
-        return toPageDtoList(amountOfProducts, productsPerPage);
+        int amountOfProducts= this.productService.getOnlineAmountOfProducts(searchName);
+        return toPageDto.convert(amountOfProducts, productsPerPage);
     }
 
     @Override
-    public List<BusinessProductDto> getProductsListByUserLogin(String userLogin) {
-        List<Product> products = productService.getProductsListByUserLogin(userLogin);
+    public List<BusinessProductDto> getBusinessProductsList(String catVer, String searchName, int pageId, int productsPerPage, String userLogin) {
+        List<Product> products;
+       products=productService.getProductsList(catVer,searchName,pageId,productsPerPage,userLogin);
         List<BusinessProductDto> list = new ArrayList<>(products.size());
         for (Product product :
                 products) {
@@ -95,14 +105,9 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
-    public List<Integer> getProductIdsListByUserLogin(String userLogin) {
-        List<Product> products = productService.getProductsListByUserLogin(userLogin);
-        List<Integer> ids = new ArrayList<>(products.size());
-        for (Product product :
-                products) {
-            ids.add(product.getProductId());
-        }
-        return ids;
+    public List<PageDto> getBusinessPagesList(String catVer, String searchName, int productsPerPage, String userLogin) {
+        int amountOfProducts= this.productService.getBusinessAmountOfProductsByUserLoginAndSearchNameAndCatVerId(catVer, searchName, userLogin);
+        return toPageDto.convert(amountOfProducts, productsPerPage);
     }
 
     @Override
@@ -112,12 +117,16 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
-    public void deleteProduct(int productId) {
-        File file = new File(System.getenv("CATALINA_HOME") +
-                "\\webapps\\webproject\\resources\\images\\" +
-                productService.getProductById(productId).getImageLink());
-        file.delete();
-        productService.deleteProduct(productId);
+    public boolean deleteProducts(String [] productIds) {
+        boolean isDeleted=true;
+        for (String id : productIds) {
+            if(productService.getProductById(Integer.parseInt(id))!=null){
+                productService.deleteProduct(Integer.parseInt(id));
+            } else {
+                isDeleted=false;
+            }
+        }
+        return isDeleted;
     }
 
     @Override
@@ -130,6 +139,19 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
+    public boolean changeProductsVersion(String [] productIds) {
+        boolean isChanged=true;
+        for (String id : productIds) {
+            if(productService.getProductById(Integer.parseInt(id))!=null){
+                productService.changeVersionProduct(Integer.parseInt(id));
+            } else {
+                isChanged=false;
+            }
+        }
+        return isChanged;
+    }
+
+    @Override
     public void createProduct(String userLogin, BusinessProductCreationDto businessProductCreationDto) {
         businessProductCreationDto.setUserLogin(userLogin);
         Product product = fromBusinessProductCreationDto.convert(businessProductCreationDto);
@@ -138,15 +160,5 @@ public class ProductFacadeImpl implements ProductFacade {
         price.setProductId(product.getProductId());
         price.setProductId(product.getProductId());
         priceService.savePrice(price);
-    }
-
-    private List<PageDto> toPageDtoList(int amountOfProducts, int productsPerPage) {
-        int pagesNumber = amountOfProducts % productsPerPage == 0 ? amountOfProducts / productsPerPage : amountOfProducts / productsPerPage + 1;
-        List<PageDto> list = new ArrayList<>(pagesNumber);
-        for (int i = 0; i < pagesNumber; i++) {
-            PageDto pr = new PageDto(i + 1);
-            list.add(pr);
-        }
-        return list;
     }
 }

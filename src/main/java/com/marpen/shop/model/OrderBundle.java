@@ -8,7 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name="orderbundle")
@@ -80,5 +82,34 @@ public class OrderBundle {
 
     public void setOrderNote(String orderNote) {
         this.orderNote = orderNote;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderBundle that = (OrderBundle) o;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return orderBundleId == that.orderBundleId &&
+                Objects.equals(userLogin, that.userLogin) &&
+                Objects.equals(formatter.format(date), formatter.format(that.date)) &&
+                Objects.equals(totalPrice, that.totalPrice) &&
+                Objects.equals(orderNote, that.orderNote);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderBundleId, userLogin, date, totalPrice, orderNote);
+    }
+
+    @Override
+    public String toString() {
+        return "OrderBundle{" +
+                "orderBundleId=" + orderBundleId +
+                ", userLogin='" + userLogin + '\'' +
+                ", date=" + date +
+                ", totalPrice=" + totalPrice +
+                ", orderNote='" + orderNote + '\'' +
+                '}';
     }
 }

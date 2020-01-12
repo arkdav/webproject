@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <title>UserData</title>
-    <script src="${pageContext.request.contextPath}/resources/js/http_code.jquery.com_jquery-3.3.1.slim.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/http_code.jquery.com_jquery-3.4.1.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/http_cdnjs.cloudflare.com_ajax_libs_popper.js_1.14.7_umd_popper.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/http_stackpath.bootstrapcdn.com_bootstrap_4.3.1_js_bootstrap.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
@@ -17,51 +17,62 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" id="navbarBrand"><tag:message code="header.userinformation"/></a>
+</nav>
 <main>
     <div class="main-block">
         <div class="container">
-            <h2><tag:message code="header.userinformation"/></h2>
-            <p><tag:message code="userdata.login"/> ${currentUser.login}</p>
-            <form:form method="POST" modelAttribute="userDataForm" class="form-signin"
+            <h3 class="centered-name"><tag:message code="userdata.login"/> ${currentUser.login}</h3>
+            <div class="loginform">
+           <form:form method="POST" modelAttribute="userDataForm" class="form-user"
                        action="${pageContext.request.contextPath}/userdata">
-                <label for="password"><tag:message code="userdata.password"/></label>
-                <div class="form-group">
-                    <form:input type="password" id="password" path="password" class="form-control"/>
+                <div class="form-gr">
+                    <p><tag:message code="userdata.password"/></p>
+                    <form:input type="password" id="password" path="password"/>
                     <form:errors path="password"/>
                 </div>
-                <label for="name"><tag:message code="userdata.name"/></label>
-                <div class="form-group">
-                    <form:input type="name" id="name" path="name" class="form-control"
-                                placeholder="${currentUser.name}"/>
+               <div class="form-gr">
+                   <p><tag:message code="userdata.confirmpassword"/></p>
+                   <form:input type="password" path="confirmPassword"/>
+                   <form:errors path="confirmPassword"/>
+               </div>
+                <div class="form-gr">
+                    <p><tag:message code="userdata.name"/></p>
+                    <form:input type="name" id="name" path="name" value="${currentUser.name}"/>
                     <form:errors path="name"/>
                 </div>
-                <label for="surname"><tag:message code="userdata.surname"/></label>
-                <div class="form-group">
-                    <form:input type="surname" id="surname" path="surname" class="form-control"
-                                placeholder="${currentUser.surname}"/>
+                <div class="form-gr">
+                    <p><tag:message code="userdata.surname"/></p>
+                    <form:input type="surname" id="surname" path="surname" value="${currentUser.surname}"/>
                     <form:errors path="surname"/>
                 </div>
-                <label for="email"><tag:message code="userdata.email"/></label>
-                <div class="form-group">
-                    <form:input type="email" id="email" path="email" class="form-control"
-                                placeholder="${currentUser.email}"/>
+                <div class="form-gr">
+                    <p><tag:message code="userdata.email"/></p>
+                    <form:input type="email" id="email" path="email" value="${currentUser.email}"/>
                     <form:errors path="email"/>
                 </div>
-                <label for="phone"><tag:message code="userdata.phone"/></label>
-                <div class="form-group">
-                    <form:input type="phone" id="phone" path="phone" class="form-control"
-                                placeholder="${currentUser.phone}"/>
+                <div class="form-gr">
+                    <p><tag:message code="userdata.phone"/></p>
+                    <form:input type="phone" id="phone" path="phone" value="${currentUser.phone}"/>
                     <form:errors path="phone"/>
                 </div>
-                <label for="birthdate"><tag:message code="userdata.birthdate"/></label>
-                <div class="form-group">
-                    <form:input type="birthdate" id="birthdate" path="birthdate" class="form-control"
-                                placeholder="${currentUser.birthdate}"/>
+                <div class="form-gr">
+                    <p><tag:message code="userdata.birthdate"/></p>
+                    <form:input type="birthdate" id="birthdate" path="birthdate" value="${currentUser.birthdate}"/>
                     <form:errors path="birthdate"/>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit"><tag:message
+               <div class="form-gr">
+                   <p><tag:message code="userdata.address"/></p>
+                   <form:input type="address" id="address" path="address" value="${currentUser.address}"/>
+                   <form:errors path="address"/>
+               </div>
+               <div class="form-gr">
+                   <button class="btn btn-outline-success btn-block" type="submit"><tag:message
                         code="userdata.change"/></button>
+               </div>
             </form:form>
+            </div>
         </div>
     </div>
 </main>

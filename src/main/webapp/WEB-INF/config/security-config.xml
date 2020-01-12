@@ -7,24 +7,27 @@
             http://www.springframework.org/schema/security
             http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <http auto-config="true">
-        <intercept-url pattern="/" access="permitAll()"/>
-        <intercept-url pattern="/userdata" access="hasAnyRole('ROLE_CUSTOMER','ROLE_BUSINESS_USER', 'ROLE_ADMIN')"/>
+    <http pattern="/**" auto-config="true" >
+     <intercept-url pattern="/" access="permitAll()"/>
+        <intercept-url pattern="/catalog" access="!hasAnyRole('ROLE_BUSINESS_USER','ROLE_ADMIN')"/>
+        <intercept-url pattern="/error" access="permitAll()"/>
+        <intercept-url pattern="/productdata" access="!hasAnyRole('ROLE_BUSINESS_USER','ROLE_ADMIN')"/>
+        <intercept-url pattern="/registration" access="isAnonymous()"/>
+        <intercept-url pattern="/login" access="isAnonymous()"/>
+        <intercept-url pattern="/userdata" access="hasAnyRole('ROLE_CUSTOMER','ROLE_BUSINESS_USER')"/>
         <intercept-url pattern="/cart" access="hasRole('ROLE_CUSTOMER')"/>
-        <intercept-url pattern="/catalog" access="permitAll()"/>
-        <intercept-url pattern="/registration" access="!isAuthenticated()"/>
         <intercept-url pattern="/addtocart" access="hasRole('ROLE_CUSTOMER')"/>
         <intercept-url pattern="/userorders" access="hasRole('ROLE_CUSTOMER')"/>
         <intercept-url pattern="/order" access="hasRole('ROLE_CUSTOMER')"/>
-        <intercept-url pattern="/adminusers" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/adminusers/*" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/businessdata" access="hasRole('ROLE_BUSINESS_USER')"/>
         <intercept-url pattern="/businessdata/*" access="hasRole('ROLE_BUSINESS_USER')"/>
         <intercept-url pattern="/businessorders" access="hasRole('ROLE_BUSINESS_USER')"/>
         <intercept-url pattern="/businessorders/*" access="hasRole('ROLE_BUSINESS_USER')"/>
-        <form-login login-page="/login" default-target-url="/userdata"
-                        authentication-failure-url="/login?error"
-                        username-parameter="username" password-parameter="password"/>
+        <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+        <form-login login-page="/login"
+                    default-target-url="/isuser"
+                    authentication-failure-url="/login?error"
+                    username-parameter="username" password-parameter="password"/>
         <logout logout-url="/logout" logout-success-url="/catalog" invalidate-session="true"/>
     </http>
 

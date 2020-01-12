@@ -5,12 +5,14 @@ import com.marpen.shop.converter.FromCartProductDto;
 import com.marpen.shop.converter.ToBusinessOrderDto;
 import com.marpen.shop.converter.ToBusinessOrderProductDto;
 import com.marpen.shop.converter.ToOrderDto;
+import com.marpen.shop.converter.ToPageDto;
 import com.marpen.shop.dto.BusinessOrderDto;
 import com.marpen.shop.dto.BusinessOrderProductDto;
 import com.marpen.shop.dto.BusinessProductDto;
 import com.marpen.shop.dto.CartDto;
 import com.marpen.shop.dto.CartProductDto;
 import com.marpen.shop.dto.OrderDto;
+import com.marpen.shop.dto.PageDto;
 import com.marpen.shop.facade.CartFacade;
 import com.marpen.shop.facade.OrderFacade;
 import com.marpen.shop.facade.ProductFacade;
@@ -23,7 +25,12 @@ import com.marpen.shop.service.OrderEntryService;
 import com.marpen.shop.service.OrderService;
 import com.marpen.shop.service.ProductService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class OrderFacadeImpl implements OrderFacade {
@@ -34,20 +41,22 @@ public class OrderFacadeImpl implements OrderFacade {
     private ProductService productService;
     private CartFacade cartFacade;
     private ToOrderDto toOrderDto;
+    private ToPageDto toPageDto;
     private FromCartDto fromCartDto;
     private ToBusinessOrderDto toBusinessOrderDto;
 
 
     public OrderFacadeImpl(OrderBundleService orderBundleService, OrderService orderService,
                            OrderEntryService orderEntryService, ProductService productService,
-                           CartFacade cartFacade,  ToOrderDto toOrderDto,
+                           CartFacade cartFacade, ToOrderDto toOrderDto, ToPageDto toPageDto,
                            FromCartDto fromCartDto, ToBusinessOrderDto toBusinessOrderDto) {
         this.orderBundleService = orderBundleService;
         this.orderService = orderService;
         this.orderEntryService = orderEntryService;
-        this.productService=productService;
+        this.productService = productService;
         this.cartFacade = cartFacade;
         this.toOrderDto = toOrderDto;
+        this.toPageDto = toPageDto;
         this.fromCartDto = fromCartDto;
         this.toBusinessOrderDto = toBusinessOrderDto;
     }
@@ -89,8 +98,16 @@ public class OrderFacadeImpl implements OrderFacade {
     }
 
     @Override
-    public List<OrderDto> getOrdersByUserLogin(String userLogin) {
-        List<OrderBundle> orderBundles = orderBundleService.getOrderBundlesByUserLogin(userLogin);
+    public List<OrderDto> getOrdersByUserLoginAndDate(String dateFromString, String dateToString, String userLogin, int page, int perPage) {
+        Date dateFrom, dateTo;
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            dateFrom = dateFromString.isEmpty() ?  new GregorianCalendar(2019, Calendar.OCTOBER, 1).getTime() : format.parse(dateFromString);
+            dateTo = dateToString.isEmpty() ? new Date() : format.parse(dateToString);
+        } catch (ParseException exc) {
+            dateTo = dateFrom = new Date();
+        }
+        List<OrderBundle> orderBundles = orderBundleService.getOrderBundlesByUserLoginAndDate(dateFrom, dateTo, userLogin, page, perPage);
         List<OrderDto> orderBundleDtos = new ArrayList<>();
         if (!orderBundles.isEmpty()) {
             for (OrderBundle orderBundle :
@@ -103,9 +120,12 @@ public class OrderFacadeImpl implements OrderFacade {
     }
 
     @Override
-    public List<BusinessOrderDto> getBusinessOrders(String login) {
+    public List<BusinessOrderDto> getBusinessOrders(String status, String login, int pageId, int ordersPerPage) {
         List<BusinessOrderDto> businessOrderDtos = new ArrayList<>();
-        List<Order> allBusinessOrders = orderService.getOrdersByOwnerLogin(login);
+        if (!status.isEmpty()) {
+            status = status.equals("col") ? "collected" : status.equals("proc") ? "processing" : "";
+        }
+        List<Order> allBusinessOrders = orderService.getOrders(status, login, pageId, ordersPerPage);
         for (Order order :
                 allBusinessOrders) {
             BusinessOrderDto businessOrderDto = toBusinessOrderDto.convert(order);
@@ -120,4 +140,26 @@ public class OrderFacadeImpl implements OrderFacade {
         orderService.changeOrderStatus(order);
     }
 
+    @Override
+    public List<PageDto> getOrdersPagesList(String dateFromString, String dateToString, String userLogin, int ordersPerPage) {
+        Date dateFrom, dateTo;
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            dateFrom = dateFromString.isEmpty() ?  new GregorianCalendar(2019, Calendar.OCTOBER, 1).getTime() : format.parse(dateFromString);
+            dateTo = dateToString.isEmpty() ? new Date() : format.parse(dateToString);
+        } catch (ParseException exc) {
+            dateTo = dateFrom = new Date();
+        }
+        int amountOfProducts = orderBundleService.getAmountOfOrderBundlesByLoginAndDate(dateFrom, dateTo, userLogin);
+        return toPageDto.convert(amountOfProducts, ordersPerPage);
+    }
+
+    @Override
+    public List<PageDto> getBusinessPagesList(String status, String userLogin, int productsPerPage) {
+        if (!status.isEmpty()) {
+            status = status.equals("col") ? "collected" : status.equals("proc") ? "processing" : "";
+        }
+        int amountOfProducts = this.orderService.getBusinessOrdersAmount(userLogin, status);
+        return toPageDto.convert(amountOfProducts, productsPerPage);
+    }
 }

@@ -28,7 +28,7 @@ public class BusinessProductValidator implements Validator {
                 errors.rejectValue("price", "Format.business.price");
             }
         }
-        if (!businessProductDto.getDescription().isEmpty() && (businessProductDto.getDescription().length() < 6 || businessProductDto.getDescription().length() > 200)) {
+        if (!businessProductDto.getDescription().isEmpty() && (businessProductDto.getDescription().length() < 4 || businessProductDto.getDescription().length() > 500)) {
             errors.rejectValue("description", "Size.business.description");
         }
     }

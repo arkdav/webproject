@@ -8,18 +8,21 @@ public class UserDto {
     private String email;
     private String phone;
     private String birthdate;
+    private String address;
     private String status;
 
     public UserDto(){
     }
 
-    public UserDto(String login, String name, String surname, String email, String phone, String birthdate, String status) {
+    public UserDto(String login, String name, String surname, String email,
+                   String phone, String birthdate, String address, String status) {
         this.login = login;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.phone = phone;
         this.birthdate = birthdate;
+        this.address=address;
         this.status=status;
     }
 
@@ -69,6 +72,14 @@ public class UserDto {
 
     public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getStatus() {

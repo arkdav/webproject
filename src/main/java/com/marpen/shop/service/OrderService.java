@@ -12,9 +12,12 @@ public interface OrderService {
 
     int save(int orderBundleId, String ownerLogin, double totalPrice);
 
-    List<Order> getOrdersByOwnerLogin(String ownerLogin);
+    List<Order> getOrders(String status, String ownerLogin, int pageId, int ordersPerPage);
 
     Order getOrder(int orderId);
 
     void changeOrderStatus(Order order);
+
+    int getBusinessOrdersAmount(String userLogin, String status);
+
 }

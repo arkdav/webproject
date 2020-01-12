@@ -3,13 +3,14 @@ package com.marpen.shop.dao.impl;
 import com.marpen.shop.dao.CatalogVersionDao;
 import com.marpen.shop.model.CatalogVersion;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import java.util.List;
 
 public class CatalogVersionDaoImpl extends GenericDaoImpl<CatalogVersion> implements CatalogVersionDao {
 
-    private CatalogVersionDaoImpl() {
-        super();
+    private CatalogVersionDaoImpl(SessionFactory sessionFactory) {
+        super(sessionFactory);
     }
 
     private Session currentSession() {

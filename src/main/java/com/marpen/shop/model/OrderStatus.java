@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name="orderstatus")
@@ -43,5 +44,27 @@ public class OrderStatus {
 
     public void setStatusName(String statusName) {
         this.statusName = statusName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderStatus that = (OrderStatus) o;
+        return statusId == that.statusId &&
+                Objects.equals(statusName, that.statusName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(statusId, statusName);
+    }
+
+    @Override
+    public String toString() {
+        return "OrderStatus{" +
+                "statusId=" + statusId +
+                ", statusName='" + statusName + '\'' +
+                '}';
     }
 }

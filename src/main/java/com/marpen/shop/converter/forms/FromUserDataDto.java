@@ -44,6 +44,9 @@ public class FromUserDataDto implements Converter<UserDataDto, User> {
                 e.printStackTrace();
             }
         }
+        if (userDataDto.getAddress() != null && !userDataDto.getAddress().isEmpty()) {
+            user.setAddress(userDataDto.getAddress());
+        }
         return user;
     }
 }

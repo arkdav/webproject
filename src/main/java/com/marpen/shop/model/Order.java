@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name="orders")
@@ -80,5 +81,33 @@ public class Order {
 
     public void setOwnerLogin(String ownerLogin) {
         this.ownerLogin = ownerLogin;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return orderId == order.orderId &&
+                Double.compare(order.price, price) == 0 &&
+                statusId == order.statusId &&
+                orderBundleId == order.orderBundleId &&
+                Objects.equals(ownerLogin, order.ownerLogin);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderId, price, statusId, orderBundleId, ownerLogin);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", price=" + price +
+                ", statusId=" + statusId +
+                ", orderBundleId=" + orderBundleId +
+                ", ownerLogin='" + ownerLogin + '\'' +
+                '}';
     }
 }

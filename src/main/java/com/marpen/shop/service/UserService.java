@@ -18,6 +18,10 @@ public interface UserService {
 
     void changeUserStatus(User user);
 
-    List<User> getUserListByRole(String rolename);
+    List<User> getUserListByRoleAndStatus(String roleName, String status, int page, int perPage);
+
+    String getUserRoleName(String username);
+
+    int getAmountOfUsers(String role, String status);
 
 }

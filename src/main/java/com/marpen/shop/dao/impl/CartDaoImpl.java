@@ -3,13 +3,14 @@ package com.marpen.shop.dao.impl;
 import com.marpen.shop.dao.CartDao;
 import com.marpen.shop.model.Cart;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import java.util.List;
 
 public class CartDaoImpl extends GenericDaoImpl<Cart> implements CartDao {
 
-    private CartDaoImpl() {
-        super();
+    public CartDaoImpl(SessionFactory sessionFactory) {
+        super(sessionFactory);
     }
 
     private Session currentSession() {

@@ -20,7 +20,7 @@
 <main>
     <div class="main-block">
         <div class="container-fluid">
-            <div class="row">
+            <div class="row" id="user-row">
                 <div class="left-content col-9">
                     <c:forEach items="${orderList.products}" var="product">
                         <div class="cart-product">

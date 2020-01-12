@@ -9,19 +9,21 @@ import java.util.List;
 
 public interface ProductFacade {
 
-    List<ProductDto> getCatalogList(String searchName, int pageId, int productsPerPage);
+    List<ProductDto> getCatalogList(String searchName, int pageId, int productsPerPage, String sort);
 
     ProductDto getProductById(int productId);
 
     List<PageDto> getCatalogPagesList(String searchName, int productsPerPage);
 
-    List<BusinessProductDto> getProductsListByUserLogin(String userLogin);
+    List<BusinessProductDto> getBusinessProductsList(String catVer, String searchName, int pageId, int productsPerPage, String userLogin);
 
-    List<Integer> getProductIdsListByUserLogin(String userLogin);
+    List<PageDto> getBusinessPagesList(String catVer, String searchName, int productsPerPage, String userLogin);
 
     BusinessProductDto getBusinessProductDtoById(int productId);
 
-    void deleteProduct(int productId);
+    boolean deleteProducts(String [] productIds);
+
+    boolean changeProductsVersion(String [] productIds);
 
     void updateProduct(String userLogin, BusinessProductDto businessProductDto);
 

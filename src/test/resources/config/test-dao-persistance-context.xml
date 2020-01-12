@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:property-placeholder location="classpath:test.properties"/>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${database.driver}"/>
+        <property name="url" value="${database.url}"/>
+        <property name="username" value="${database.username}"/>
+        <property name="password" value="${database.password}"/>
+    </bean>
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="annotatedClasses">
+            <list>
+                <value>com.marpen.shop.model.Product</value>
+                <value>com.marpen.shop.model.Price</value>
+                <value>com.marpen.shop.model.CatalogVersion</value>
+                <value>com.marpen.shop.model.Role</value>
+                <value>com.marpen.shop.model.User</value>
+                <value>com.marpen.shop.model.Cart</value>
+                <value>com.marpen.shop.model.CartEntry</value>
+                <value>com.marpen.shop.model.Order</value>
+                <value>com.marpen.shop.model.OrderEntry</value>
+                <value>com.marpen.shop.model.OrderStatus</value>
+                <value>com.marpen.shop.model.OrderBundle</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+                <prop key="hibernate.default_schema">testdb</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="use_sql_comments">${hibernate.use_sql_comments}</prop>
+                <prop key="javax.persistence.validation.mode">none</prop>
+                <prop key="current_session_context_class">thread</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+    <bean id="catalogVersionDao" class="com.marpen.shop.dao.impl.CatalogVersionDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="productDao" class="com.marpen.shop.dao.impl.ProductDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="priceDao" class="com.marpen.shop.dao.impl.PriceDaoImpl" >
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="cartDao" class="com.marpen.shop.dao.impl.CartDaoImpl" >
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="cartEntryDao" class="com.marpen.shop.dao.impl.CartEntryDaoImpl" >
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="orderBundleDao" class="com.marpen.shop.dao.impl.OrderBundleDaoImpl" >
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="orderStatusDao" class="com.marpen.shop.dao.impl.OrderStatusDaoImpl" >
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="orderDao" class="com.marpen.shop.dao.impl.OrderDaoImpl" >
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="orderEntryDao" class="com.marpen.shop.dao.impl.OrderEntryDaoImpl" >
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="userDao" class="com.marpen.shop.dao.impl.UserDaoImpl" >
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="roleDao" class="com.marpen.shop.dao.impl.RoleDaoImpl" >
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+</beans>

@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-
-<%@ taglib prefix="from" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tag" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -14,98 +13,81 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item ">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/catalog"><tag:message
-                            code="header.catalog"/></a>
-                </li>
-                <sec:authorize access="hasRole('ROLE_CUSTOMER')">
-                <li class="nav-item ">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/cart"><tag:message
-                            code="header.cart"/></a>
-                </li>
+                <sec:authorize access="!hasAnyRole('ROLE_ADMIN','ROLE_BUSINESS_USER')">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/catalog"><tag:message
+                                code="header.catalog"/></a>
+                    </li>
                 </sec:authorize>
-                <sec:authorize access="hasAnyRole('ROLE_CUSTOMER', 'ROLE_BUSINESS_USER', 'ROLE_ADMIN')">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownUser" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        <tag:message code="header.userdata"/>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownUser">
-                        <a class="dropdown-item" href="${pageContext.request.contextPath}/userdata">
-                            <tag:message code="header.userinformation"/>
+                <sec:authorize access="hasAnyRole('ROLE_CUSTOMER', 'ROLE_BUSINESS_USER')">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownUser" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <tag:message code="header.userdata"/>
                         </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownUser">
+                            <a class="dropdown-item" href="${pageContext.request.contextPath}/userdata">
+                                <tag:message code="header.userinformation"/>
+                            </a>
+                            <sec:authorize access="hasRole('ROLE_CUSTOMER')">
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/userorders">
+                                    <tag:message code="header.userorders"/>
+                                </a>
+                            </sec:authorize>
+                            <sec:authorize access="hasRole('ROLE_BUSINESS_USER')">
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/businessdata">
+                                    <tag:message code="header.businessdata.catalog"/>
+                                </a>
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/businessorders">
+                                    <tag:message code="header.businessdata.orders"/>
+                                </a>
+                            </sec:authorize>
+                        </div>
+                    </li>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/admin">
+                            <tag:message code="header.admindata"/>
+                        </a>
+                    </li>
+                </sec:authorize>
+            </ul>
+            <sec:authorize access="isAnonymous()">
+                <div class="my-lg-0">
+                    <ul class="navbar-nav">
+                        <li class="nav-item ">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/login"><tag:message
+                                    code="header.login"/> </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/registration"><tag:message
+                                    code="registration.create"/></a>
+                        </li>
+                    </ul>
+                </div>
+            </sec:authorize>
+            <sec:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_BUSINESS_USER','ROLE_ADMIN')">
+                <div class="my-lg-0">
+                    <ul class="navbar-nav">
                         <sec:authorize access="hasRole('ROLE_CUSTOMER')">
-                        <a class="dropdown-item" href="${pageContext.request.contextPath}/userorders">
-                            <tag:message code="header.userorders"/>
-                        </a>
+                            <li class="nav-item" id="cart-link">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/cart">
+                                    <img id="cart-icon"
+                                         src="${pageContext.request.contextPath}/resources/images/cart.png"
+                                         alt="<tag:message code="header.cart"/>" title="<tag:message code="header.cart"/>"></a>
+                            </li>
                         </sec:authorize>
-                        <sec:authorize access="hasRole('ROLE_BUSINESS_USER')">
-                        <a class="dropdown-item" href="${pageContext.request.contextPath}/businessdata">
-                            <tag:message code="header.businessdata.catalog"/>
-                        </a>
-                        <a class="dropdown-item" href="${pageContext.request.contextPath}/businessdata/create">
-                            <tag:message code="header.businessdata.create"/>
-                        </a>
-                        <a class="dropdown-item" href="${pageContext.request.contextPath}/businessorders">
-                            <tag:message code="header.businessdata.orders"/>
-                        </a>
-                        </sec:authorize>
-                        <sec:authorize access="hasRole('ROLE_ADMIN')">
-                            <a class="dropdown-item" href="${pageContext.request.contextPath}/adminusers?u=customer">
-                                <tag:message code="header.admin.users"/>
-                            </a>
-                            <a class="dropdown-item" href="${pageContext.request.contextPath}/adminusers?u=business">
-                                <tag:message code="header.admin.businessusers"/>
-                            </a>
-                            <a class="dropdown-item" href="${pageContext.request.contextPath}/adminusers/create">
-                                <tag:message code="header.admin.create"/>
-                            </a>
-                </sec:authorize>
-        </div>
-        </li>
-        </sec:authorize>
-
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdownLan" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
-                <tag:message code="header.languages"/>
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownLan">
-                <a class="dropdown-item" href="?lang=en"><tag:message code="header.languages.english"/></a>
-                <a class="dropdown-item" href="?lang=ru"><tag:message code="header.languages.russian"/> </a>
-            </div>
-        </li>
-        </ul>
-        <sec:authorize access="isAnonymous()">
-            <div class="my-lg-0">
-                <ul class="navbar-nav">
-                    <li class="nav-item ">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/login"><tag:message
-                                code="header.login"/> </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="${pageContext.request.contextPath}/registration"><tag:message
-                                code="registration.create"/></a>
-                    </li>
-                </ul>
-            </div>
-        </sec:authorize>
-        <sec:authorize access="isAuthenticated()">
-            <div class="my-lg-0">
-                <ul class="navbar-nav">
-                    <li class="nav-item ">
-                        <form method="POST" action="${pageContext.request.contextPath}/logout" class="form-signin">
-                            <div class="form-group">
+                        <li class="nav-item">
+                            <form method="POST" action="${pageContext.request.contextPath}/logout" style="padding-top:10px;">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <button class="btn btn-lg btn-primary btn-block" type="submit"><tag:message
+                                <button class="btn btn-outline-success" type="submit"><tag:message
                                         code="userdata.logout"/></button>
-                            </div>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </sec:authorize>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </sec:authorize>
         </div>
     </nav>
 </header>
-

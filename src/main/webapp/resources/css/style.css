@@ -5,10 +5,20 @@ body{
 div{
     display: block;
 }
+a{
+    color:green;
+}
+a:hover{
+    color: #0b2e13;
+    text-decoration: none;
+}
 .container {
     width: 95%;
     min-width: 90%;
     margin: auto;
+}
+.bg-dark {
+    background-color: #5d5d5d!important;
 }
 .navbar-brand{
     /*margin: 0;*/
@@ -20,7 +30,7 @@ div{
 }
 .main-block{
     padding: 30px 0;
-    margin-left: 20px;
+    margin: 0 20px;
 }
 .catalog{
     /*border: 1px solid black;*/
@@ -36,15 +46,13 @@ div{
 .product:hover{
     box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
 }
-
 .product-img{
-    padding: auto;
     text-align: center;
     margin-bottom: 5px;
 }
 .product-img img{
-    height: auto;
-    width: 100%;
+    max-width: 450px;
+    height: 300px;
     padding-top: 10px;
 }
 .product-name{
@@ -64,6 +72,17 @@ div{
 .text-form{
     width: 100%;
     margin: auto;
+}
+#searchString, #search{
+    margin-right: 10px;
+    margin-bottom: 0;
+    width: 300px;
+}
+#searchButton img{
+    width: 20px;
+}
+#navbarBrand{
+    margin-left: 20px;
 }
 .cart-product-img{
     display: flex;
@@ -91,7 +110,7 @@ div{
     width: 100%;
 }
 .business-product{
-    margin-bottom: 15px;
+    margin: 0 20px 15px 20px;
 }
 .business-product p{
     margin-bottom: 0 !important;
@@ -104,28 +123,22 @@ div{
     align-content: center;
 }
 .loginform {
+    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.business-orders{
-
-}
-
-.business-order-processing{
-    border: #062c33 solid 2px;
-    padding: 15px;
+.business-order{
+    border: aliceblue solid;
+    padding: 10px;
     margin-bottom: 10px;
-    float:left;
 }
-.business-order-collected{
-    border: #062c33 solid 2px;
-    padding: 15px;
-    margin-bottom: 10px;
-    float:right;
-}
-.order-info{
 
+.product-id{
+    text-align: center;
+}
+.order-info p, .order-entry p, .order-total p{
+    margin: 0 0 3px 0;
 }
 .order-entry{
     margin-left: 50px;
@@ -133,21 +146,22 @@ div{
 .order-total{
     text-align: right;
 }
-
 .form-control{
     margin-bottom: 10px;
 }
-
 .user-order{
-    border: #1d2124 solid 1px;
+    border: #28a745 solid 1px;
     padding: 10px;
     margin: 10px;
 }
 .form-group span{
     color: red;
 }
-
+.form-group{
+    margin: 0;
+}
 .product-create-form{
+    padding-top: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -156,9 +170,158 @@ div{
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-top:15px;
+}
+.buser{
+    padding: 0 0;
 }
 .product-update-form{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.pagination{
+    justify-content: center;
+    margin-top: 20px;
+}
+#error{
+    color: darkred;
+}
+.perpage{
+    margin-left: 40px;
+}
+.form-signin{
+    width: 300px;
+}
+.productdata-image{
+     padding: 20px;
+ }
+.productdata-image img{
+    width: 300px;
+}
+.productdata-block{
+    padding: 20px;
+    margin-left: 50px;
+}
+.navbar-brand{
+    font-weight: 500;
+}
+#main-block-productdata{
+    margin:0 200px;
+    padding: 30px 0;
+}
+.form-user{
+    width: 350px;
+}
+.form-gr{
+    padding:5px;
+}
+.form-gr span{
+    color: red;
+}
+.form-gr input{
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+.form-gr p{
+    margin: 5px;
+}
+.form-gr button{
+    margin-top: 10px;
+}
+#cart-icon{
+    width: 40px;
+}
+#cart-link{
+    padding: 0 400px 0 0;
+}
+#add-to-cart-btn{
+    margin: 0 100px;
+}
+.create-product{
+    padding:0;
+}
+.page-item.active .page-link{
+    z-index: 1;
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+.nav-admin-href{
+    margin-top: 10px;
+    display: block;
+    padding: 15px;
+}
+.nav-admin-href-now{
+    margin-top: 10px;
+    display: block;
+    padding: 15px;
+    background-color: #28a745;
+    color: #ffffff;
+}
+.no-items{
+    margin: auto;
+    color: darkred;
+}
+.column-left{
+    background-color: aliceblue;
+}
+table{
+    border: 2px solid #28a745;
+    width: 100%;
+}
+th {
+    background: rgba(224, 255, 204, 0.96); /* Цвет фона */
+    color: #1c1c1c;
+}
+td, th {
+    padding: 5px;
+}
+.centered-name{
+    text-align: center;
+}
+
+#user-change-button{
+    margin-top: 380px;
+}
+.column-right .row {
+    width: 100%;
+}
+.admin-buttons{
+    margin-bottom: 10px;
+}
+#user-row{
+    margin: 0 15%;
+}
+#date-form{
+    text-align: center;
+}
+#active-status{
+    background-color: aliceblue;
+}
+#inactive-status{
+    background-color: aliceblue;
+}
+.borders {
+    height: 40px;
+    border-right: 2px solid #28a745;
+}
+.admin-button-upper {
+    margin: 0 10px;
+}
+.businessproduct-img img{
+    width: 190px;
+}
+.description-scroll {
+    width: 100%;
+    height: 48px;
+    overflow: auto;
 }
