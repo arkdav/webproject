@@ -61,7 +61,7 @@ public class UserDataValidator implements Validator {
             }
         }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address", "Required");
-        if(!user.getAddress().isEmpty() && (user.getAddress().length()<2 || user.getAddress().length()>32)) {
+        if(!user.getAddress().isEmpty() && (user.getAddress().length()<4 || user.getAddress().length()>32)) {
                 errors.rejectValue("address", "Format.address");
         }
     }

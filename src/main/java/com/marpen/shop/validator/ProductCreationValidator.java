@@ -17,7 +17,7 @@ public class ProductCreationValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         BusinessProductCreationDto product = (BusinessProductCreationDto) o;
-        if (product.getName().length() < 6 || product.getName().length() > 32) {
+        if (product.getName().length() < 4 || product.getName().length() > 32) {
             errors.rejectValue("name", "Size.business.name");
         }
         try {
@@ -25,7 +25,7 @@ public class ProductCreationValidator implements Validator {
         } catch (NumberFormatException e) {
             errors.rejectValue("price", "Format.business.price");
         }
-        if (product.getDescription().length() < 6 || product.getDescription().length() > 500) {
+        if (product.getDescription().length() < 4 || product.getDescription().length() > 500) {
             errors.rejectValue("description", "Size.business.description");
         }
     }
