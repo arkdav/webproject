@@ -1,6 +1,5 @@
 package com.marpen.shop.dto;
 
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -58,7 +57,7 @@ public class CartDto {
     public void setCartPrice(Double cartPrice) {
         Locale locale = new Locale("en");
         Locale.setDefault(locale);
-        String formattedDouble=new DecimalFormat("##0.00").format(cartPrice);
+        String formattedDouble = new DecimalFormat("##0.00").format(cartPrice);
         this.cartPrice = Double.valueOf(formattedDouble);
     }
 }

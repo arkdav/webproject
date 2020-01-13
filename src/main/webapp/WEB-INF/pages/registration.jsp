@@ -24,50 +24,59 @@
     <a class="navbar-brand" id="navbarBrand"><tag:message code="header.registration"/></a>
 </nav>
 <main>
+    <spring:message code="placeholder.username" var="placeholderUsername"/>
+    <spring:message code="placeholder.password" var="placeholderPass"/>
+    <spring:message code="placeholder.password.confirm" var="placeholderPassConfirm"/>
+    <spring:message code="placeholder.name" var="placeholderName"/>
+    <spring:message code="placeholder.surname" var="placeholderSurname"/>
+    <spring:message code="placeholder.email" var="placeholderEmail"/>
+    <spring:message code="placeholder.phone" var="placeholderPhone"/>
+    <spring:message code="placeholder.birthdate" var="placeholderBirthdate"/>
+    <spring:message code="placeholder.address" var="placeholderAddress"/>
     <div class="container">
         <div class="loginform">
             <form:form method="POST" modelAttribute="registrationForm" class="form-signin">
                 <div class="form-group">
-                    <form:input type="text" path="login" class="form-control" placeholder="Username"/>
+                    <form:input type="text" path="login" class="form-control" placeholder="${placeholderUsername}"/>
                     <form:errors path="login"/>
                 </div>
                 <div class="form-group">
-                    <form:input type="password" path="password" class="form-control" placeholder="Password"/>
+                    <form:input type="password" path="password" class="form-control" placeholder="${placeholderPass}"/>
                     <form:errors path="password"/>
                 </div>
                 <div class="form-group">
                     <form:input type="password" path="confirmPassword" class="form-control"
-                                placeholder="Confirm your password"/>
+                                placeholder="${placeholderPassConfirm}"/>
                     <form:errors path="confirmPassword"/>
                 </div>
                 <div class="form-group">
                     <form:input type="name" path="name" class="form-control"
-                                placeholder="Name"/>
+                                placeholder="${placeholderName}"/>
                     <form:errors path="name"/>
                 </div>
                 <div class="form-group">
                     <form:input type="surname" path="surname" class="form-control"
-                                placeholder="Surname"/>
+                                placeholder="${placeholderSurname}"/>
                     <form:errors path="surname"/>
                 </div>
                 <div class="form-group">
                     <form:input type="email" path="email" class="form-control"
-                                placeholder="Email"/>
+                                placeholder="${placeholderEmail}"/>
                     <form:errors path="email"/>
                 </div>
                 <div class="form-group ">
                     <form:input type="phone" path="phone" class="form-control"
-                                placeholder="Phone"/>
+                                placeholder="${placeholderPhone}"/>
                     <form:errors path="phone"/>
                 </div>
                 <div class="form-group ">
                     <form:input type="birthdate" path="birthdate" class="form-control"
-                                placeholder="Birth date (dd.mm.yyyy)"/>
+                                placeholder="${placeholderBirthdate}"/>
                     <form:errors path="birthdate"/>
                 </div>
                 <div class="form-group ">
                     <form:input type="address" path="address" class="form-control"
-                                placeholder="Address"/>
+                                placeholder="${placeholderAddress}"/>
                     <form:errors path="address"/>
                 </div>
                 <form:input type="hidden" path="role" value="u"/>

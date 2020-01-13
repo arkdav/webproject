@@ -84,7 +84,7 @@ public class CartOrderController {
     public String order(@RequestParam(name = "dateFrom", required = false, defaultValue = "") String dateFrom,
                         @RequestParam(name = "dateTo", required = false, defaultValue = "") String dateTo,
                         @RequestParam(name = "page", required = false, defaultValue = "1") Integer pageId,
-                        @RequestParam(value = "perpage", required = false, defaultValue = "6") Integer ordersPerPage,
+                        @RequestParam(value = "perpage", required = false, defaultValue = "5") Integer ordersPerPage,
                         Model model) {
         System.out.println(dateFrom);
         System.out.println(dateTo);

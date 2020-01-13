@@ -48,8 +48,8 @@
                 <div class="form-group create-product">
                     <tag:message code="businessdata.catalogversion"/>
                     <form:select size="1" name="catalogVersion" path="catalogVersion" class="form-control">
-                        <form:option value="online">Online</form:option>
-                        <form:option value="offline">Offline</form:option>
+                        <form:option value="online"><tag:message code="productcreation.online"/></form:option>
+                        <form:option value="offline"><tag:message code="productcreation.offline"/></form:option>
                     </form:select>
                 </div>
                 <form:button class="btn btn-outline-success btn-block" type="submit"><tag:message

@@ -26,10 +26,10 @@ public class OrderEntryDaoImpl extends GenericDaoImpl<OrderEntry> implements Ord
         return orderEntries;
     }
 
-    @Override
-    public List<OrderEntry> getOrderEntries() {
-        String sql = "select * from orderentry";
-        List<OrderEntry> orderEntries = currentSession().createSQLQuery(sql).addEntity(OrderEntry.class).list();
-        return orderEntries;
-    }
+//    @Override
+//    public List<OrderEntry> getOrderEntries() {
+//        String sql = "select * from orderentry";
+//        List<OrderEntry> orderEntries = currentSession().createSQLQuery(sql).addEntity(OrderEntry.class).list();
+//        return orderEntries;
+//    }
 }

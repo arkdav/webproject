@@ -24,16 +24,12 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
         entityClass = (Class<T>) pt.getActualTypeArguments()[0];
     }
 
-    public SessionFactory getSessionFactory() {
-        return this.sessionFactory;
-    }
-
     public Session getSession() {
         Session session;
         try {
-            session = getSessionFactory().getCurrentSession();
+            session = this.sessionFactory.getCurrentSession();
         } catch (HibernateException | NullPointerException e) {
-            session = getSessionFactory().openSession();
+            session = this.sessionFactory.openSession();
         }
         return session;
     }
@@ -61,7 +57,8 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 
     @Override
     public List<T> getAll(){
-        return getSession().createQuery("FROM "+ entityClass.getSimpleName()).list();
+        List<T> list =  getSession().createQuery("FROM "+ entityClass.getSimpleName()).list();
+        return list;
     }
 
 }

@@ -30,17 +30,17 @@ public class ToBusinessOrderDto implements Converter<Order, BusinessOrderDto> {
                               UserService userService,
                               ToUserDto toUserDto,
                               ToBusinessOrderProductDto toBusinessOrderProductDto) {
-        this.orderEntryService=orderEntryService;
-        this.orderBundleService=orderBundleService;
-        this.orderStatusService=orderStatusService;
-        this.userService=userService;
-        this.toUserDto=toUserDto;
-        this.toBusinessOrderProductDto=toBusinessOrderProductDto;
+        this.orderEntryService = orderEntryService;
+        this.orderBundleService = orderBundleService;
+        this.orderStatusService = orderStatusService;
+        this.userService = userService;
+        this.toUserDto = toUserDto;
+        this.toBusinessOrderProductDto = toBusinessOrderProductDto;
     }
 
     @Override
     public BusinessOrderDto convert(Order order) {
-        BusinessOrderDto businessOrderDto=new BusinessOrderDto();
+        BusinessOrderDto businessOrderDto = new BusinessOrderDto();
         businessOrderDto.setOrderBundleId(order.getOrderBundleId());
         businessOrderDto.setOrderId(order.getOrderId());
         OrderBundle orderBundle = orderBundleService.getOrderBundleById(order.getOrderBundleId());
@@ -48,12 +48,12 @@ public class ToBusinessOrderDto implements Converter<Order, BusinessOrderDto> {
         businessOrderDto.setUserDto(toUserDto.convert(user));
         businessOrderDto.setOrderNote(orderBundle.getOrderNote());
         businessOrderDto.setDate(orderBundle.getDate());
-        String orderName=orderStatusService.getOrderStatusNameById(order.getStatusId());
+        String orderName = orderStatusService.getOrderStatusNameById(order.getStatusId());
         businessOrderDto.setOrderStatus(orderName);
         businessOrderDto.setPrice(order.getPrice());
         List<BusinessOrderProductDto> businessOrderProductDtos = new ArrayList<>();
-        List <OrderEntry> orderEntries=orderEntryService.getOrderEntriesByOrderId(order.getOrderId());
-        for (OrderEntry orderEntry:
+        List<OrderEntry> orderEntries = orderEntryService.getOrderEntriesByOrderId(order.getOrderId());
+        for (OrderEntry orderEntry :
                 orderEntries) {
             businessOrderProductDtos.add(toBusinessOrderProductDto.convert(orderEntry));
         }

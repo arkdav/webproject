@@ -11,6 +11,8 @@ public class OrderDto {
     private List<OrderProductDto> products;
     private Double orderPrice;
     private String orderNote;
+    private String status;
+
 
     public OrderDto() {
     }
@@ -53,8 +55,7 @@ public class OrderDto {
     }
 
     public void setOrderPrice(Double orderPrice) {
-        //String formattedDouble = String.format("%.2f", orderPrice);
-        this.orderPrice = orderPrice;
+         this.orderPrice = orderPrice;
     }
 
     public void setDate(String date) {
@@ -67,5 +68,13 @@ public class OrderDto {
 
     public void setOrderNote(String orderNote) {
         this.orderNote = orderNote;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

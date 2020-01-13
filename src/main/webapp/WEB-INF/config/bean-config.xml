@@ -23,7 +23,6 @@
         <constructor-arg name="sessionFactory" ref="sessionFactory"/>
     </bean>
     <bean id="priceService" class="com.marpen.shop.service.impl.PriceServiceImpl">
-
         <constructor-arg name="priceDao" ref="priceDao"/>
     </bean>
     <!-- CartDao and CartService beans -->

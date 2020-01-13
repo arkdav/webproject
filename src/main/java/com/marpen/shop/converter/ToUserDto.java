@@ -19,10 +19,10 @@ public class ToUserDto implements Converter<User, UserDto> {
         userDto.setBirthdate(new SimpleDateFormat("dd.MM.yyyy").format(user.getBirthDate()));
         userDto.setAddress(user.getAddress());
         String status;
-        if(user.getStatus()){
-            status="active";
+        if (user.getStatus()) {
+            status = "active";
         } else {
-            status="inactive";
+            status = "inactive";
         }
         userDto.setStatus(status);
         return userDto;

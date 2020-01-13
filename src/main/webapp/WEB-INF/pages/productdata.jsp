@@ -69,6 +69,8 @@
                     </div>
                 </div>
             </sec:authorize>
+                <a href="${pageContext.request.contextPath}/catalog"><tag:message
+                    code="productdata.tocatalog"/></a>
             </div>
         </div>
 

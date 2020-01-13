@@ -62,7 +62,7 @@
                         <c:when test="${!empty orders}">
                             <div class="userorders">
                                 <c:forEach items="${orders}" var="order">
-                                    <div class="user-order">
+                                    <div class="user-order" >
                                         <table>
                                             <tr>
                                                 <td><tag:message code="order.date"/> ${order.date}</td>
@@ -70,20 +70,20 @@
                                                 <td>&nbsp;</td>
                                             </tr>
                                             <c:forEach items="${order.products}" var="orderEntry">
-                                                <c:if test="${orderEntry.status=='collected'}">
-                                                    <tr style="background-color: antiquewhite;">
-                                                </c:if>
-                                                <c:if test="${orderEntry.status=='processing'}">
-                                                    <tr style="background-color: aliceblue;">
-                                                </c:if>
+                                                <tr>
                                                 <td>&nbsp;</td>
                                                 <td><tag:message code="order.product"/>
                                                     <a href="${pageContext.request.contextPath}/productdata/${orderEntry.productDto.productId}"> ${orderEntry.productDto.name}</a>
                                                     x ${orderEntry.amount}
                                                 </td>
-                                                <td><tag:message code="order.status"/> ${orderEntry.status}</td>
+                                                <td>&nbsp;</td>
                                                 </tr>
                                             </c:forEach>
+                                            <tr style="background-color: ${order.status =='collected' ? 'aliceblue' : 'antiquewhite'}">
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td><tag:message code="order.status"/> ${order.status}</td>
+                                            </tr>
                                             <c:if test="${!empty order.orderNote}">
                                                 <tr>
                                                     <td>&nbsp;</td>

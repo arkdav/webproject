@@ -15,20 +15,20 @@ public class ToBusinessOrderProductDto implements Converter<OrderEntry, Business
 
     public ToBusinessOrderProductDto(ProductService productService, PriceService priceService, ToProductDto toProductDto) {
 
-        this.productService=productService;
-        this.priceService=priceService;
+        this.productService = productService;
+        this.priceService = priceService;
         this.toProductDto = toProductDto;
     }
 
     @Override
     public BusinessOrderProductDto convert(OrderEntry orderEntry) {
-        BusinessOrderProductDto businessOrderProductDto=new BusinessOrderProductDto();
+        BusinessOrderProductDto businessOrderProductDto = new BusinessOrderProductDto();
         businessOrderProductDto.setAmount(orderEntry.getAmount());
         businessOrderProductDto.setOrderEntryId(orderEntry.getOrderEntryId());
-        Product product=productService.getProductById(orderEntry.getProductId());
+        Product product = productService.getProductById(orderEntry.getProductId());
         businessOrderProductDto.setProductDto(toProductDto.convert(product));
         double price = priceService.getPriceByProductId(product.getProductId()).getPrice();
-        businessOrderProductDto.setPrice(price*orderEntry.getAmount());
+        businessOrderProductDto.setPrice(price * orderEntry.getAmount());
         return businessOrderProductDto;
     }
 }

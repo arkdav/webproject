@@ -39,7 +39,7 @@ public class OrderEntryServiceImplTest {
         orderEntryList.add(orderEntry1);
         orderEntryList.add(orderEntry2);
         orderEntryList.add(orderEntry3);
-        Mockito.when(orderEntryDao.getOrderEntries()).thenReturn(orderEntryList);
+        Mockito.when(orderEntryDao.getAll()).thenReturn(orderEntryList);
         List<OrderEntry> actual = orderEntryService.getOrderEntries();
         assertEquals(orderEntryList, actual);
     }

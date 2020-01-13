@@ -8,5 +8,5 @@ public interface OrderEntryDao extends GenericDao<OrderEntry>{
 
     List<OrderEntry> getOrderEntriesByOrderId(int orderId);
 
-    List<OrderEntry> getOrderEntries();
+//    List<OrderEntry> getOrderEntries();
 }

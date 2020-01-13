@@ -38,6 +38,6 @@ public class OrderEntryServiceImpl implements OrderEntryService {
 
     @Override
     public List<OrderEntry> getOrderEntries() {
-        return orderEntryDao.getOrderEntries();
+        return orderEntryDao.getAll();
     }
 }
